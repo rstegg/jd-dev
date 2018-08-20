@@ -2,16 +2,17 @@ import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import './Styles.css'
 
-import SelectSearch from './SelectSearch'
-import DentalPicker from '../DentalPicker/Picker'
-import { Progress, Input, notification, Icon, Button, Form, Table } from 'antd'
+import PrescriptionForm from './PrescriptionForm'
+import { Card, Modal, notification, Button, Form } from 'antd'
 import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
 
-const { Column } = Table
-const { Search, TextArea } = Input
-const FormItem = Form.Item
-
 class UploadTable extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: {}
+    }
+  }
   openNotify = () => {
     notification.error({
       message: 'Form fields empty',
@@ -23,73 +24,43 @@ class UploadTable extends Component {
     e.preventDefault();
     this.props.validateForm(this.props.products, this.props.options)
   }
+  openModal(idx) {
+    this.setState({
+      visible: {
+        ...this.state.visible,
+        [idx]: true
+      }
+    });
+  }
+  hideModal = (idx) => {
+   this.setState({
+     visible: {
+       ...this.state.visible,
+       [idx]: false
+     }
+   });
+ }
+
   render() {
     return (
         <Form onSubmit={this.handleSubmit}>
-          <Table dataSource={this.props.products} rowKey='index' showHeader={false} pagination={false}
-            rowClassName={((_, idx) => idx % 2 ? 'ant-table-row ant-table-row-level-0' : 'ant-table-row ant-table-row-level-1' )}>
-            <Column dataIndex='preview' key='preview'
-              render={(_, product, idx) =>
-              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              {this.props.isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
-              : <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
-                {product.renameCaseID ?
-                  <FormItem hasFeedback validateStatus={product.hasNameError}>
-                    <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                      <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
-                      <Search
-                        placeholder='Case ID'
-                        style={{ width: 300, lineHeight: 0 }}
-                        onSearch={value => this.props.setName(value, idx)}
-                        enterButton={<Icon type='check' />}
-                        defaultValue={product.name} />
-                    </div>
-                  </FormItem>
-                  : <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                      <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
-                      <b>{product.name}</b>
-                      <Button size='small' type="primary" onClick={() => this.props.toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
-                    </div>
-                }
-                <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
-                  <FormItem hasFeedback validateStatus={product.hasUnitError}>
-                    <DentalPicker idx={idx} product={product} setUnits={this.props.setUnits} clearUnits={this.props.clearUnits} />
-                  </FormItem>
-                  <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
-                    <FormItem hasFeedback validateStatus={product.hasTypeError}>
-                      <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                        <div style={{ width: '100%', marginBottom: '12px' }}>Type of Restore</div>
-                        <SelectSearch
-                          label='Restoration type'
-                          options={this.props.productTypes}
-                          style={{ width: 200, marginRight: '16px' }}
-                          onChange={value => this.props.setType(value, idx)}
-                          value={product.type} />
-                      </div>
-                    </FormItem>
-                      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                        <FormItem>
-                          <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px' }}>Design Notes</div>
-                            <TextArea
-                              label='Design Notes'
-                              style={{ width: 200, marginRight: '16px' }}
-                              onChange={e => this.props.setNotes(e.target.value, idx)}
-                              value={product.notes} />
-                          </div>
-                        </FormItem>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              }
-              {!this.props.isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
-                <Button shape="circle" icon="delete" onClick={() => this.props.deleteProduct(idx)} />
-              </div>}
+          <Card title="Card title">
+          { this.props.products.map((product, idx) => (
+            <div key={`case-${idx}`}>
+              <Card.Grid style={{ width: '25%', textAlign: 'center', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => this.openModal(idx)}>{product.name}</Card.Grid>
+              <Modal
+                title="Modal"
+                visible={this.state.visible[idx]}
+                onOk={() => this.hideModal(idx)}
+                onCancel={() => this.hideModal(idx)}
+                okText="Save"
+                cancelText="Cancel"
+              >
+                <PrescriptionForm {...this.props} product={product} idx={idx} />
+              </Modal>
             </div>
-            }
-          />
-      </Table>
+          ))}
+        </Card>
       {this.props.errors && this.props.errors.length ? this.openNotify() : null}
       <Button type='primary' loading={this.props.isLoading} htmlType='submit' style={{marginTop: '24px'}} block>Upload</Button>
     </Form>

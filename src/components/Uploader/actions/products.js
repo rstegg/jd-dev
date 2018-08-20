@@ -118,18 +118,6 @@ export const setSelectedProducts = (selected) => ({
   }
 })
 
-export const applyToAll = (fillProduct, idxs) =>
-  dispatch => {
-    idxs.map((idx) => {
-      if (fillProduct.type) {
-        dispatch(setType(fillProduct.type, idx))
-      }
-      if (fillProduct.notes) {
-        dispatch(setNotes(fillProduct.notes, idx))
-      }
-    })
-  }
-
 export const fetchTypes = () =>
   dispatch =>
     su.get('https://cdn.shopify.com/s/files/1/0935/7892/files/data.json?1609093586141030510')
