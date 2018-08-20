@@ -15,7 +15,6 @@
         "base64-url": "^2.2.0",
         "chart.js": "^2.4.0",
         "classnames": "^2.2.5",
-        "domkit": "^0.0.1",
         "font-awesome": "^4.7.0",
         "fullcalendar": "^3.1.0",
         "jquery": "^3.1.1",
@@ -46,7 +45,5 @@
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
     },
-    "devDependencies": {
-        "@attently/riek": "^2.0.1"
-    }
+    "devDependencies": {}
 }
