@@ -9,10 +9,13 @@
     },
     "license": "MIT",
     "dependencies": {
+        "antd": "^3.8.2",
         "axios": "^0.15.3",
         "babel-polyfill": "^6.26.0",
+        "base64-url": "^2.2.0",
         "chart.js": "^2.4.0",
         "classnames": "^2.2.5",
+        "domkit": "^0.0.1",
         "font-awesome": "^4.7.0",
         "fullcalendar": "^3.1.0",
         "jquery": "^3.1.1",
@@ -21,11 +24,17 @@
         "npm-run-all": "^4.1.3",
         "primereact": "1.6.0-rc.1",
         "quill": "^1.3.1",
+        "ramda": "^0.25.0",
         "react": "^16.3.2",
         "react-dom": "^16.3.2",
+        "react-dropzone": "^5.0.1",
+        "react-redux": "^5.0.7",
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.1.4",
-        "react-transition-group": "^2.2.1"
+        "react-transition-group": "^2.2.1",
+        "redux": "^4.0.0",
+        "redux-form": "^7.4.2",
+        "superagent": "^3.8.3"
     },
     "scripts": {
         "build-css": "node-sass-chokidar src/layout/ -o src/layout/ | node-sass-chokidar public/assets/layout/ -o public/assets/layout/",
@@ -36,5 +45,8 @@
         "build": "npm-run-all build-css build-js",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
+    },
+    "devDependencies": {
+        "@attently/riek": "^2.0.1"
     }
 }

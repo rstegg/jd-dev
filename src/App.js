@@ -23,6 +23,7 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'fullcalendar/dist/fullcalendar.css';
 import 'font-awesome/css/font-awesome.css';
+import 'antd/dist/antd.css'
 import './App.css';
 import './layout/layout.css';
 
@@ -82,7 +83,7 @@ class App extends Component {
             else
                 this.addClass(document.body, 'body-overflow-hidden');
         }
-       
+
         event.preventDefault();
     }
 
