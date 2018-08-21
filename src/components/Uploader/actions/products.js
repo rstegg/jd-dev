@@ -1,7 +1,4 @@
 import su from 'superagent'
-import base64 from 'base64-url'
-import shortid from 'shortid'
-import { find, propEq } from 'ramda'
 
 export const acceptUpload = accepted => ({
   type: 'ACCEPT_UPLOAD',
@@ -163,19 +160,10 @@ export const validateForm = (products, options) =>
   dispatch => {
     const errors = products.map((product, i) => {
       let errs = []
-      if (!product.shade && options[i].productShades && options[i].productShades.length) {
-        errs.push({ shade: 'Required' })
-      }
-      if (!product.finish && options[i].productFinishes && options[i].productFinishes.length) {
-        errs.push({ finish: 'Required' })
-      }
-      if (!product.product) {
-        errs.push({ product: 'Required' })
-      }
       if (!product.type) {
         errs.push({ type: 'Required' })
       }
-      if (!product.units || product.units <= 0) {
+      if (!product.units) {
         errs.push({ units: 'Required' })
       }
       return errs
@@ -199,95 +187,10 @@ export const notifyErrors = errors => ({
 export const sendCheckout = products =>
   dispatch => {
     dispatch(setButtonLoading(true))
-    const line_items = products.reduce((line_prods, product) => {
-      let properties = { 'Case ID': product.name }
 
-      if (product.shade) {
-        properties = { 'Case ID': product.name , 'Shade': product.shade }
-      }
+    console.log(products);
 
-      if (product.finish && !product.shade) {
-        properties = { 'Case ID': product.name, 'Finishing': product.finish }
-      }
-
-      if (product.finish && product.shade) {
-        properties = { 'Case ID': product.name, 'Shade': product.shade, 'Finishing': product.finish }
-      }
-
-      const agId = 'antigravity_' + shortid.generate().replace(/-/g, '')
-
-      let arr = [{
-        variantId: product.variant_id,
-        quantity: product.units || 1,
-        stl: product.stl,
-        name: product.name,
-        caseID: product.name,
-        shade: product.shade,
-        finishing: product.finish,
-        agId,
-        properties
-      }]
-
-      if (product.finish_variant_id) {
-        arr = arr.concat([{
-          variantId: product.finish_variant_id,
-          quantity: product.units || 1,
-          agId
-        }])
-      }
-
-      if (product.layering_variant_id) {
-        arr = arr.concat([{
-          variantId: product.layering_variant_id,
-          quantity: product.units || 1,
-          agId
-        }])
-      }
-
-      return line_prods.concat(arr)
-    }, [])
-
-    const requests = line_items.map((line_item, idx) => {
-      const variant_id = base64.decode(line_item.variantId).split('/').slice(-1)[0]
-      const quantity = line_item.quantity
-      const caseID = line_item.caseID || ''
-      const shade = line_item.shade || ''
-      const finishing = line_item.finishing || ''
-      const ag_id = line_item.agId
-      if (line_item.stl) {
-        return su.post('https://www.alienmilling.com/cart/add.js')
-        .field({
-          id: variant_id,
-          quantity,
-          'properties[Case ID]': caseID,
-          'properties[Shade]': shade,
-          'properties[Finishing]': finishing,
-          'properties[_master_builder]': 1,
-          'properties[_builder_id]': ag_id
-        })
-        .attach('properties[Upload STL]', line_item.stl)
-        .on('progress', event => {
-          const product = find(propEq('stl', line_item.stl), products)
-          dispatch(setProgress(event.percent, products.indexOf(product)))
-        })
-      } else {
-        return su.post('https://www.alienmilling.com/cart/add.js')
-        .field({
-          id: variant_id,
-          quantity,
-          'properties[_bold_ratio]': 1,
-          'properties[_builder_id]': ag_id,
-        })
-      }
-    })
-
-    const requestChain = requests.reduce((prev, cur) => prev.then(() => Promise.resolve(cur)), Promise.resolve())
-
-    requestChain
-      .then(res => {
-        dispatch(redirectToCheckout('https://www.alienmilling.com/cart'))
-      })
-
+    window.location.href = '#/orders'
   }
 
 export const deleteProduct = idx => ({

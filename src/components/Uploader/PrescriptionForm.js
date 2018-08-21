@@ -9,7 +9,7 @@ const FormItem = Form.Item
 
 export default class PrescriptionForm extends Component {
   render () {
-    const { product, isLoading, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx } = this.props
+    const { product, productTypes, isLoading, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
@@ -21,7 +21,7 @@ export default class PrescriptionForm extends Component {
                 <Search
                   placeholder='Case ID'
                   style={{ width: 300, lineHeight: 0 }}
-                  onSearch={value => this.props.setName(value, idx)}
+                  onSearch={value => setName(value, idx)}
                   enterButton={<Icon type='check' />}
                   defaultValue={product.name} />
               </div>
@@ -29,12 +29,12 @@ export default class PrescriptionForm extends Component {
             : <div style={{ lineHeight: 0, marginTop: '24px' }}>
                 <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
                 <b>{product.name}</b>
-                <Button size='small' type="primary" onClick={() => this.props.toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
+                <Button size='small' type="primary" onClick={() => toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
               </div>
           }
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
             <FormItem hasFeedback validateStatus={product.hasUnitError}>
-              <DentalPicker idx={idx} product={product} setUnits={this.props.setUnits} clearUnits={this.props.clearUnits} />
+              <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} />
             </FormItem>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
               <FormItem hasFeedback validateStatus={product.hasTypeError}>
@@ -42,9 +42,9 @@ export default class PrescriptionForm extends Component {
                   <div style={{ width: '100%', marginBottom: '12px' }}>Type of Restore</div>
                   <SelectSearch
                     label='Restoration type'
-                    options={this.props.productTypes}
+                    options={productTypes}
                     style={{ width: 200, marginRight: '16px' }}
-                    onChange={value => this.props.setType(value, idx)}
+                    onChange={value => setType(value, idx)}
                     value={product.type} />
                 </div>
               </FormItem>
@@ -55,7 +55,7 @@ export default class PrescriptionForm extends Component {
                       <TextArea
                         label='Design Notes'
                         style={{ width: 200, marginRight: '16px' }}
-                        onChange={e => this.props.setNotes(e.target.value, idx)}
+                        onChange={e => setNotes(e.target.value, idx)}
                         value={product.notes} />
                     </div>
                   </FormItem>
@@ -64,7 +64,7 @@ export default class PrescriptionForm extends Component {
             </div>
           </div>
         }
-        {!this.props.isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
+        {!isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
           <Button shape="circle" icon="delete" onClick={() => deleteProduct(idx)} />
         </div>}
       </div>

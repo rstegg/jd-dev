@@ -6,6 +6,7 @@ import { AppMenu } from './AppMenu';
 import { AppInlineProfile } from './AppInlineProfile';
 import { Route } from 'react-router-dom';
 import { Dashboard } from './components/Dashboard';
+import { Orders } from './components/Orders';
 import { FormsDemo } from './components/FormsDemo';
 import { SampleDemo } from './components/SampleDemo';
 import { DataDemo } from './components/DataDemo';
@@ -104,6 +105,7 @@ class App extends Component {
     createMenu() {
         this.menu = [
             {label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => { window.location = '#/'}},
+            {label: 'Orders', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/orders'}},
             {
                 label: 'Menu Modes', icon: 'fa fa-fw fa-cog',
                 items: [
@@ -236,6 +238,7 @@ class App extends Component {
 
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
+                    <Route path="/orders" exact component={Orders} />
                     <Route path="/forms" component={FormsDemo} />
                     <Route path="/sample" component={SampleDemo} />
                     <Route path="/data" component={DataDemo} />

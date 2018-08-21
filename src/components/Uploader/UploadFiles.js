@@ -14,9 +14,10 @@ class UploadTable extends Component {
     }
   }
   openNotify = () => {
+    console.log(this.props.errors);
     notification.error({
       message: 'Form fields empty',
-      description: 'You still have some form fields that need to be filled out.  Try filling out your forms and then click "Blast off" again.',
+      description: 'You still have some form fields that need to be filled out.',
     });
     this.props.openNotification()
   }
