@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form';
 
 import products from './products'
 import files from './files'
@@ -7,6 +8,8 @@ import allProducts from './all_products'
 import options from './options'
 import redirects from './redirects'
 import errors from './errors'
+import orders from './orders'
+import user from './user'
 
 export default combineReducers({
   products,
@@ -15,5 +18,8 @@ export default combineReducers({
   productTypes,
   files,
   redirects,
-  errors
+  errors,
+  orders,
+  user,
+  form: formReducer,
 })

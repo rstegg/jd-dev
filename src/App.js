@@ -5,8 +5,12 @@ import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
 import { AppInlineProfile } from './AppInlineProfile';
 import { Route } from 'react-router-dom';
-import { Dashboard } from './components/Dashboard';
-import { Orders } from './components/Orders';
+
+import Dashboard from './pages/Dashboard';
+import Orders from './pages/Orders';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+
 import { FormsDemo } from './components/FormsDemo';
 import { SampleDemo } from './components/SampleDemo';
 import { DataDemo } from './components/DataDemo';
@@ -106,6 +110,7 @@ class App extends Component {
         this.menu = [
             {label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => { window.location = '#/'}},
             {label: 'Orders', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/orders'}},
+            {label: 'Login', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/login'}},
             {
                 label: 'Menu Modes', icon: 'fa fa-fw fa-cog',
                 items: [
@@ -239,6 +244,8 @@ class App extends Component {
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/orders" exact component={Orders} />
+                    <Route path="/login" exact component={Login} />
+                    <Route path="/signup" exact component={Signup} />
                     <Route path="/forms" component={FormsDemo} />
                     <Route path="/sample" component={SampleDemo} />
                     <Route path="/data" component={DataDemo} />
