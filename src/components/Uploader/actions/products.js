@@ -125,12 +125,6 @@ export const fetchTypes = () =>
     })
     .catch(err => console.log(err))
 
-// export const fetchTypes = () =>
-//   dispatch =>
-//     import('./data.json').then(products => {
-//       dispatch(populateTypes(products))
-//     })
-
 export const populateTypes = (productTypes, idx) => ({
   type: 'POPULATE_TYPES',
   payload: {
@@ -160,10 +154,19 @@ export const validateForm = (products, options) =>
   dispatch => {
     const errors = products.map((product, i) => {
       let errs = []
+      if (!product.shade && options[i].productShades && options[i].productShades.length) {
+        errs.push({ shade: 'Required' })
+      }
+      if (!product.finish && options[i].productFinishes && options[i].productFinishes.length) {
+        errs.push({ finish: 'Required' })
+      }
+      if (!product.product) {
+        errs.push({ product: 'Required' })
+      }
       if (!product.type) {
         errs.push({ type: 'Required' })
       }
-      if (!product.units) {
+      if (!product.units || product.units <= 0) {
         errs.push({ units: 'Required' })
       }
       return errs
@@ -188,9 +191,7 @@ export const sendCheckout = products =>
   dispatch => {
     dispatch(setButtonLoading(true))
 
-    console.log(products);
-
-    window.location.href = '#/orders'
+    window.location.href = '/#orders'
   }
 
 export const deleteProduct = idx => ({
