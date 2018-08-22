@@ -19,18 +19,7 @@ export class AppInlineProfile extends Component {
     render() {
         return  (
             <div className="profile">
-                <div>
-                    <img src="assets/layout/images/profile.png" alt="" />
-                </div>
-                <a className="profile-link" onClick={this.onClick}>
-                    <span className="username">Claire Williams</span>
-                    <i className="fa fa-fw fa-cog"/>
-                </a>
-                <ul className={classNames({'profile-expanded': this.state.expanded})}>
-                    <li><a><i className="fa fa-fw fa-sliders"/><span>Account</span></a></li>
-                    <li><a><i className="fa fa-fw fa-bell"/><span>Notifications</span><span className="menu-badge">2</span></a></li>
-                    <li><a><i className="fa fa-fw fa-sign-out"/><span>Logout</span></a></li>
-                </ul>
+                <span className="username">Dev Menu - Links</span>
             </div>
         );
     }

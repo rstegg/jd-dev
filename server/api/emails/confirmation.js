@@ -143,8 +143,8 @@ module.exports = (user, permalink_url) => `
       <tbody>
         <tr>
           <td style="padding:0 0 20px 0;border-bottom:1px solid #e9edee;">
-            <a href="https://www.kuwau.com/" style="display:block; margin:0 auto;" target="_blank">
-              <img src="https://www.kuwau.com/images/logo/kuwau-logo-100.png" width="75" height="75" alt="Kuwau logo" style="border: 0px;">
+            <a href="https://www.freecontour.com/" style="display:block; margin:0 auto;" target="_blank">
+              <img src="https://www.freecontour.com/images/logo/freecontour-logo-100.png" width="75" height="75" alt="Kuwau logo" style="border: 0px;">
             </a>
           </td>
         </tr>
@@ -152,7 +152,7 @@ module.exports = (user, permalink_url) => `
           <td colspan="2" style="padding:30px 0;">
             <p style="color:#1d2227;line-height:28px;font-size:22px;margin:12px 10px 20px 10px;font-weight:400;">Hi there,</p>
             <p style="margin:0 10px 10px 10px;padding:0;">This message is to confirm that the Kuwau account with the username <b>${user.username}</b> belongs to you. Verifying your email address helps you secure your account.  If you forget your password, you will now be able to reset it by email.</p>
-            <p style="margin:0 10px 10px 10px;padding:0;">To confirm that this is your kuwau account, click here:</p>
+            <p style="margin:0 10px 10px 10px;padding:0;">To confirm that this is your freecontour account, click here:</p>
             <p>
               <a class="button-link" style="display:inline-block;text-decoration:none;padding:15px 20px;background-color:#70cf95;border:1px solid #70cf95;border-radius:3px;color:#FFF;font-weight:bold;" href=${permalink_url} target="_blank">Confirm Email</a>
             </p>

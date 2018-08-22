@@ -17,19 +17,19 @@ class AppSubmenu extends Component {
         onMenuItemClick: PropTypes.func,
         root: PropTypes.bool
     }
-    
+
     constructor(props) {
         super(props);
         this.state = {activeIndex: null};
     }
-    
+
     onMenuItemClick(event, item, index) {
         //avoid processing disabled items
         if(item.disabled) {
             event.preventDefault();
             return true;
         }
-                        
+
         //execute command
         if(item.command) {
             item.command({originalEvent: event, item: item});
@@ -41,7 +41,7 @@ class AppSubmenu extends Component {
         }
 
         if(index === this.state.activeIndex)
-            this.setState({activeIndex: null});    
+            this.setState({activeIndex: null});
         else
             this.setState({activeIndex: index});
 
@@ -51,8 +51,8 @@ class AppSubmenu extends Component {
                 item: item
             });
         }
-    } 
-    
+    }
+
     render() {
         let items = this.props.items && this.props.items.map((item, i) => {
             let active = this.state.activeIndex === i;
@@ -67,13 +67,12 @@ class AppSubmenu extends Component {
                         <i className={item.icon}></i>
                         <span>{item.label}</span>
                         {submenuIcon}
-                        {badge}
                     </a>
                     <AppSubmenu items={item.items} onMenuItemClick={this.props.onMenuItemClick}/>
                 </li>
             );
         });
-        
+
         return items ? <ul className={this.props.className}>{items}</ul> : null;
     }
 }

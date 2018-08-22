@@ -80,7 +80,16 @@ module.exports = function(proxy, allowedHost) {
       disableDotRule: true,
     },
     public: allowedHost,
-    proxy,
+    proxy: {
+        '/api/v1': {
+          target: 'http://localhost:3030',
+          secure: false
+        },
+        '/WSS': {
+          target: 'http://localhost:3030',
+          secure: false
+        },
+      },
     before(app) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());

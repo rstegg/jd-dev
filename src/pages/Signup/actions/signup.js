@@ -1,10 +1,14 @@
+import su from 'superagent'
+
 export const onSignupSubmit = user =>
-({
-  type: 'SIGNUP_SUBMIT',
-  payload: {
-    user
-  }
-})
+  dispatch => {
+    dispatch({ type: 'SIGNUP_SUBMIT' })
+    su.post('/api/v1/auth/signup')
+      .accept('application/json')
+      .send({ user })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+}
 
 export const onSignupSuccess = res =>
 ({

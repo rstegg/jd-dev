@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
-import { AppInlineProfile } from './AppInlineProfile';
 import { Route } from 'react-router-dom';
 
 import Dashboard from './pages/Dashboard';
@@ -11,18 +10,6 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
-import { FormsDemo } from './components/FormsDemo';
-import { SampleDemo } from './components/SampleDemo';
-import { DataDemo } from './components/DataDemo';
-import { PanelsDemo } from './components/PanelsDemo';
-import { OverlaysDemo } from './components/OverlaysDemo';
-import { MenusDemo } from './components/MenusDemo';
-import { MessagesDemo } from './components/MessagesDemo';
-import { ChartsDemo } from './components/ChartsDemo';
-import { MiscDemo } from './components/MiscDemo';
-import { EmptyPage } from './components/EmptyPage';
-import { UtilsDemo } from './components/UtilsDemo';
-import { Documentation } from "./components/Documentation";
 import { ScrollPanel } from 'primereact/components/scrollpanel/ScrollPanel';
 import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -110,91 +97,8 @@ class App extends Component {
         this.menu = [
             {label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => { window.location = '#/'}},
             {label: 'Orders', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/orders'}},
-            {label: 'Login', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/login'}},
-            {
-                label: 'Menu Modes', icon: 'fa fa-fw fa-cog',
-                items: [
-                    {label: 'Static Menu', icon: 'fa fa-fw fa-bars',  command: () => this.setState({layoutMode: 'static'}) },
-                    {label: 'Overlay Menu', icon: 'fa fa-fw fa-bars',  command: () => this.setState({layoutMode: 'overlay'}) }
-                ]
-            },
-            {
-                label: 'Layout Options', icon: 'fa fa-fw fa-diamond',
-                items: [
-                    {label: 'Dark', icon: 'fa fa-fw fa-bars',  command: () => this.setState({layoutColorMode: 'dark'}) },
-                    {label: 'Light', icon: 'fa fa-fw fa-bars',  command: () => this.setState({layoutColorMode: 'light'}) }
-                ]
-            },
-            {
-                label: 'Components', icon: 'fa fa-fw fa-bars', badge: '2', badgeStyleClass: 'teal-badge',
-                items: [
-                    {label: 'Sample Page', icon: 'fa fa-fw fa-columns', command: () => { window.location = '#/sample'}},
-                    {label: 'Forms', icon: 'fa fa-fw fa-code', command: () => { window.location = '#/forms'}},
-                    {label: 'Data', icon: 'fa fa-fw fa-table', command: () => { window.location = "#/data"}},
-                    {label: 'Panels', icon: 'fa fa-fw fa-list-alt', command: () => { window.location = "#/panels"}},
-                    {label: 'Overlays', icon: 'fa fa-fw fa-square', command: () => { window.location = "#/overlays"}},
-                    {label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', command: () => { window.location = "#/menus"}},
-                    {label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', command: () => { window.location = "#/messages"}},
-                    {label: 'Charts', icon: 'fa fa-fw fa-area-chart', command: () => { window.location = "#/charts"}},
-                    {label: 'Misc', icon: 'fa fa-fw fa-user-secret', command: () => { window.location = "#/misc"}}
-                ]
-            },
-            {
-                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver',
-                items: [
-                    {label: 'Empty Page', icon: 'fa fa-fw fa-square-o', command: () => { window.location = "#/empty"}},
-                    {label: 'Login', icon: 'fa fa-fw fa-sign-in', url: 'assets/pages/login.html', target: '_blank'},
-                    {label: 'Error', icon: 'fa fa-fw fa-exclamation-circle', url: 'assets/pages/error.html', target: '_blank'},
-                    {label: '404 Page', icon: 'fa fa-fw fa-times', url: 'assets/pages/404.html', target: '_blank'},
-                    {label: 'Access Denied', icon: 'fa fa-fw fa-exclamation-triangle', url: 'assets/pages/access.html', target: '_blank'}
-                ]
-            },
-            {
-                label: 'Menu Hierarchy', icon: 'fa fa-fw fa-sitemap',
-                items: [
-                    {
-                        label: 'Submenu 1', icon: 'fa fa-fw fa-sign-in',
-                        items: [
-                            {
-                                label: 'Submenu 1.1', icon: 'fa fa-fw fa-sign-in',
-                                items: [
-                                    {label: 'Submenu 1.1.1', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 1.1.2', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 1.1.3', icon: 'fa fa-fw fa-sign-in'},
-                                ]
-                            },
-                            {
-                                label: 'Submenu 1.2', icon: 'fa fa-fw fa-sign-in',
-                                items: [
-                                    {label: 'Submenu 1.2.1', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 1.2.2', icon: 'fa fa-fw fa-sign-in'}
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        label: 'Submenu 2', icon: 'fa fa-fw fa-sign-in',
-                        items: [
-                            {
-                                label: 'Submenu 2.1', icon: 'fa fa-fw fa-sign-in',
-                                items: [
-                                    {label: 'Submenu 2.1.1', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 2.1.2', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 2.1.3', icon: 'fa fa-fw fa-sign-in'},
-                                ]
-                            },
-                            {
-                                label: 'Submenu 2.2', icon: 'fa fa-fw fa-sign-in',
-                                items: [
-                                    {label: 'Submenu 2.2.1', icon: 'fa fa-fw fa-sign-in'},
-                                    {label: 'Submenu 2.2.2', icon: 'fa fa-fw fa-sign-in'}
-                                ]
-                            },
-                        ]
-                    }
-                ]
-            },
-            {label: 'Documentation', icon: 'fa fa-fw fa-book', command: () => { window.location = "#/documentation"}}
+            {label: 'Login', icon: 'fa fa-fw fa-sign-in', command: () => { window.location = '#/login'}},
+            {label: 'Sign up', icon: 'fa fa-fw fa-user-plus', command: () => { window.location = '#/signup'}},
         ];
     }
 
@@ -234,8 +138,6 @@ class App extends Component {
 
                     <ScrollPanel ref={(el) => this.layoutMenuScroller = el} style={{height:'100%'}}>
                         <div className="layout-sidebar-scroll-content" >
-                            <div className="logo"></div>
-                            <AppInlineProfile />
                             <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
                         </div>
                     </ScrollPanel>
@@ -246,18 +148,6 @@ class App extends Component {
                     <Route path="/orders" exact component={Orders} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
-                    <Route path="/forms" component={FormsDemo} />
-                    <Route path="/sample" component={SampleDemo} />
-                    <Route path="/data" component={DataDemo} />
-                    <Route path="/panels" component={PanelsDemo} />
-                    <Route path="/overlays" component={OverlaysDemo} />
-                    <Route path="/menus" component={MenusDemo} />
-                    <Route path="/messages" component={MessagesDemo} />
-                    <Route path="/charts" component={ChartsDemo} />
-                    <Route path="/misc" component={MiscDemo} />
-                    <Route path="/empty" component={EmptyPage} />
-                    <Route path="/utils" component={UtilsDemo} />
-                    <Route path="/documentation" component={Documentation} />
                 </div>
 
                 <AppFooter />

@@ -12,7 +12,7 @@ module.exports = (req, res) =>
     )
     .then(updatedUser =>
       mailgun
-        .lists('news@mg.kuwau.com')
+        .lists('news@mg.freecontour.com')
         .members()
         .create({
           subscribed: true,

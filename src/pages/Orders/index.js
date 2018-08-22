@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {OrganizationChart} from 'primereact/components/organizationchart/OrganizationChart';
 import {DataTable} from 'primereact/components/datatable/DataTable';
-import {DataView, DataViewLayoutOptions} from 'primereact/components/dataview/DataView';
-import {Tree} from 'primereact/components/tree/Tree';
-import {TreeTable} from 'primereact/components/treetable/TreeTable';
+import { DataViewLayoutOptions} from 'primereact/components/dataview/DataView';
 import {Column} from 'primereact/components/column/Column'
-import {PickList} from 'primereact/components/picklist/PickList';
-import {OrderList} from 'primereact/components/orderlist/OrderList';
-import {Schedule} from 'primereact/components/schedule/Schedule';
-import {Panel} from 'primereact/components/panel/Panel';
-import {Button} from 'primereact/components/button/Button';
 import {InputText} from 'primereact/components/inputtext/InputText';
 import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 
@@ -73,43 +65,6 @@ class OrdersView extends Component {
     }
 
     render(){
-
-        let organizationValue = [{
-            label: 'F.C Barcelona',
-            expanded: true,
-            children: [
-                {
-                    label: 'F.C Barcelona',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'Chelsea FC'
-                        },
-                        {
-                            label: 'F.C. Barcelona'
-                        }
-                    ]
-                },
-                {
-                    label: 'Real Madrid',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'Bayern Munich'
-                        },
-                        {
-                            label: 'Real Madrid'
-                        }
-                    ]
-                }
-            ]
-        }];
-
-        let scheduleHeader = {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        };
 
         let dataViewHeader = this.dataViewHeaderTemplate();
 

@@ -143,15 +143,15 @@ module.exports = (toName, fromName, url, note) => `
       <tbody>
         <tr>
           <td style="padding:0 0 20px 0;border-bottom:1px solid #e9edee;">
-            <a href="https://www.kuwau.com/" style="display:block; margin:0 auto;" target="_blank">
-              <img src="https://www.kuwau.com/images/logo/kuwau-logo-100.png" width="75" height="75" alt="Kuwau logo" style="border: 0px;">
+            <a href="https://www.freecontour.com/" style="display:block; margin:0 auto;" target="_blank">
+              <img src="https://www.freecontour.com/images/logo/freecontour-logo-100.png" width="75" height="75" alt="Kuwau logo" style="border: 0px;">
             </a>
           </td>
         </tr>
         <tr>
           <td colspan="2" style="padding:30px 0;">
             <p style="color:#1d2227;line-height:28px;font-size:22px;margin:12px 10px 20px 10px;font-weight:400;">Hi ${toName},</p>
-            <p style="margin:0 10px 10px 10px;padding:0;"><b>${fromName}</b> started a post on kuwau!</p>
+            <p style="margin:0 10px 10px 10px;padding:0;"><b>${fromName}</b> started a post on freecontour!</p>
             <p style="margin:0 10px 10px 10px;padding:0;"><b>${fromName}</b>: <i>${note || 'Check it out!'}</i></p>
             <p style="margin:0 10px 10px 10px;padding:0;">Click here to contribute:</p>
             <p>
@@ -161,7 +161,7 @@ module.exports = (toName, fromName, url, note) => `
         </tr>
         <tr>
           <td colspan="2" style="padding:30px 0 0 0;border-top:1px solid #e9edee;color:#9b9fa5">
-            This message was sent on kuwau.com
+            This message was sent on freecontour.com
           </td>
         </tr>
       </tbody>

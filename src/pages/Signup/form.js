@@ -1,18 +1,20 @@
 import React from 'react'
 
 import { Field, reduxForm } from 'redux-form'
-import { Form } from 'antd'
 
 import { validate, asyncValidate } from './validators'
 
-import { Button, Input, Icon } from 'antd'
+import { Form, Button, Input, Icon } from 'antd'
 
-const InputField = ({ input, name, type, label, icon, placeholder }) =>
-  <Input
-    {...input}
-    placeholder={placeholder}
-    prefix={icon}
-    style={{ marginBottom: '12px'}} />
+const FormItem = Form.Item
+
+const InputField = ({ input, meta, icon, ...rest }) =>
+  <FormItem hasFeedback validateStatus={meta.touched ? (meta.error ? 'error' : 'success') : ''} help={meta.touched && meta.error ? meta.error : ''}>
+    <Input
+      {...input}
+      prefix={icon}
+      {...rest} />
+  </FormItem>
 
 const SignupForm = ({handleSubmit, submitting}) =>
   <Form onSubmit={handleSubmit}>

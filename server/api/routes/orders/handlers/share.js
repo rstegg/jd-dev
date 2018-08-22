@@ -24,10 +24,10 @@ module.exports = (req, res) =>
   validate(req)
     .then(product =>
       mailcomposer({
-        from: 'kuwau.com <hello@mg.kuwau.com>',
+        from: 'freecontour.com <hello@mg.freecontour.com>',
         to: req.body.email,
-        subject: `Dear ${req.body.name}, someone shared a post with you at kuwau.com!`,
-        text: `${req.user.name} shared a link on kuwau.com! ${req.body.url}`,
+        subject: `Dear ${req.body.name}, someone shared a post with you at freecontour.com!`,
+        text: `${req.user.name} shared a link on freecontour.com! ${req.body.url}`,
         html: shareEmailTemplate(req.body.name, req.user.name, req.body.url, req.body.message)
       })
       .build((mailBuildError, message) =>

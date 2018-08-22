@@ -1,7 +1,6 @@
 {
   "name": "sigma-react",
   "version": "1.0.0",
-  "homepage": ".",
   "private": false,
   "proxy": "http://localhost:3030",
   "repository": {

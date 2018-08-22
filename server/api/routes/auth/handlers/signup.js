@@ -55,17 +55,17 @@ module.exports = (req, res) =>
     .then(({thread, user}) => {
       const newUser = merge({
         password: user.password,
-        ip: getIp(req),
+        ip_address: getIp(req),
         verified: false,
         permalink: createPermalink(user.email),
-        verifyToken: bytes(20),
+        verify_token: bytes(20),
         threadId: thread.id
       }, pick(['email', 'name', 'username'], user))
       return User.create(newUser, { plain: true })
     })
     .then(createdUser => {
       const { permalink, verifyToken } = createdUser
-      const permalink_url = `https://kuwau.com/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
+      const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verify_token}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
       const resUser = pick(['id', 'email', 'name', 'username'], createdUser)
