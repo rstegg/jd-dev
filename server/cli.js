@@ -1,7 +1,7 @@
 'use strict';
 const R = require('ramda');
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const argv = require('minimist')(process.argv.slice(2));
 const models = require('./models');
 // to destroy the db and recreate a user admin
