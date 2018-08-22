@@ -16,7 +16,7 @@ const io = require('socket.io')(http, { path: '/WSS' })
 const API_HOST = process.env.API_HOST || '/api/v1'
 
 app
-  .use(express.static('./build'))
+  .use(express.static('../build'))
   .use(compress())
   .use(cors())
   .use(bodyParser.json())
