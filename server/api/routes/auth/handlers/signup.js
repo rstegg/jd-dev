@@ -29,7 +29,7 @@ const createPermalink = (email) =>
         .trim()
 
 const createThread = user =>
-  Thread.create({ title: user.username }, { plain: true })
+  Thread.create({ title: user.name }, { plain: true })
     .then(thread =>
       !thread ? Promise.reject('Thread not created')
       : { thread, user }
@@ -37,16 +37,11 @@ const createThread = user =>
 
 const validate = req =>
   User.findOne({
-      where: {
-        $or: [
-          { email: req.body.user.email },
-          { username: req.body.user.username }
-        ]
-      }
+    where: { email: req.body.user.email }
   })
   .then(user =>
       user ?
-        Promise.reject('user registered')
+        Promise.reject('email registered')
         : createThread(req.body.user)
   )
 
@@ -60,7 +55,7 @@ module.exports = (req, res) =>
         permalink: createPermalink(user.email),
         verify_token: bytes(20),
         threadId: thread.id
-      }, pick(['email', 'username'], user))
+      }, pick(['email', 'name'], user))
       return User.create(newUser, { plain: true })
     })
     .then(createdUser => {
@@ -68,7 +63,7 @@ module.exports = (req, res) =>
       const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verify_token}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
-      const resUser = pick(['email', 'username'], createdUser)
+      const resUser = pick(['email', 'email'], createdUser)
       const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)
       return res.status(200).json({user: resUser, token})
     })

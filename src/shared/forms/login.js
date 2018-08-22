@@ -18,7 +18,7 @@ const InputField = ({ input, meta, icon, ...rest }) =>
 
 const LoginForm = ({handleSubmit, submitting}) =>
   <Form onSubmit={handleSubmit}>
-    <Field component={InputField} name="username" type="text" icon={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Username' />
+    <Field component={InputField} name="email" type="email" icon={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Email' />
     <Field component={InputField} name="password" type="password" icon={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Password' />
     <Button loading={submitting} htmlType="submit" type='primary'>Log in</Button>
   </Form>

@@ -12,10 +12,10 @@ const { Strategy: LocalStrategy } = passportLocal
 
 const localStrategy = new LocalStrategy(
   { session: false },
-  (username, password, done) =>
-    User.findOne({ where: { username } })
+  (email, password, done) =>
+    User.findOne({ where: { email } })
       .then(user =>
-        !user ? done(null, false, { message: 'Incorrect username' })
+        !user ? done(null, false, { message: 'Incorrect email' })
         : !user.validPassword(password) ? done(null, false, { message: 'Incorrect password' })
         : done(null, user)
       )

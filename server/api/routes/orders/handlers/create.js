@@ -18,7 +18,7 @@ const getValidSlug = (slug, userId, thread) =>
   )
 
 const createThread = (user, slug) =>
-  Thread.create({ title: slug, owner: user.username }, { plain: true })
+  Thread.create({ title: slug, owner: user.email }, { plain: true })
     .then(thread =>
       !thread ? Promise.reject('Thread not created')
       : getValidSlug(slug, user.id, thread)

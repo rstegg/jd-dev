@@ -5,14 +5,13 @@ const { allPass, pipe, path, prop } = require('ramda')
 const loginHandler = require('./handlers/login')
 const signupHandler = require('./handlers/signup')
 const validateEmailHandler = require('./handlers/validateEmail')
-const validateUsernameHandler = require('./handlers/validateUsername')
 const verifyTokenHandler = require('./handlers/verifyToken')
 
 const validateBody = apiRequire('middleware/validate-body')
 const validFields = apiRequire('middleware/valid-fields')
 const hashPassword = apiRequire('middleware/hash-password')
 
-const validSignupUser = validFields('user', ['email', 'username', 'password'])
+const validSignupUser = validFields('user', ['email', 'name', 'password'])
 
 module.exports =
   router
@@ -28,10 +27,6 @@ module.exports =
    .post(`/signup/validate_email`,
       validateBody(prop('email'), 'missing email'),
       validateEmailHandler
-    )
-    .post(`/signup/validate_username`,
-      validateBody(prop('username'), 'missing username'),
-      validateUsernameHandler
     )
     .get(`/signup/email_confirmation/:permalink/:verify_token`,
       verifyTokenHandler

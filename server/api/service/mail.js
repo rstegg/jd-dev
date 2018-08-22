@@ -9,7 +9,7 @@ const confirmationMail = (user, permalink_url) => mailcomposer({
   from: 'Freecontour <hello@mg.kuwau.com>',
   to: user.email,
   subject: 'Verify your email address to use freecontour.com',
-  text: `Hi there, this message is to confirm that the Kuwau account with the username ${user.username} belongs to you. To confirm that this is your freecontour account, click here: ${permalink_url}`,
+  text: `Hi there, this message is to confirm that the Kuwau account with the email ${user.email} belongs to you. To confirm that this is your freecontour account, click here: ${permalink_url}`,
   html: confirmationTemplate(user, permalink_url)
 })
 

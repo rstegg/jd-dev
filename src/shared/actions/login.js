@@ -1,11 +1,11 @@
 import su from 'superagent'
 
-export const onLoginSubmit = ({ username, password }) =>
+export const onLoginSubmit = ({ email, password }) =>
   dispatch => {
     dispatch({ type: 'LOGIN_SUBMIT' })
     su.post('/api/v1/auth/login')
       .accept('application/json')
-      .send({ username, password })
+      .send({ email, password })
       .then(res => dispatch(onLoginSuccess(res)))
       .catch(err => console.log(err))
 }

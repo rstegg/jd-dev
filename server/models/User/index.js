@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -49,7 +49,6 @@ module.exports = (sequelize, DataTypes) => {
         isIP: true,
       }
     },
-    name: DataTypes.STRING,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     region: DataTypes.STRING,
