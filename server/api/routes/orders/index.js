@@ -12,12 +12,15 @@ const validateBody = apiRequire('middleware/validate-body')
 const validateParams = apiRequire('middleware/validate-params')
 const validFields = apiRequire('middleware/valid-fields')
 
-const validOrder = validFields('order', [ 'name', 'price' ])
+const validOrder = validFields('order', [ 'name', 'type', 'units', 'notes' ])
 const validEditOrderParams = validFields(false, [ 'id'])
 
 module.exports =
   router
     .use(passport.authenticate('jwt', { session: false }))
+    .get('/',
+      getOrdersHandler
+    )
     .get('/:id',
       getOrderHandler
     )

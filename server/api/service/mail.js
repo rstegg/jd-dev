@@ -1,12 +1,12 @@
 const api_key = process.env.MAILGUN_SECRET
-const domain = 'mg.freecontour.com'
+const domain = 'mg.kuwau.com'
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
 const mailcomposer = require('mailcomposer')
 
 const confirmationTemplate = require('../emails/confirmation')
 
 const confirmationMail = (user, permalink_url) => mailcomposer({
-  from: 'freecontour.com <hello@mg.freecontour.com>',
+  from: 'Freecontour <hello@mg.kuwau.com>',
   to: user.email,
   subject: 'Verify your email address to use freecontour.com',
   text: `Hi there, this message is to confirm that the Kuwau account with the username ${user.username} belongs to you. To confirm that this is your freecontour account, click here: ${permalink_url}`,
@@ -20,6 +20,7 @@ const sendConfirmation = (mail, user) => {
       message: message.toString('ascii')
     }
     mailgun.messages().sendMime(verifyEmail, (sendError, body) => {
+      console.log(body);
       if (sendError) {
         console.log(sendError);
         return;

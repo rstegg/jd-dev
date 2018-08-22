@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import { DataViewLayoutOptions} from 'primereact/components/dataview/DataView';
 import {Column} from 'primereact/components/column/Column'
@@ -23,51 +24,16 @@ class OrdersView extends Component {
             orders: [],
             organizationSelect: null
         };
-        this.dataViewHeaderTemplate = this.dataViewHeaderTemplate.bind(this);
-        this.onSortChange = this.onSortChange.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchOrders()
-    }
-
-    onSortChange(event) {
-        let value = event.value;
-
-        if (value.indexOf('!') === 0) {
-            this.setState({sortOrder: -1, sortField:value.substring(1, value.length), sortKey: value});
-        }
-        else {
-            this.setState({sortOrder: 1, sortField:value, sortKey: value});
-        }
-    }
-
-    dataViewHeaderTemplate() {
-        let sortOptions = [
-            {label: 'Newest First', value: '!year'},
-            {label: 'Oldest First', value: 'year'},
-            {label: 'Brand', value: 'brand'}
-        ];
-
-        return <div className="ui-g">
-                    <div className="ui-g-12 ui-md-4">
-                        <Dropdown options={sortOptions} value={this.state.sortKey} placeholder="Sort By" onChange={this.onSortChange} autoWidth={false} style={{minWidth:'15em'}}/>
-                    </div>
-                    <div className="ui-g-6 ui-md-4 filter-container">
-                        <div style={{position:'relative'}}>
-                            <InputText placeholder="Search by brand" onKeyUp={e=>this.dv.filter(e.target.value)}/>
-                        </div>
-                    </div>
-                    <div className="ui-g-6 ui-md-4" style={{textAlign: 'right'}}>
-                        <DataViewLayoutOptions onClick={(e)=>this.dv.changeLayout(e.originalEvent,e.layout)}/>
-                    </div>
-                </div>;
+        this.props.fetchOrders(this.props.user.token)
     }
 
     render(){
-
-        let dataViewHeader = this.dataViewHeaderTemplate();
-
+      if (!this.props.user.isAuthenticated) {
+        return <Redirect to='/login' from='/' />
+      }
         return (
             <div className="ui-g">
                 <div className="ui-g-12">
@@ -82,18 +48,18 @@ class OrdersView extends Component {
                         </DataTable>
                     </div>
                 </div>
-
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-  orders: state.orders
+  orders: state.orders,
+  user: state.user,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrders: () => dispatch(fetchOrders())
+  fetchOrders: token => dispatch(fetchOrders(token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrdersView)

@@ -4,11 +4,13 @@ import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Dashboard from './pages/Dashboard';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+
 
 import { ScrollPanel } from 'primereact/components/scrollpanel/ScrollPanel';
 import 'primereact/resources/themes/omega/theme.css';
@@ -21,8 +23,8 @@ import './layout/layout.css';
 
 class App extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             layoutMode: 'static',
             layoutColorMode: 'light',
@@ -94,12 +96,18 @@ class App extends Component {
     }
 
     createMenu() {
+      if (this.props.user.isAuthenticated) {
         this.menu = [
             {label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => { window.location = '#/'}},
             {label: 'Orders', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/orders'}},
+        ];
+      } else {
+        this.menu = [
             {label: 'Login', icon: 'fa fa-fw fa-sign-in', command: () => { window.location = '#/login'}},
             {label: 'Sign up', icon: 'fa fa-fw fa-user-plus', command: () => { window.location = '#/signup'}},
         ];
+      }
+
     }
 
     addClass(element, className) {
@@ -158,4 +166,6 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = ({ user }) => ({ user })
+
+export default connect(mapStateToProps)(App);

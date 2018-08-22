@@ -1,39 +1,13 @@
-const { Product, Thread } = requireDb
+const { Order, Thread } = requireDb
 const shortId = require('shortid')
 
-const { merge, pick } = require('ramda')
+const { merge, pick, length } = require('ramda')
 
-const ProductParams = [ 'id', 'name', 'slug', 'isPublic', 'description', 'gallery', 'layout', 'themes', 'category', 'subCategory', 'price', 'image' ]
-
-const defaultTheme = {
-  rgb: {
-    r: 255,
-    g: 255,
-    b: 255,
-    a: 1
-  }
-}
-
-const defaultFontTheme = {
-  rgb: {
-    r: 0,
-    g: 0,
-    b: 0,
-    a: 1
-  }
-}
-
-const defaultThemes = {
-  primary: defaultTheme,
-  secondary: defaultTheme,
-  background: defaultTheme,
-  segment: defaultTheme,
-  font: defaultFontTheme,
-}
+const OrderParams = [ 'designers', 'name', 'units', 'unitsCount', 'type', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
 
 const getValidSlug = (slug, userId, thread) =>
   new Promise(resolve =>
-    Product.findOne({
+    Order.findOne({
       where: { slug, userId }
     })
     .then(product =>
@@ -64,14 +38,11 @@ const validate = req => {
 module.exports = (req, res) =>
   validate(req)
     .then(({ slug, thread }) => {
-      const newProduct = merge({
-        slug,
-        themes: defaultThemes,
-        threadId: thread.id,
+      const newOrder = merge({
         userId: req.user.id,
-        username: req.user.username,
-      }, pick(ProductParams, req.body.product))
-      return Product.create(newProduct, { plain: true })
+        unitsCount: length(req.body.order.units)
+      }, pick(OrderParams, req.body.order))
+      return Order.create(newOrder, { plain: true })
     })
     .then(product => res.status(200).json({ product }))
     .catch(error => res.status(400).json({ error })) //TODO: return custom error handling

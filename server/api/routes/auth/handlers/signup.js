@@ -60,17 +60,16 @@ module.exports = (req, res) =>
         permalink: createPermalink(user.email),
         verify_token: bytes(20),
         threadId: thread.id
-      }, pick(['email', 'name', 'username'], user))
+      }, pick(['email', 'username'], user))
       return User.create(newUser, { plain: true })
     })
     .then(createdUser => {
-      const { permalink, verifyToken } = createdUser
+      const { permalink, verify_token } = createdUser
       const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verify_token}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
-      const resUser = pick(['id', 'email', 'name', 'username'], createdUser)
+      const resUser = pick(['email', 'username'], createdUser)
       const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)
-      res.status(200).json({user: resUser, token})
-      return Thread.update({ owner: createdUser.username }, { where: { id: createdUser.threadId } })
+      return res.status(200).json({user: resUser, token})
     })
-    .catch(error => res.status(400).json({error}))
+    .catch(error => res.status(400).json({ error }))

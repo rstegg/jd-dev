@@ -33,6 +33,6 @@ module.exports =
       validateBody(prop('username'), 'missing username'),
       validateUsernameHandler
     )
-    .get(`/signup/email_confirmation/:permalink/:verifyToken`,
+    .get(`/signup/email_confirmation/:permalink/:verify_token`,
       verifyTokenHandler
     )

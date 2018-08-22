@@ -1,15 +1,11 @@
-const { Product } = requireDb
+const { Order } = requireDb
 
-const ProductAttrs = [ 'id', 'name', 'slug', 'isPublic', 'description', 'gallery', 'layout', 'themes', 'category', 'subCategory', 'price', 'image', 'userId' ]
+const OrderAttrs = [ 'designers', 'name', 'units', 'unitsCount', 'type', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
 
 module.exports = (req, res) =>
-  Product.findAll({
-    include: [{
-      model: Shop,
-      attributes: [ 'image', 'name', 'slug' ]
-    }],
+  Order.findAll({
     where: { userId: req.params.userId },
-    attributes: ProductAttrs
+    attributes: OrderAttrs
   })
-  .then(products => res.status(200).json({ products }))
+  .then(orders => res.status(200).json({ orders }))
   .catch(error => res.status(400).json({ error }))

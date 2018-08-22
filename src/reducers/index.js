@@ -10,6 +10,7 @@ import redirects from './redirects'
 import errors from './errors'
 import orders from './orders'
 import user from './user'
+import chat from './chat'
 
 export default combineReducers({
   products,
@@ -21,5 +22,6 @@ export default combineReducers({
   errors,
   orders,
   user,
+  chat,
   form: formReducer,
 })

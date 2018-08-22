@@ -1,24 +1,18 @@
 import su from 'superagent'
 
-export const fetchOrdersSuccess = orders => ({
+export const fetchOrdersSuccess = res => ({
   type: 'FETCH_ORDERS_SUCCESS',
   payload: {
-    orders
+    orders: res.body.orders
   }
 })
 
-export const fetchOrders = () =>
+export const fetchOrders = token =>
   dispatch => {
-    //const token = document.cookie
     su.get('/api/v1/orders')
-      //.set('Authorization', token)
-      .then(docs => {
-        const json = JSON.parse(docs.text)
-        const orders = json.rows.map(row => row.doc)
-        dispatch(
-          fetchOrdersSuccess(orders)
-        )
-      })
+      .accept('application/json')
+      .set('Authorization', 'JWT ' + token)
+      .then(res => dispatch(fetchOrdersSuccess(res)))
       .catch(err => {
         console.error(err);
       })

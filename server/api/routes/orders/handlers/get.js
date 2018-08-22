@@ -17,17 +17,6 @@ const ProductAttrs = [
   'userId'
 ]
 
-const ProductAssociations = [
-  {
-    model: User,
-    attributes: ['id', 'username', 'image']
-  },
-  {
-    model: Thread,
-    attributes: ['id', 'name', 'owner']
-  }
-]
-
 const getProductBySlug = slug =>
   Product.findOne({
     include: ProductAssociations,

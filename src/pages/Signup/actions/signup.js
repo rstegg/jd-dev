@@ -6,7 +6,7 @@ export const onSignupSubmit = user =>
     su.post('/api/v1/auth/signup')
       .accept('application/json')
       .send({ user })
-      .then(res => console.log(res))
+      .then(res => dispatch(onSignupSuccess(res)))
       .catch(err => console.log(err))
 }
 

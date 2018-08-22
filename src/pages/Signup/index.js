@@ -14,6 +14,9 @@ const Signup = ({
   post,
   onSignupSubmit
 }) =>
+  user.isAuthenticated ?
+  <Redirect to='/' from='/signup' />
+  :
   <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px', marginBottom: '50px' }}>
     <Card
       style={{ width: 300 }}

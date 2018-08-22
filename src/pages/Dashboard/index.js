@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { Panel } from 'primereact/components/panel/Panel';
 import Uploader from './components/Uploader/Uploader';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     render() {
+      if (!this.props.user.isAuthenticated) {
+        return <Redirect to='/login' from='/' />
+      }
         return (
           <div className="ui-g ui-fluid dashboard">
             <div className="ui-g-12 ui-md-4">
@@ -77,3 +82,7 @@ export default class Dashboard extends Component {
       )
     }
 }
+
+const mapStateToProps = ({ user }) => ({ user })
+
+export default connect(mapStateToProps)(Dashboard)
