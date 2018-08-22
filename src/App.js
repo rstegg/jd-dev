@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
-import { Route } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Dashboard from './pages/Dashboard';
@@ -168,4 +168,4 @@ class App extends Component {
 
 const mapStateToProps = ({ user }) => ({ user })
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));

@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Chat from './features/Chat'
+import { Widget } from 'react-chat-widget'
+import 'react-chat-widget/lib/styles.css'
 
-export class AppFooter extends Component {
+export class AppFooterView extends Component {
+    handleNewUserMessage = msg => {
+      console.log(msg);
+    }
     render() {
+        const { user } = this.props
         return  (
             <div className="layout-footer">
-                <span className="footer-text" style={{'marginRight': '5px'}}>Ryan Stegmann -- </span>
-                <span className="footer-text" style={{'marginLeft': '5px'}}>-- Cool guy</span>
-                <Chat />
+              { user && user.isAuthenticated ? <Widget handleNewUserMessage={this.handleNewUserMessage} />
+              : <span className="footer-text" style={{'marginRight': '5px'}}>Ryan Stegmann -- Cool guy</span>}
             </div>
         );
     }
 }
+
+export const AppFooter = connect( ({ user }) => ({ user }) )(AppFooterView)
