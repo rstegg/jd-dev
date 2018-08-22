@@ -20,7 +20,7 @@ const Login = ({
     <Card
       style={{ width: 300 }}
       title="Login"
-      actions={[<RouterButton to="/signup" from="/login" prefix="Don't have an account?" label="Sign up" />]}
+      actions={[<RouterButton to="/signup" prefix="Don't have an account?" label="Sign up" />]}
       >
         <LoginForm onSubmit={onLoginSubmit} />
       </Card>

@@ -139,17 +139,10 @@ class App extends Component {
         let sidebarClassName = classNames("layout-sidebar", {'layout-sidebar-dark': this.state.layoutColorMode === 'dark'});
 
         return (
-            <div className={wrapperClass} onClick={this.onWrapperClick}>
-                <AppTopbar onToggleMenu={this.onToggleMenu}/>
+            <div className='layout-wrapper' onClick={this.onWrapperClick}>
+                <AppTopbar />
 
-                <div ref={(el) => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
 
-                    <ScrollPanel ref={(el) => this.layoutMenuScroller = el} style={{height:'100%'}}>
-                        <div className="layout-sidebar-scroll-content" >
-                            <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
-                        </div>
-                    </ScrollPanel>
-                </div>
 
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />

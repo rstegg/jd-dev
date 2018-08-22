@@ -1,3 +1,22 @@
 .ant-tooltip {
   pointer-events: none;
 }
+
+.layout-topbar {
+  left: 0;
+  text-align: left;
+}
+
+.layout-menu-buttons {
+  display: inline-flex;
+  font-size: 28px;
+  text-decoration: none;
+  color: #ffffff;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: -10px;
+}
