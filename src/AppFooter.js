@@ -12,7 +12,7 @@ export class AppFooterView extends Component {
         const { user } = this.props
         return  (
             <div className="layout-footer">
-              { user && user.isAuthenticated ? <Widget handleNewUserMessage={this.handleNewUserMessage} />
+              { user && user.isAuthenticated ? <Widget handleNewUserMessage={this.handleNewUserMessage} title="Temp Chat" subtitle="Cool lil chat software" />
               : <span className="footer-text" style={{'marginRight': '5px'}}>Ryan Stegmann -- Cool guy</span>}
             </div>
         );
