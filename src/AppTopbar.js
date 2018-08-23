@@ -14,14 +14,6 @@ const HeadNavLink = ({ to, className, label, icon, style, activeClassName }) =>
 
 export class AppTopbarView extends Component {
 
-    static defaultProps = {
-        onToggleMenu: null
-    }
-
-    static propTypes = {
-        onToggleMenu: PropTypes.func.isRequired
-    }
-
     isDesktop() {
         return window.innerWidth > 1024;
     }

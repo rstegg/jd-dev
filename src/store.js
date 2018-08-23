@@ -14,10 +14,13 @@ const middleware = applyMiddleware(
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: [ 'chat' ]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const store = createStore(rootReducer, composeEnhancers(middleware))
+const store = createStore(persistedReducer, composeEnhancers(middleware))
+
+export const persistor = persistStore(store)
 
 export default store;

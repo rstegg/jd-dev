@@ -1,36 +1,27 @@
 import React, { Component } from 'react'
-import './Launcher.styles.css'
+import { connect } from 'react-redux'
+
+import ContactsMenu from './ContactsMenu'
+import ContactsLauncher from './ContactsLauncher'
+
+import './styles.css'
 
 class ChatView extends Component {
+  isDesktop() {
+      return window.innerWidth > 1024;
+  }
   render() {
+    const { chat } = this.props
+    const isMobile = !this.isDesktop()
     return (
-      <div className={
-      `rcw-widget-container ${props.fullScreenMode ? 'rcw-full-screen' : ''} ${props.showChat ? 'rcw-opened' : ''}`
-    }>
-      {props.showChat &&
-      <Conversation
-        title={props.title}
-        subtitle={props.subtitle}
-        sendMessage={props.onSendMessage}
-        senderPlaceHolder={props.senderPlaceHolder}
-        profileAvatar={props.profileAvatar}
-        toggleChat={props.onToggleConversation}
-        showChat={props.showChat}
-        showCloseButton={props.showCloseButton}
-        disabledInput={props.disabledInput}
-        autofocus={props.autofocus}
-        titleAvatar={props.titleAvatar}
-      />
-    }
-    {props.customLauncher ?
-      props.customLauncher(props.onToggleConversation) :
-      !props.fullScreenMode &&
-      <Launcher
-        toggle={props.onToggleConversation}
-        badge={props.badge}
-      />
-    }
-    </div>
+      <div className={`rcw-widget-container`}>
+        { chat.isContactsOpened ? <ContactsMenu /> : null }
+        <ContactsLauncher />
+      </div>
     )
   }
 }
+
+const mapStateToProps = ({ chat }) => ({ chat })
+
+export default connect(mapStateToProps)(ChatView)

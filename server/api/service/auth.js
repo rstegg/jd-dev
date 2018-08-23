@@ -11,7 +11,7 @@ const { ExtractJwt, Strategy: JwtStrategy } = passportJWT
 const { Strategy: LocalStrategy } = passportLocal
 
 const localStrategy = new LocalStrategy(
-  { session: false },
+  { usernameField: 'email', session: false },
   (email, password, done) =>
     User.findOne({ where: { email } })
       .then(user =>

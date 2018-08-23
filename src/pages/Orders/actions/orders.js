@@ -11,7 +11,7 @@ export const fetchOrders = token =>
   dispatch => {
     su.get('/api/v1/orders')
       .accept('application/json')
-      .set('Authorization', 'JWT ' + token)
+      .set('Authorization', token)
       .then(res => dispatch(fetchOrdersSuccess(res)))
       .catch(err => {
         console.error(err);

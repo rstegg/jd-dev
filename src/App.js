@@ -34,9 +34,6 @@ class App extends Component {
         };
 
         this.onWrapperClick = this.onWrapperClick.bind(this);
-        this.onToggleMenu = this.onToggleMenu.bind(this);
-        this.onSidebarClick = this.onSidebarClick.bind(this);
-        this.onMenuItemClick = this.onMenuItemClick.bind(this);
         this.createMenu();
     }
 
@@ -49,50 +46,6 @@ class App extends Component {
         }
 
         this.menuClick = false;
-    }
-
-    onToggleMenu(event) {
-        this.menuClick = true;
-
-        if (this.isDesktop()) {
-            if (this.state.layoutMode === 'overlay') {
-                this.setState({
-                    overlayMenuActive: !this.state.overlayMenuActive
-                });
-            }
-            else if (this.state.layoutMode === 'static') {
-                this.setState({
-                    staticMenuInactive: !this.state.staticMenuInactive
-                });
-            }
-        }
-        else {
-            const mobileMenuActive = this.state.mobileMenuActive;
-            this.setState({
-                mobileMenuActive: !mobileMenuActive
-            });
-
-            if (mobileMenuActive)
-                this.removeClass(document.body, 'body-overflow-hidden');
-            else
-                this.addClass(document.body, 'body-overflow-hidden');
-        }
-
-        event.preventDefault();
-    }
-
-    onSidebarClick(event) {
-        this.menuClick = true;
-        setTimeout(() => {this.layoutMenuScroller.moveBar(); }, 500);
-    }
-
-    onMenuItemClick(event) {
-        if(!event.item.items) {
-            this.setState({
-                overlayMenuActive: false,
-                mobileMenuActive: false
-            })
-        }
     }
 
     createMenu() {
@@ -141,9 +94,6 @@ class App extends Component {
         return (
             <div className='layout-wrapper' onClick={this.onWrapperClick}>
                 <AppTopbar />
-
-
-
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/orders" exact component={Orders} />

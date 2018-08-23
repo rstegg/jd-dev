@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const passport = apiRequire('service/auth')
-const { allPass, pipe, path, prop } = require('ramda')
+const { allPass, pipe, path, prop, tap } = require('ramda')
 
 const loginHandler = require('./handlers/login')
 const signupHandler = require('./handlers/signup')
@@ -12,6 +12,8 @@ const validFields = apiRequire('middleware/valid-fields')
 const hashPassword = apiRequire('middleware/hash-password')
 
 const validSignupUser = validFields('user', ['email', 'name', 'password'])
+
+const logger = tap(console.log)
 
 module.exports =
   router

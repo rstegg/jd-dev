@@ -107,6 +107,7 @@
   }
 }
 .rcw-launcher {
+  cursor: pointer;
   -webkit-animation-delay: 0;
   -webkit-animation-duration: 0.5s;
   -webkit-animation-name: slide-in;
@@ -125,17 +126,18 @@
   align-self: flex-end;
   background-color: #35cce6;
   border: 0;
-  border-radius: 50%;
+  border-radius: 10%;
   box-shadow: 0px 2px 10px 1px #b5b5b5;
   height: 60px;
   margin-top: 10px;
-  width: 60px;
+  width: 160px;
 }
 .rcw-launcher:focus {
   outline: none;
 }
 
 .rcw-open-launcher {
+  width: 50px;
   -webkit-animation-delay: 0;
   -webkit-animation-duration: 0.5s;
   -webkit-animation-name: rotation-rl;
@@ -180,7 +182,7 @@
     right: 0;
   }
 
-  .rcw-hide-sm {
+  .rcw-launcher > .rcw-launcher-close {
     display: none;
   }
 }
