@@ -51,9 +51,25 @@ class OrdersView extends Component {
           onConfirm={() => this.props.cancelOrder(rowData, this.props.user.token)}
           okText="Yes" cancelText="Cancel">
         <Button type="danger">
-            <Icon type="close" className="ui-button-warning" />
+            <Icon type="close" />
           </Button>
         </Popconfirm>;
+    }
+
+    caseFileTemplate = (rowData, column) => {
+      if (rowData.caseFileUrls) {
+        return rowData.caseFileUrls.map(caseFile => <Button key={`${Math.random()}`} href={caseFile} shape="circle" icon="download" />)
+      } else {
+        return null
+      }
+    }
+
+    designFileTemplate = (rowData, column) => {
+      if (rowData.designFileUrls) {
+        return rowData.designFileUrls.map(designFile => <Button href={designFile} shape="circle" icon="inbox" />)
+      } else {
+        return null
+      }
     }
 
     render(){
@@ -73,8 +89,8 @@ class OrdersView extends Component {
                             <Column field="unitsCount" header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
                             <Column field="notes" header="Notes" sortable={true}/>
-                            <Column field="caseFileUrls" header="Case Files" sortable={true}/>
-                            <Column field="designFileUrls" header="Design Files" sortable={true}/>
+                            <Column body={this.caseFileTemplate} header="Case Files" sortable={true}/>
+                            <Column body={this.designFileTemplate} header="Design Files" sortable={true}/>
                             <Column body={this.actionTemplate} header="Cancel order" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>
                     </div>
