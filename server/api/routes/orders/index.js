@@ -11,9 +11,10 @@ const deleteOrderHandler = require('./handlers/delete')
 const validateBody = apiRequire('middleware/validate-body')
 const validateParams = apiRequire('middleware/validate-params')
 const validFields = apiRequire('middleware/valid-fields')
+const validField = apiRequire('middleware/valid-field')
 
-const validOrder = validFields('order', [ 'name', 'type', 'units', 'notes' ])
-const validEditOrderParams = validFields(false, [ 'id'])
+const validOrder = validField('orders')
+const validEditOrderParams = validFields(false, [ 'id' ])
 
 module.exports =
   router

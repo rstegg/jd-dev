@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import { Card } from 'antd'
 
@@ -22,8 +22,8 @@ const Login = ({
       title="Login"
       actions={[<RouterButton to="/signup" prefix="Don't have an account?" label="Sign up" />]}
       >
-        <LoginForm onSubmit={onLoginSubmit} />
-      </Card>
+      <LoginForm onSubmit={onLoginSubmit} />
+    </Card>
   </div>
 
 const mapStateToProps = ({user}) =>
@@ -36,4 +36,4 @@ const mapDispatchToProps = dispatch =>
   onLoginSubmit: user => dispatch(onLoginSubmit(user)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

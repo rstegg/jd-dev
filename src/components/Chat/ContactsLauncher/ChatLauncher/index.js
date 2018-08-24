@@ -1,24 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Widget } from 'react-chat-widget'
+import './styles.css'
 
 import { Icon } from 'antd'
 
 import { closeContactChat } from './actions'
 
-const CustomChatLoader = ({  })
+import avatarPlaceholder from './avatar.png';
 
 class ChatLauncher extends Component {
+  handleNewUserMessage = msg => {
+
+  }
   render() {
-    const { chat, removeContactChat } = this.props
+    const { chat, closeContactChat } = this.props
     const { contacts } = chat
     return (
       <div>
         {
           contacts.map((contact, idx) =>
-            <div key={`contact-launcher--${idx}`} className={contact.isShowing  ? '' : 'contact-launcher-hide'} style={{ display: 'inlineflex' }}>
-              <Widget  />
-              <Icon type='close' />
+            <div key={`contact-launcher--${idx}`} className={contact.isShowing  ? 'contact-launcher-show' : 'contact-launcher-hide'}>
+              <Widget
+                handleNewUserMessage={this.handleNewUserMessage}
+                profileAvatar={contact.avatar || avatarPlaceholder}
+                title={contact.name}
+                //subtitle={contact.orderName}
+                subtitle={contact.orderName || ''}
+              />
+              <div className='contact-launcher-close'>
+                <Icon type='close' onClick={() => closeContactChat(contact, idx)}/>
+              </div>
             </div>
           )
         }

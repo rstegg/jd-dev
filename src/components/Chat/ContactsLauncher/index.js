@@ -11,18 +11,22 @@ import chatIcon from './chaticon.svg'
 import closeIcon from './closeicon.png'
 
 import ChatLauncher from './ChatLauncher'
+import ContactsMenu from './ContactsMenu'
 
 const Launcher = ({ toggleChatContacts, chat }) =>
-  <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-    <button type="primary"
-       className={chat.isContactsOpened ? 'rcw-launcher rcw-hide-sm' : 'rcw-launcher'}
-       onClick={toggleChatContacts}>
-      <Badge count={chat.contactsUnseen} />
-        {chat.isContactsOpened ?
-          <img className="rcw-close-launcher" src={closeIcon} /> :
-          <img className="rcw-open-launcher" src={chatIcon} />
-        }
-      </button>
+  <div style={{ position: 'fixed', display: 'flex', flexDirection: 'row-reverse', right: 0, bottom: 0 }}>
+    <div className='chat-launcher-contact-column'>
+      { chat.isContactsOpened ? <ContactsMenu /> : null }
+      <button type="primary"
+         className={chat.isContactsOpened ? 'rcw-launcher rcw-hide-sm' : 'rcw-launcher'}
+         onClick={toggleChatContacts}>
+        <Badge count={chat.contactsUnseen} />
+          {chat.isContactsOpened ?
+            <img className="rcw-close-launcher" src={closeIcon} /> :
+            <img className="rcw-open-launcher" src={chatIcon} />
+          }
+        </button>
+      </div>
       <ChatLauncher />
     </div>
 

@@ -1,15 +1,36 @@
 import su from 'superagent'
 import shortid from 'shortid'
 
-export const acceptUpload = accepted => ({
-  type: 'ACCEPT_UPLOAD',
+export const acceptStl = accepted => ({
+  type: 'ACCEPT_STL',
+  payload: {
+    accepted,
+  }
+})
+
+export const acceptXml = accepted => ({
+  type: 'ACCEPT_XML',
+  payload: {
+    accepted,
+  }
+})
+
+export const acceptZip = accepted => ({
+  type: 'ACCEPT_ZIP',
+  payload: {
+    accepted,
+  }
+})
+
+export const acceptGeneric = accepted => ({
+  type: 'ACCEPT_GENERIC',
   payload: {
     accepted,
   }
 })
 
 export const rejectUpload = rejected => ({
-  type: 'REJECT_UPLOAD',
+  type: 'REJECT_STL',
   payload: {
     rejected
   }
@@ -168,7 +189,7 @@ export const validateForm = (products, token) =>
     if (errors.length) {
       dispatch(notifyErrors(errors))
     } else {
-      dispatch(addNewOrders(products))
+      dispatch(sendOrders(products, token))
     }
 }
 
@@ -179,37 +200,45 @@ export const notifyErrors = errors => ({
   }
 })
 
-export const sendCheckout = (products, token) =>
+export const sendOrders = (products, token) =>
   dispatch => {
     dispatch(setButtonLoading(true))
 
-  const orderProcess =
-    products.map(product => {
-    const uid = shortid()
-    const savedOrder = {
-      "id": uid,
-      "name": product.name,
-      "type": product.type,
-      "notes": product.notes,
-      "units": product.units
-    }
-    return su.put('http://localhost:5984/orders/' + uid)
-      .set('Content-Type', 'application/json')
-      .send(savedOrder)
-    })
+    const files = products.map(product => product.file)
 
-    Promise.all(orderProcess)
-      .then(jsonArr => {
-        jsonArr.map(json => {
-          console.log(json.text)
-        })
-
-        window.location.href = '/#orders'
+    const uploadReq = su.post('/api/v1/upload/orders').set('Authorization', token)
+      files.forEach(file => {
+        uploadReq.attach(file.name, file)
       })
 
+      uploadReq.end(res => console.log(res.files))
 
+    // su.post('/api/v1/orders')
+    //   .set('Authorization', token)
+    //   .send({ orders: products })
+    //   .then(res => {
+    //     dispatch(createOrdersSuccess(res.body.orders))
+    //   })
+    //   .catch(err => {
+    //     dispatch(setButtonLoading(false))
+    //     notifyErrors(err)
+    //   })
 
   }
+
+
+export const createOrdersSuccess = orders => ({
+  type: 'CREATE_ORDERS_SUCCESS',
+  payload: {
+    orders
+  }
+})
+
+export const redirectingOrders = () => ({
+  type: 'REDIRECTING_TO_ORDERS'
+})
+
+
 
 export const deleteProduct = idx => ({
   type: 'DELETE_PRODUCT',
@@ -222,11 +251,8 @@ export const openNotification = () => ({
   type: 'OPEN_NOTIFICATION'
 })
 
-export const redirectToCheckout = url => ({
-  type: 'REDIRECT_TO_CHECKOUT',
-  payload: {
-    url
-  }
+export const redirectToOrders = () => ({
+  type: 'REDIRECT_TO_ORDERS',
 })
 
 export const setButtonLoading = isLoading => ({

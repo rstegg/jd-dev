@@ -26,8 +26,6 @@ class ContactsMenuHeader extends Component {
   }
 }
 
-
-
 class ContactsMenu extends Component {
   render() {
     const { chat, openContactChat, closeContactMenu } = this.props;
@@ -49,7 +47,7 @@ class ContactsMenu extends Component {
           </List.Item>
         )}
       />
-    );
+    )
   }
 }
 

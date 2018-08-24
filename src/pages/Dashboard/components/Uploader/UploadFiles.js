@@ -45,12 +45,17 @@ class UploadTable extends Component {
   render() {
     return (
         <Form onSubmit={this.handleSubmit}>
-          <Card title="Card title">
+          <Card title="Orders">
           { this.props.products.map((product, idx) => (
             <div key={`case-${idx}`}>
-              <Card.Grid style={{ width: '25%', textAlign: 'center', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => this.openModal(idx)}>{product.name}</Card.Grid>
+              <Card.Grid style={{ width: '25%', textAlign: 'center', cursor: 'pointer',  }} onClick={() => this.openModal(idx)}>
+                {product.name}
+                {!this.props.isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
+                  <Button shape="circle" icon="delete" onClick={() => this.props.deleteProduct(idx)} />
+                </div>}
+              </Card.Grid>
               <Modal
-                title="Modal"
+                title={product.name}
                 visible={this.state.visible[idx]}
                 onOk={() => this.hideModal(idx)}
                 onCancel={() => this.hideModal(idx)}
@@ -69,7 +74,10 @@ class UploadTable extends Component {
   }
 }
 
-const mapStateToProps = state => ({  })
+const mapStateToProps = ({ user, redirects }) => ({
+  token: user.token,
+  isLoading: redirects.isLoading
+})
 
 const mapDispatchToProps = dispatch => ({
   setType: (type, idx) => dispatch(setType(type, idx)),
@@ -78,7 +86,7 @@ const mapDispatchToProps = dispatch => ({
   setUnits: (units, idx) => dispatch(setUnits(units, idx)),
   clearUnits: (idx) => dispatch(clearUnits(idx)),
   deleteProduct: idx => dispatch(deleteProduct(idx)),
-  validateForm: (products, options) => dispatch(validateForm(products, options)),
+  validateForm: (products, token) => dispatch(validateForm(products, token)),
   toggleRenameCaseID: idx => dispatch(toggleRenameCaseID(idx)),
   openNotification: () => dispatch(openNotification()),
 })

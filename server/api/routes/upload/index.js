@@ -4,20 +4,42 @@ const router = require('express').Router()
 
 const AWS = require('aws-sdk')
 const multer = require('multer')
+const multerS3 = require('multer-s3')
 const imager = require('multer-imager')
-const shortId = require('shortid')
 
 const uploadProfileImage = require('./handlers/uploadProfileImage')
-const uploadProductImage = require('./handlers/uploadProductImage')
-const uploadGalleryProductImage = require('./handlers/uploadGalleryProductImage')
+const uploadCaseFile = require('./handlers/uploadCaseFile')
+
+const debug = require('debug')('aws-s3')
+
+const winston = require('winston')
+
+const logger = (req, res, next) => winston.log('info', req) && next()
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
 
 const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'freecontour-stls',
+    acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
+
+const uploadImg = multer({
   storage: imager({
-    dirname: 'avatars',
+    dirname: 'images',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'us-east-1',
-    bucket: 'payup-storage',
+    bucket: 'freecontour-images',
     acl: 'public-read',
     contentType: imager.AUTO_CONTENT_TYPE,
     metadata: (req, file, cb) => {
@@ -41,19 +63,11 @@ const success =
 module.exports =
   router
     .use(passport.authenticate('jwt', { session: false }))
-    .post('/profile', //EDIT PROFILE IMAGE
-      upload.single('image'),
+    .post('/profile',
+      uploadImg.single('image'),
       uploadProfileImage
     )
-    .post('/product',
-      upload.single('image'), //UPLOAD PRODUCT IMAGE
-      success
-    )
-    .post('/product/:id', //EDIT PRODUCT IMAGE
-      upload.single('image'),
-      uploadProductImage
-    )
-    .post('/product/:id/gallery/:index', //EDIT PRODUCT GALLERY
-      upload.single('image'),
-      uploadGalleryProductImage
+    .post('/orders',
+      upload.array('file'),
+      uploadCaseFile
     )

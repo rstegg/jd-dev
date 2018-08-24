@@ -1,8 +1,9 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
+import filext from 'file-extension'
 
 import UploadFiles from './UploadFiles'
-import { acceptUpload, rejectUpload, fetchTypes } from './actions/products'
+import { acceptStl, acceptXml, acceptZip, acceptGeneric, rejectUpload, fetchTypes } from './actions/products'
 
 import Dropzone from 'react-dropzone'
 
@@ -57,8 +58,8 @@ class Uploader extends Component {
 
     return (
       <Dropzone
-        accept='.stl'
         disableClick
+        name='file'
         style={{position: "relative"}}
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
@@ -67,7 +68,20 @@ class Uploader extends Component {
             dropzoneActive: false
           })
           accepted.forEach(accept => {
-            this.props.acceptUpload(accept)
+            switch (filext(accept.name)) {
+              case 'stl':
+                this.props.acceptStl(accept);
+                break;
+              case 'xml':
+                this.props.acceptXml(accept);
+                break;
+              case 'zip':
+                this.props.acceptZip(accept);
+                break;
+              default:
+                this.props.acceptGeneric(accept)
+                break;
+            }
           })
           rejected.forEach(reject => {
             this.props.rejectUpload(reject)
@@ -80,13 +94,13 @@ class Uploader extends Component {
             <div className="ant-layout-content" style={{ margin: '24px 16px' }}>
               <div className="dropzone">
                 <Dropzone
-                  accept='.stl'
+                  name='file'
                   onDrop={(accepted, rejected) => {
                     this.setState({
                       dropzoneActive: false
                     })
                     accepted.forEach(accept => {
-                      this.props.acceptUpload(accept)
+                      this.props.acceptStl(accept)
                     })
                     rejected.forEach(reject => {
                       this.props.rejectUpload(reject)
@@ -132,7 +146,10 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  acceptUpload: accepted => dispatch(acceptUpload(accepted)),
+  acceptStl: accepted => dispatch(acceptStl(accepted)),
+  acceptXml: accepted => dispatch(acceptXml(accepted)),
+  acceptZip: accepted => dispatch(acceptZip(accepted)),
+  acceptGeneric: accepted => dispatch(acceptGeneric(accepted)),
   rejectUpload: rejected => dispatch(rejectUpload(rejected)),
   fetchTypes: () => dispatch(fetchTypes())
 })

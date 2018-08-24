@@ -4,7 +4,7 @@ const OrderAttrs = [ 'designers', 'name', 'units', 'unitsCount', 'type', 'status
 
 module.exports = (req, res) =>
   Order.findAll({
-    where: { userId: req.params.userId },
+    where: { userId: req.user.id },
     attributes: OrderAttrs
   })
   .then(orders => res.status(200).json({ orders }))

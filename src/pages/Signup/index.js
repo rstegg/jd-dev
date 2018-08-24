@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import { Card, Button } from 'antd'
 
@@ -37,4 +37,4 @@ const mapDispatchToProps = dispatch =>
   onSignupSubmit: user => dispatch(onSignupSubmit(user)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup))

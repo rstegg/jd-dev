@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { Panel } from 'primereact/components/panel/Panel';
 import Uploader from './components/Uploader/Uploader';
 
+import { redirectToOrders } from './actions'
+
 class Dashboard extends Component {
+    componentDidUpdate = () => {
+      if (this.props.redirects.shouldRedirect) {
+        this.props.redirectToOrders()
+      }
+    }
     render() {
       if (!this.props.user.isAuthenticated) {
         return <Redirect to='/login' from='/' />
+      }
+      if (this.props.redirects.shouldRedirect) {
+        return <Redirect to='/orders' from='/' />
       }
         return (
           <div className="ui-g ui-fluid dashboard">
@@ -83,6 +93,10 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = ({ user, redirects }) => ({ user, redirects })
 
-export default connect(mapStateToProps)(Dashboard)
+const mapDispatchToProps = dispatch => ({
+  redirectToOrders: () => dispatch(redirectToOrders())
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard))

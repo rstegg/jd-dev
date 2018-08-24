@@ -29,7 +29,7 @@ const filterNames = (collection, allProducts) =>
 
 export default (state=initialState, action) => {
   switch(action.type) {
-    case 'ACCEPT_UPLOAD':
+    case 'ACCEPT_STL':
       return [ ...state, { ...action.payload.accepted, renameCaseID: false } ]
     case 'POPULATE_NAMES':
       return [ ...state.slice(0, action.payload.idx),

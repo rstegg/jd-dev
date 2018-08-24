@@ -64,9 +64,6 @@ export default class PrescriptionForm extends Component {
             </div>
           </div>
         }
-        {!isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
-          <Button shape="circle" icon="delete" onClick={() => deleteProduct(idx)} />
-        </div>}
       </div>
     )
   }

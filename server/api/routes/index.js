@@ -3,7 +3,7 @@ const router = require('express').Router()
 const auth = require('./auth')
 const stripe = require('./stripe')
 const profile = require('./profile')
-const images = require('./images')
+const upload = require('./upload')
 const orders = require('./orders')
 
 module.exports =
@@ -12,4 +12,4 @@ module.exports =
     .use('/stripe', stripe)
     .use('/user', profile)
     .use('/orders', orders)
-    .use('/image', images)
+    .use('/upload', upload)
