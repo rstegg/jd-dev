@@ -25,7 +25,6 @@ class ChatLauncher extends Component {
                 handleNewUserMessage={this.handleNewUserMessage}
                 profileAvatar={contact.avatar || avatarPlaceholder}
                 title={contact.name}
-                //subtitle={contact.orderName}
                 subtitle={contact.orderName || ''}
               />
               <div className='contact-launcher-close'>

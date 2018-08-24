@@ -14,7 +14,7 @@ const middleware = applyMiddleware(
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [ 'chat' ]
+  whitelist: [ 'user', 'orders', 'products' ]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

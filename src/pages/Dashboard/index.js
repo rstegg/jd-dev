@@ -7,6 +7,9 @@ import Uploader from './components/Uploader/Uploader';
 import { redirectToOrders } from './actions'
 
 class Dashboard extends Component {
+    constructor(props) {
+      super(props);
+    }
     componentDidUpdate = () => {
       if (this.props.redirects.shouldRedirect) {
         this.props.redirectToOrders()
