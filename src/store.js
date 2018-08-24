@@ -14,7 +14,8 @@ const middleware = applyMiddleware(
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [ 'user', 'orders', 'products' ]
+  // whitelist: [ 'user', 'orders', 'products' ],
+  // stateReconciler: hardSet
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

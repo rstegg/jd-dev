@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
-import { withRouter, Route } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Dashboard from './pages/Dashboard';
@@ -35,6 +35,11 @@ class App extends Component {
 
         this.onWrapperClick = this.onWrapperClick.bind(this);
         this.createMenu();
+    }
+
+    shouldComponentUpdate(props) {
+      console.log(props.location.pathname);
+      return (props.location.pathname !== props.location.match)
     }
 
     onWrapperClick(event) {
@@ -95,10 +100,12 @@ class App extends Component {
             <div className='layout-wrapper' onClick={this.onWrapperClick}>
                 <AppTopbar />
                 <div className="layout-main">
+                  <Switch>
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/orders" exact component={Orders} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
+                  </Switch>
                 </div>
 
                 <AppFooter />
