@@ -1,8 +1,8 @@
-const { Product } = requireDb
+const { Order } = requireDb
 
 module.exports = (req, res) =>
-  Product.destroy({ where: { id: req.params.id, userId: req.user.id } })
-    .then(product => {
-      res.status(200).json({ product })
+  Order.destroy({ where: { uid: req.body.order.uid, userId: req.user.id } })
+    .then(order => {
+      res.status(200).json({ order })
     })
     .catch(errror => res.status(400).json({ error }))

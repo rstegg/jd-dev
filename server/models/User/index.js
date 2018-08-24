@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(Message)
   }
 
-  User.prototype.validPassword = (password) => {
+  User.prototype.validPassword = function(password) {
     return bcrypt.compare(password, this.password)
   }
 

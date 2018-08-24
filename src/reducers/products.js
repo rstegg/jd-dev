@@ -7,6 +7,12 @@ export default (state = initialState, action) => {
   switch(action.type) {
     case 'ACCEPT_STL':
       return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+    case 'ACCEPT_XML':
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+    case 'ACCEPT_ZIP':
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+    case 'ACCEPT_GENERIC':
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], type: action.payload.type, product: undefined, id: undefined, variant_id: undefined, shade: undefined, finish: undefined, layering: undefined },
@@ -42,6 +48,8 @@ export default (state = initialState, action) => {
     case 'DELETE_PRODUCT':
       return [ ...state.slice(0, action.payload.idx),
               ...state.slice(action.payload.idx+1) ]
+    case 'CREATE_ORDERS_SUCCESS':
+      return initialState
     default:
       return state
   }

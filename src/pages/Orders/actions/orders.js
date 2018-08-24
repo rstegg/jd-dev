@@ -17,3 +17,24 @@ export const fetchOrders = token =>
         console.error(err);
       })
   }
+
+export const cancelOrder = (order, token) =>
+  dispatch => {
+    console.log(token);
+    dispatch({ type: 'CANCEL_ORDER', payload: { order } })
+    su.delete('/api/v1/orders')
+      .accept('application/json')
+      .set('Authorization', token)
+      .send({ order })
+      .then(res => dispatch(cancelOrdersSuccess(res)))
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+export const cancelOrdersSuccess = res => ({
+  type: 'CANCEL_ORDERS_SUCCESS',
+  payload: {
+    orders: res.body.orders
+  }
+})

@@ -1,9 +1,10 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import './Styles.css'
 
 import PrescriptionForm from './PrescriptionForm'
-import { Card, Modal, notification, Button, Form } from 'antd'
+import { Progress, Card, Modal, notification, Button, Form } from 'antd'
 import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
 
 class UploadTable extends Component {
@@ -14,7 +15,6 @@ class UploadTable extends Component {
     }
   }
   openNotify = () => {
-    console.log(this.props.errors);
     notification.error({
       message: 'Form fields empty',
       description: 'You still have some form fields that need to be filled out.',
@@ -53,6 +53,7 @@ class UploadTable extends Component {
                 {!this.props.isLoading && <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', marginTop: '24px'}}>
                   <Button shape="circle" icon="delete" onClick={() => this.props.deleteProduct(idx)} />
                 </div>}
+                {this.props.isLoading && <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />}
               </Card.Grid>
               <Modal
                 title={product.name}
@@ -91,7 +92,7 @@ const mapDispatchToProps = dispatch => ({
   openNotification: () => dispatch(openNotification()),
 })
 
-export default Form.create()(connect(
+export default withRouter(Form.create()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(UploadTable))
+)(UploadTable)))

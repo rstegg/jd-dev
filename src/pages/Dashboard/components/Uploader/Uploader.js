@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import filext from 'file-extension'
 
 import UploadFiles from './UploadFiles'
@@ -100,7 +101,23 @@ class Uploader extends Component {
                       dropzoneActive: false
                     })
                     accepted.forEach(accept => {
-                      this.props.acceptStl(accept)
+                      const reader = new FileReader();
+                      reader.addEventListener("loadend", function(event) { console.log(event.target.result);});
+                      switch (filext(accept.name)) {
+                        case 'stl':
+                          this.props.acceptStl(accept);
+                          break;
+                        case 'xml':
+                          const xml = reader.readAsText(accept);
+                          this.props.acceptXml(accept, xml);
+                          break;
+                        case 'zip':
+                          this.props.acceptZip(accept);
+                          break;
+                        default:
+                          this.props.acceptGeneric(accept)
+                          break;
+                      }
                     })
                     rejected.forEach(reject => {
                       this.props.rejectUpload(reject)
@@ -147,14 +164,14 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   acceptStl: accepted => dispatch(acceptStl(accepted)),
-  acceptXml: accepted => dispatch(acceptXml(accepted)),
+  acceptXml: (accepted, xml) => dispatch(acceptXml(accepted, xml)),
   acceptZip: accepted => dispatch(acceptZip(accepted)),
   acceptGeneric: accepted => dispatch(acceptGeneric(accepted)),
   rejectUpload: rejected => dispatch(rejectUpload(rejected)),
   fetchTypes: () => dispatch(fetchTypes())
 })
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Uploader)
+)(Uploader))

@@ -8,6 +8,12 @@ const ordersReducer = (state = initialState, action) => {
       return mapOrdersToothUnits(action.payload.orders)
     case 'ADD_NEW_ORDERS':
       return state.concat( mapOrdersToothUnits(action.payload.orders) )
+    case 'CANCEL_ORDER':
+      const uids = state.map(s => s.uid)
+      const puid = action.payload.order.uid
+      const idx = uids.indexOf(puid)
+      return [ ...state.slice(0, idx),
+              ...state.slice(idx+1) ]
     default:
       return state
   }

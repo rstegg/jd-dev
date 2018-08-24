@@ -8,10 +8,11 @@ export const acceptStl = accepted => ({
   }
 })
 
-export const acceptXml = accepted => ({
+export const acceptXml = (accepted, xml) => ({
   type: 'ACCEPT_XML',
   payload: {
     accepted,
+    xml
   }
 })
 
@@ -206,23 +207,23 @@ export const sendOrders = (products, token) =>
 
     const files = products.map(product => product.file)
 
-    const uploadReq = su.post('/api/v1/upload/orders').set('Authorization', token)
-      files.forEach(file => {
-        uploadReq.attach(file.name, file)
+    su.post('/api/v1/upload/orders')
+      .set('Authorization', token)
+      .field('file', files)
+      .then(({ body }) => {
+        const caseFileUrls = body.files.map(file => file.location )
+        const orders = products.map((product, i) => ({ ...product, caseFileUrls: caseFileUrls[i] }) )
+        return su.post('/api/v1/orders')
+          .set('Authorization', token)
+          .send({ orders })
       })
+      .then(res => dispatch(createOrdersSuccess(res.body.orders)))
+      .catch(err => {
+        dispatch(setButtonLoading(false))
+        notifyErrors(err)
+      })
+      .catch(console.error)
 
-      uploadReq.end(res => console.log(res.files))
-
-    // su.post('/api/v1/orders')
-    //   .set('Authorization', token)
-    //   .send({ orders: products })
-    //   .then(res => {
-    //     dispatch(createOrdersSuccess(res.body.orders))
-    //   })
-    //   .catch(err => {
-    //     dispatch(setButtonLoading(false))
-    //     notifyErrors(err)
-    //   })
 
   }
 

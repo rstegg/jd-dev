@@ -34,6 +34,6 @@ module.exports =
       validateParams(validEditOrderParams),
       editOrderHandler
     )
-    .delete('/:id',
+    .delete('/',
       deleteOrderHandler
     )
