@@ -1,15 +1,20 @@
 import su from 'superagent'
 import { path } from 'ramda'
+import { SubmissionError } from 'redux-form'
 
 export const onLoginSubmit = ({ email, password }) =>
   dispatch => {
     dispatch({ type: 'LOGIN_SUBMIT' })
-    su.post('/api/v1/auth/login')
+    return su.post('/api/v1/auth/login')
       .type('application/json')
       .accept('application/json')
       .send({ email, password })
       .then(res => dispatch(onLoginSuccess(res)))
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new SubmissionError({
+          _error: 'Login failed!'
+        })
+      })
 }
 
 export const onLoginSuccess = res =>

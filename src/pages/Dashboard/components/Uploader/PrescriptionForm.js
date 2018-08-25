@@ -17,9 +17,9 @@ export default class PrescriptionForm extends Component {
           {product.renameCaseID ?
             <FormItem hasFeedback validateStatus={product.hasNameError}>
               <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
+                <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Identifier</div>
                 <Search
-                  placeholder='Case ID'
+                  placeholder='Identifier'
                   style={{ width: 300, lineHeight: 0 }}
                   onSearch={value => setName(value, idx)}
                   enterButton={<Icon type='check' />}
@@ -27,7 +27,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </FormItem>
             : <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
+                <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Identifier</div>
                 <b>{product.name}</b>
                 <Button size='small' type="primary" onClick={() => toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
               </div>

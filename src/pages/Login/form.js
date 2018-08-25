@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Field, reduxForm } from 'redux-form'
 
-import { Form, Button, Input, Icon } from 'antd'
+import { Alert, Form, Button, Input, Icon } from 'antd'
 
 import { validate } from './validators'
 
@@ -16,10 +16,11 @@ const InputField = ({ input, meta, icon, ...rest }) =>
       {...rest} />
   </FormItem>
 
-const LoginForm = ({handleSubmit, submitting}) =>
+const LoginForm = ({error, handleSubmit, submitting}) =>
   <Form onSubmit={handleSubmit}>
     <Field component={InputField} name="email" type="email" icon={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Email' />
     <Field component={InputField} name="password" type="password" icon={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Password' />
+    {error && <Alert message={error} type="warning" closable />}
     <Button loading={submitting} htmlType="submit" type='primary'>Log in</Button>
   </Form>
 

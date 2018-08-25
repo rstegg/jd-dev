@@ -12,7 +12,7 @@ export default class PrescriptionForm extends Component {
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
           <div style={{ lineHeight: 0, marginTop: '24px' }}>
-            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case ID</div>
+            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Identifier</div>
             <b>{order.name}</b>
           </div>
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
