@@ -95,7 +95,8 @@
     "build-css": "node-sass-chokidar src/layout/ -o src/layout/ | node-sass-chokidar public/assets/layout/ -o public/assets/layout/",
     "watch-css": "npm run build-css && node-sass-chokidar src/layout/ -o src/layout/ --watch --recursive | node-sass-chokidar public/assets/layout/ -o public/assets/layout/ --watch --recursive",
     "start-js": "node scripts/start.js",
-    "start": "npm-run-all -p watch-css start-js",
+    "start-server": "cd server && npm run dev",
+    "start": "npm-run-all -p watch-css start-server start-js",
     "build-js": "node scripts/build.js",
     "build": "npm-run-all build-css build-js",
     "test": "node scripts/test.js --env=jsdom"
