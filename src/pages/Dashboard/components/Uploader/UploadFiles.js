@@ -6,8 +6,31 @@ import './Styles.css'
 import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
-import { Tabs, List, Tag,  Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
-import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
+import { Tabs, List, Tag, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
+import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
+
+const FormItem = Form.Item
+const Search = Input.Search
+
+const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
+  product.renameCaseID ?
+    <FormItem hasFeedback validateStatus={product.hasNameError}>
+      <div style={{ lineHeight: 0, marginTop: '24px' }}>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+        <Search
+          placeholder='Identifier'
+          style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
+          onSearch={value => setName(value, idx)}
+          enterButton={<Icon type='check' />}
+          defaultValue={product.name} />
+      </div>
+    </FormItem>
+    : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+        <b>{product.name}</b>
+        <Button size='small' type="primary" onClick={() => toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
+      </div>
+
 
 const OrderPreviewDetails = ({ product, viewMore }) =>
   <Tabs defaultActiveKey="1">
@@ -81,7 +104,24 @@ class UploadTable extends Component {
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>
                     <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ fontSize: '12px' }}>{product.name}</div>
+                      {product.renameCaseID ?
+                        <FormItem hasFeedback validateStatus={product.hasNameError}>
+                          <div style={{ lineHeight: 0, marginTop: '24px' }}>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+                            <Search
+                              placeholder='Identifier'
+                              style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
+                              onSearch={value => this.props.setName(value, idx)}
+                              enterButton={<Icon type='check' />}
+                              defaultValue={product.name} />
+                          </div>
+                        </FormItem>
+                        : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+                            <b>{product.name}</b>
+                            <Button size='small' type="primary" onClick={() => this.props.toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
+                          </div>
+                      }
                     </div>
                   </div>
                 </div>
@@ -105,7 +145,7 @@ class UploadTable extends Component {
                 </ul>
               </Card.Grid>
               <Modal
-                title={product.name}
+                title={<UploaderHeader {...this.props} product={product} idx={idx} />}
                 visible={this.state.visible[idx]}
                 onOk={() => this.hideModal(idx)}
                 onCancel={() => this.hideModal(idx)}
@@ -134,6 +174,7 @@ const mapDispatchToProps = dispatch => ({
   setName: (name, idx) => dispatch(setName(name, idx)),
   setNotes: (notes, idx) => dispatch(setNotes(notes, idx)),
   setUnits: (units, idx) => dispatch(setUnits(units, idx)),
+  setDueDate: (time, idx) => dispatch(setDueDate(time, idx)),
   clearUnits: (idx) => dispatch(clearUnits(idx)),
   deleteProduct: uid => dispatch(deleteProduct(uid)),
   validateForm: (products, token) => dispatch(validateForm(products, token)),

@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, preview: action.payload.stl, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], }
       ]))
     case 'ACCEPT_XML':
       return state.concat(mergeAll([
@@ -55,6 +55,14 @@ export default (state = initialState, action) => {
     case 'SET_NAME':
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], name: action.payload.name, renameCaseID: false },
+              ...state.slice(action.payload.idx+1) ]
+    case 'SET_TIME':
+      return [ ...state.slice(0, action.payload.idx),
+              { ...state[action.payload.idx], time: action.payload.time },
+              ...state.slice(action.payload.idx+1) ]
+    case 'SET_PATIENT':
+      return [ ...state.slice(0, action.payload.idx),
+              { ...state[action.payload.idx], patient: action.payload.patient },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_NOTES':
       return [ ...state.slice(0, action.payload.idx),

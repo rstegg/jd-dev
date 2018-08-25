@@ -70,6 +70,14 @@ export const setName = (name, idx) => ({
   }
 })
 
+export const setDueDate = (time, idx) => ({
+  type: 'SET_TIME',
+  payload: {
+    time,
+    idx
+  }
+})
+
 export const setNotes = (notes, idx) => ({
   type: 'SET_NOTES',
   payload: {

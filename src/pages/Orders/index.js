@@ -7,7 +7,7 @@ import {Column} from 'primereact/components/column/Column'
 import {InputText} from 'primereact/components/inputtext/InputText';
 import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 
-import { Spin, Modal, Icon, Button, Popconfirm } from 'antd';
+import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
 import { fetchOrders, cancelOrder } from './actions/orders'
 
@@ -42,6 +42,17 @@ class OrdersView extends Component {
      this.setState({
        visible: false
      });
+    }
+
+    renderRestorationTypes = (order) => {
+      if (order.isLoading) {
+        return (
+          <Spin />
+        )
+      }
+      return (
+        <Tag>{order.type}</Tag>
+      )
     }
 
     actionTemplate = (rowData, column) => {
@@ -93,11 +104,12 @@ class OrdersView extends Component {
                         <h1>Orders</h1>
                         <DataTable value={this.props.orders} selectionMode="single" header="Orders" paginator={true} rows={10}
                         responsive={true} selection={this.state.dataTableSelectValue} onSelectionChange={(e) => this.selectionChange(e)}>
-                            <Column field="name" header="Identifier" sortable={true}/>
-                            <Column field="type" header="Restoration Type" sortable={true}/>
+                            <Column field="name" header="Case Identifier" sortable={true}/>
+                            <Column field="type" header="Restoration Type" body={this.renderRestorationTypes} sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
                             <Column field="unitsCount" header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
+                            <Column field="time" header="Due by" sortable={true}/>
                             <Column field="notes" header="Notes" sortable={true}/>
                             <Column body={this.caseFileTemplate} header="Case Files" sortable={true}/>
                             <Column body={this.designFileTemplate} header="Design Files" sortable={true}/>

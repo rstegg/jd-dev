@@ -22,8 +22,12 @@ const Launcher = ({ toggleChatContacts, chat }) =>
          onClick={toggleChatContacts}>
         <Badge count={chat.contactsUnseen} />
           {chat.isContactsOpened ?
-            <img className="rcw-close-launcher" src={closeIcon} /> :
-            <img className="rcw-open-launcher" src={chatIcon} />
+            <div className="rcw-close-launcher">
+
+            </div> :
+            <div className="rcw-open-launcher">
+
+            </div>
           }
         </button>
       </div>

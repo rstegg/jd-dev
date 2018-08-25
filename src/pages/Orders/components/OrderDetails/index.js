@@ -12,23 +12,19 @@ export default class PrescriptionForm extends Component {
     const { order } = this.props
     return (
       <Card title={order.status}>
-          <p style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
-            {order.status}
-          </p>
+          <p style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}> {order.status} </p>
           <Card
             type="inner"
             title="Case Files"
-            extra={<a href="#">Upload</a>}
-          >
-            {order.caseFileUrls && order.caseFileUrls.map((caseFileUrl, i) => <Tag key={`caseFileUrl-${order.uid}-${i}`} color='geekblue'><a href={caseFileUrl}>{decodeURI(caseFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+            extra={<a href="#">Upload</a>} >
+            {order.caseFileUrls && order.caseFileUrls.map((caseFileUrl, i) => <Tag key={`caseFileUrl-${order.uid}-${i}`} color='geekblue'><a href={caseFileUrl}>{decodeURI(caseFileUrl && caseFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
           </Card>
           <Card
             style={{ marginTop: 16 }}
             type="inner"
             title="Design Files"
-            extra={<a href="#">Upload</a>}
-          >
-            {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) => <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+            extra={<a href="#">Upload</a>} >
+            {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) => <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
           </Card>
           <Card
             style={{ marginTop: 16 }}

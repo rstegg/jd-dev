@@ -49,7 +49,7 @@
 @-webkit-keyframes slide-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(100px);
   }
   to {
     opacity: 1;
@@ -59,27 +59,27 @@
 @-moz-keyframes slide-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(100px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-1000);
   }
 }
 @keyframes slide-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(100px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-1000);
   }
 }
 @-webkit-keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-1000);
   }
   to {
     opacity: 0;
@@ -89,7 +89,7 @@
 @-moz-keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-1000);
   }
   to {
     opacity: 0;
@@ -99,7 +99,7 @@
 @keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-1000);
   }
   to {
     opacity: 0;
@@ -107,6 +107,7 @@
   }
 }
 .rcw-launcher {
+
   cursor: pointer;
   -webkit-animation-delay: 0;
   -webkit-animation-duration: 0.5s;
@@ -128,12 +129,39 @@
   border: 0;
   border-radius: 10%;
   box-shadow: 0px 2px 10px 1px #b5b5b5;
-  height: 60px;
+  height: 30px;
   margin-top: 10px;
   width: 160px;
 }
 .rcw-launcher:focus {
   outline: none;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-100px);
+  }
+}
+
+.rcw-hide-sm {
+  -webkit-animation-delay: 0;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-name: slide-up;
+  -webkit-animation-fill-mode: forwards;
+  /* this prevents the animation from restarting! */
+  -moz-animation-delay: 0;
+  -moz-animation-duration: 0.5s;
+  -moz-animation-name: slide-up;
+  -moz-animation-fill-mode: forwards;
+  /* this prevents the animation from restarting! */
+  animation-delay: 0;
+  animation-duration: 0.5s;
+  animation-name: slide-up;
+  animation-fill-mode: forwards;
+
 }
 
 .rcw-open-launcher {

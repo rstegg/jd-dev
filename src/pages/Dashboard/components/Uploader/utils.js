@@ -1,59 +1,52 @@
 import JSZip from 'jszip'
-import xmljs from 'xml-js'
-import { reverse, symmetricDifference, curry, reduce, assoc, keys, find, mergeAll, flatten, map, filter, length, pathEq, prop, path, sort } from 'ramda'
+import xml2js from 'xml2js'
+import { pipe, head, propEq, match, find, trim, replace, findIndex, findLastIndex, mergeAll, flatten, map, filter, length, pathEq, prop, path, sort } from 'ramda'
 
-const designTypes = [/Crown/, /Coping/, /Anatomical Coping/, /bridge/, /Abutment/, /Inlay/, /Onlay/, /Model/]
-
-const renameKeys = curry((keysMap, obj) =>
-  reduce((acc, key) => assoc(keysMap[key] || key, obj[key], acc), {}, keys(obj))
-)
-
+const designTypes = [/crown/, /coping/, /anatomical coping/, /bridge/, /abutment/, /inlay/, /onlay/, /model/]
 
 export const parseXml = xml => {
-  const jsObj = xmljs.xml2js(xml, { compact: true })
 
-  const mainObject = jsObj.DentalContainer.Object.Object
-  const itemOrders = jsObj.DentalContainer.Object.Object[0]
+  var parseString = xml2js.parseString;
 
-  const modelElementList = mainObject.filter(pathEq(['_attributes', 'name'], 'ModelElementList'))[0]
-  const itemModelList =
-    modelElementList.List.Object
-      .map(model => model.Property
-        .map(({ _attributes: { name, value } }) => name === 'Items' ? value : null, {})
-        .filter(x => !!x)
-      )
+  parseString(xml, function (err, result) {
+    const getRootObj = path(['DentalContainer', 'Object'])
+    const getMainObj = pipe( getRootObj, head, prop('Object') )
+    const getModelList = pipe( getMainObj, find(pathEq(['$', 'name'], 'ModelElementList')), prop('List'), head, prop('Object') )
 
-  //find(propEq('name', 'Items'), itemOrder)
-  //
-  // const objNames = tdmContainerEls.map(obj => obj.attributes.name)
-  // const idx = objNames.indexOf('ToothElementList')
-  // const mainContainer = tdmContainerEls[idx]
-  // const toothElementList = flatten(mainContainer.elements.map(el => el.elements.filter(el => el.attributes)))
-  // const propList = flatten(toothElementList.map(el => el.elements))
-  //
-  // const hasToothNums = pathEq(['attributes', 'name'], 'ToothNumber')
-  // const hasDesignType = pathEq(['attributes', 'name'], 'CacheToothTypeClass')
+    const modelList = getModelList(result)
 
-  // const toothNumbers = map(path(['attributes', 'value']), filter(hasToothNums, propList))
-  // const designTypes = map(path(['attributes', 'value']), filter(hasDesignType, propList))
-  // const teDesignType = length(designTypes) ? designTypes[0] : ''
-  // let restoType = teDesignType
-  // if (teDesignType.indexOf('te') === 0) {
-  //   restoType = teDesignType.replace('te', '')
-  // }
+    const getModelPropertyByName = name => modelList.map(x => getPropertyByName(name, prop('Property', x)))
 
-  // const parsedToothNumbers = map(parseInt, toothNumbers)
-  // const sortedParsedToothNumbers = sort((a,b) => a > b, parsedToothNumbers)
-  // let sortedToothNumbers = sortedParsedToothNumbers;
-  // if (toothNumbers) {
-  //   sortedToothNumbers = map(String, sortedParsedToothNumbers)
-  // }
-  // console.log(sortedToothNumbers);
-  //
-  // const jsonFromXML = {
-  //   units: sortedToothNumbers,
-  //   type: restoType
-  // }
+    const orderList = getMainObj(result)
 
-  return { units: [], type: '' }
+    const getItemOrder = pipe( head, prop('List'), head, prop('Object'), head, prop('Property') )
+    const getModelElementList = pipe( head, prop('List'), head, prop('Object'), head, prop('Property') )
+
+    const itemOrder = getItemOrder(orderList)
+
+    const getPropertyByName = (name, properties) => pipe( find(pathEq(['$', 'name'], name)), path(['$', 'value']) )(properties)
+
+    const teeth = getModelPropertyByName('Items')
+
+    const numRegex = /\d*\S*\d+$/
+
+    const teethNumsStr = teeth.map(x => {
+      const teethNums = numRegex.exec(x)
+      if (teethNums) {
+        return teethNums[0]
+      }
+    }).filter(x => !!x);
+
+    const restoTypes = pipe( map(replace(/\d*\S*\d+$/, '')), map(trim) )(teeth)
+    const orderComments = getPropertyByName('OrderComments',itemOrder)
+    const orderItems = getPropertyByName('Items',itemOrder)
+    const orderManufacturer = getPropertyByName('ManufName',itemOrder)
+    const orderFirstname = getPropertyByName('Patient_FirstName',itemOrder)
+    const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
+
+    return { units: teethNumsStr, type: restoTypes, orderComments, orderItems, orderManufacturer, orderFirstname, orderLastname  }
+    console.log(restoTypes);
+  });
+
+
 }
