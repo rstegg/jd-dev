@@ -7,7 +7,7 @@ import {Column} from 'primereact/components/column/Column'
 import {InputText} from 'primereact/components/inputtext/InputText';
 import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 
-import { Modal, Icon, Button, Popconfirm } from 'antd';
+import { Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
 import { fetchOrders, cancelOrder } from './actions/orders'
 
@@ -45,14 +45,24 @@ class OrdersView extends Component {
     }
 
     actionTemplate = (rowData, column) => {
+      if (rowData.isLoading) {
+        return (
+          <Spin />
+        )
+      }
+      if (rowData.status === 'canceled') {
+        return (
+          <Button type="danger" disabled>
+            <Icon type="close" />
+          </Button>
+        )
+      }
       return <Popconfirm
           title="Are you sure you want to cancel this order?"
           placement="topRight"
           onConfirm={() => this.props.cancelOrder(rowData, this.props.user.token)}
           okText="Yes" cancelText="Cancel">
-        <Button type="danger">
-            <Icon type="close" />
-          </Button>
+          <Button type="danger" icon="close" />
         </Popconfirm>;
     }
 

@@ -6,13 +6,13 @@ const toggleCaseUnit = (unit, arr) => arr.indexOf(unit) === -1 ? arr.concat(unit
 export default (state = initialState, action) => {
   switch(action.type) {
     case 'ACCEPT_STL':
-      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] })
     case 'ACCEPT_XML':
-      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] })
     case 'ACCEPT_ZIP':
-      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] })
     case 'ACCEPT_GENERIC':
-      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, name: action.payload.accepted.name.slice(0,-4), units: [] })
+      return state.concat({ file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] })
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], type: action.payload.type, product: undefined, id: undefined, variant_id: undefined, shade: undefined, finish: undefined, layering: undefined },
