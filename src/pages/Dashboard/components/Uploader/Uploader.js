@@ -84,7 +84,44 @@ class Uploader extends Component {
                 this.props.acceptXml(accept);
                 break;
               case 'zip':
+              const new_zip = new JSZip()
+              new_zip.loadAsync(accept)
+                .then(zip => {
+                  const strippedName = accept.name.split('.').slice(0, -1).join('')
+                  const xmlName = strippedName + '/' + strippedName + '.xml'
 
+                  const bestGuess = zip.file(xmlName)
+                  if (bestGuess) {
+                    const promised = zip.file(xmlName).async('string')
+
+                    promised
+                      .then(xml => {
+                        const jsonFromXML = parseXml(xml)
+
+                        this.props.acceptZip(accept, jsonFromXML);
+                      })
+                  } else {
+                    const allFilenames = map(file => file.name, zip.files)
+                    const xmlFiles = Object.keys(zip.files).filter((fileName, idx) => {
+                      if (/\.xml$/.test(fileName)) {
+                        const xmlFileTest = fileName.split('/')[1].replace('.xml', '')
+                        const originalFile = strippedName.split(' ')[0]
+                        const firstFewCharsEq = xmlFileTest.slice(0, 8) === originalFile.slice(0,8)
+                        return xmlFileTest.includes(originalFile) || firstFewCharsEq
+                      }
+                      return false
+                    })
+                  const nextXmlName = xmlFiles[0]
+                  const nextBestGuess = zip.file(nextXmlName)
+                  if (nextBestGuess) {
+                    zip.file(nextXmlName).async('string')
+                      .then(xml => {
+                        const jsonFromXML = parseXml(xml)
+                        this.props.acceptZip(accept, jsonFromXML);
+                      })
+                  }
+                }
+              })
                 this.props.acceptZip(accept);
                 break;
               default:
@@ -103,7 +140,6 @@ class Uploader extends Component {
             <div className="ant-layout-content" style={{ margin: '24px 16px' }}>
               <div className="dropzone">
                 <Dropzone
-                  name='file'
                   onDrop={(accepted, rejected) => {
                     this.setState({
                       dropzoneActive: false
@@ -129,19 +165,38 @@ class Uploader extends Component {
                               const strippedName = accept.name.split('.').slice(0, -1).join('')
                               const xmlName = strippedName + '/' + strippedName + '.xml'
 
-                              const promised = zip.file(xmlName).async('string')
+                              const bestGuess = zip.file(xmlName)
+                              if (bestGuess) {
+                                const promised = zip.file(xmlName).async('string')
 
-                              promised
-                                .then(xml => {
-                                  const jsonFromXML = parseXml(xml)
+                                promised
+                                  .then(xml => {
+                                    const jsonFromXML = parseXml(xml)
 
-                                  this.props.acceptZip(accept, jsonFromXML);
+                                    this.props.acceptZip(accept, jsonFromXML);
+                                  })
+                              } else {
+                                const allFilenames = map(file => file.name, zip.files)
+                                const xmlFiles = Object.keys(zip.files).filter((fileName, idx) => {
+                                  if (/\.xml$/.test(fileName)) {
+                                    const xmlFileTest = fileName.split('/')[1].replace('.xml', '')
+                                    const originalFile = strippedName.split(' ')[0]
+                                    const firstFewCharsEq = xmlFileTest.slice(0, 8) === originalFile.slice(0,8)
+                                    return xmlFileTest.includes(originalFile) || firstFewCharsEq
+                                  }
+                                  return false
                                 })
-
-
-
-                            })
-                          //
+                              const nextXmlName = xmlFiles[0]
+                              const nextBestGuess = zip.file(nextXmlName)
+                              if (nextBestGuess) {
+                                zip.file(nextXmlName).async('string')
+                                  .then(xml => {
+                                    const jsonFromXML = parseXml(xml)
+                                    this.props.acceptZip(accept, jsonFromXML);
+                                  })
+                              }
+                            }
+                          })
                           break;
                         default:
                           this.props.acceptGeneric(accept)

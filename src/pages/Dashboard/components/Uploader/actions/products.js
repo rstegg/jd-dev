@@ -133,7 +133,7 @@ export const sendOrders = (products, token) =>
       .then(({ body }) => {
         const fileNames = body.files.map(file => file.originalname)
         const productFilenames = products.map(product => product.filename)
-        products.map((product, i) => {
+        const orders = products.map((product, i) => {
           if (fileNames.indexOf(product.filename) !== -1) {
             const idx = fileNames.indexOf(product.filename)
             const file = body.files[idx]
@@ -143,14 +143,6 @@ export const sendOrders = (products, token) =>
             return product
           }
         })
-        body.files.map((file, idx) => {
-          if (productFilenames.indexOf(file.filename) !== -1) {
-
-          }
-        })
-        console.log(body);
-        const caseFileUrls = body.files.map(file => file.location )
-        const orders = products.map((product, i) => ({ ...product, caseFileUrls: caseFileUrls[i] }) )
         return su.post('/api/v1/orders')
           .set('Authorization', token)
           .send({ orders })

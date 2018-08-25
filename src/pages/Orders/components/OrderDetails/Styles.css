@@ -1,0 +1,8 @@
+.ant-list-item-content > div > div > div > .ant-card-head-title {
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+.ant-list-item-content > div > .ant-card-body {
+  font-size: 10pt;
+}

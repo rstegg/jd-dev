@@ -13,26 +13,14 @@ import { fetchOrders, cancelOrder } from './actions/orders'
 
 import OrderDetails from './components/OrderDetails'
 
-class OrdersView extends Component {
+class OrdersTableView extends Component {
 
     constructor() {
         super();
         this.state = {
-            dataTableValue: [],
-            treeData: [],
-            treeTableData: [],
-            picklistSourceCars: [],
-            picklistTargetCars: [],
-            orderlistCars: [],
-            scheduleEvents: [],
             orders: [],
-            dataTableSelectValue: {},
-            organizationSelect: null
+            dataTableSelectValue: {}
         };
-    }
-
-    componentDidMount() {
-        this.props.fetchOrders(this.props.user.token)
     }
     selectionChange = (e) => {
       this.setState({ dataTableSelectValue: e.data, visible: true })
@@ -91,8 +79,7 @@ class OrdersView extends Component {
                 <div className="ui-g-12">
                     <div className="card card-w-title">
                         <h1>Orders</h1>
-                        <DataTable value={this.props.orders} selectionMode="single" header="Orders" paginator={true} rows={10}
-                        responsive={true} selection={this.state.dataTableSelectValue} onSelectionChange={(e) => this.selectionChange(e)}>
+                        <DataTable value={this.props.orders} header="Cases" paginator={true} rows={10}>
                             <Column field="name" header="Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
@@ -130,4 +117,4 @@ const mapDispatchToProps = dispatch => ({
   cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrdersView))
+export default connect(mapStateToProps, mapDispatchToProps)(OrdersTableView)

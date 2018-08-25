@@ -1,6 +1,6 @@
 const { Order } = requireDb
 
-const OrderAttrs = [ 'designers', 'name', 'units', 'unitsCount', 'type', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
+const OrderAttrs = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
 
 module.exports = (req, res) =>
   Order.findAll({
