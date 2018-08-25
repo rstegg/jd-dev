@@ -37,11 +37,6 @@ class App extends Component {
         this.createMenu();
     }
 
-    shouldComponentUpdate(props) {
-      console.log(props.location.pathname);
-      return (props.location.pathname !== props.location.match)
-    }
-
     onWrapperClick(event) {
         if (!this.menuClick) {
             this.setState({

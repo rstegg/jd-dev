@@ -10,13 +10,6 @@ import LoginForm from './form'
 import RouterButton from './components/RouterButton'
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
-  shouldComponentUpdate(props) {
-    console.log(props.location.pathname);
-    return (props.location.pathname !== props.location.match)
-  }
   render() {
     const { user, onLoginSubmit } = this.props
     if (user.isAuthenticated) {

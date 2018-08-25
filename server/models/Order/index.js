@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     units: DataTypes.ARRAY(DataTypes.STRING),
     unitsCount: DataTypes.STRING,
-    uid: DataTypes.STRING,
+    uid: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     type: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,

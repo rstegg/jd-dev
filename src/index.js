@@ -14,15 +14,16 @@ const Loader = () =>
   <div className="loading-screen">
     <Spin />
   </div>
-
+  
 ReactDOM.render(
-    <HashRouter>
-      <Provider store={store}>
-        <PersistGate loading={<Loader />} persistor={persistor}>
+    <Provider store={store}>
+      <PersistGate loading={<Loader />} persistor={persistor}>
+        <HashRouter>
           <App />
-        </PersistGate>
-      </Provider>
-    </HashRouter>,
+        </HashRouter>
+      </PersistGate>
+    </Provider>
+    ,
     document.getElementById('root')
 );
 

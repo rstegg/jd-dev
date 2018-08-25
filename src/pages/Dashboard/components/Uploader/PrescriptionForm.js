@@ -2,14 +2,93 @@ import React, { Component} from 'react'
 
 import SelectSearch from './SelectSearch'
 import DentalPicker from '../DentalPicker/Picker'
-import { Progress, Input, Icon, Button, Form } from 'antd'
+import { List, Progress, Input, Icon, Button, Form } from 'antd'
 
 const { Search, TextArea } = Input
 const FormItem = Form.Item
 
+const designTypes = [
+  { label: 'Crown', value: 'Crown', },
+  { label: 'Coping', value: 'Coping', },
+  { label: 'Anatomical Coping', value: 'Anatomical Coping', },
+  { label: 'Bridge', value: 'Bridge', },
+  { label: 'Inlay', value: 'Inlay', },
+  { label: 'Onlay', value: 'Onlay', },
+  { label: 'Model', value: 'Model' },
+]
+const contactTypes = [
+  { label: '+0.05 mm Open Contact', value: '+0.05 mm Open Contact' },
+  { label: '+0.04 mm Open Contact', value: '+0.04 mm Open Contact' },
+  { label: '+0.03 mm Open Contact', value: '+0.03 mm Open Contact' },
+  { label: '+0.025 mm Open Contact', value: '+0.025 mm Open Contact' },
+  { label: '+0.10 mm Open Contact', value: '+0.10 mm Open Contact' },
+  { label: '+0.00 mm', value: '+0.00 mm' },
+  { label: '-0.01 mm', value: '-0.01 mm' },
+  { label: '-0.02 mm', value: '-0.02 mm' },
+  { label: '-0.025 mm', value: '-0.025 mm' },
+  { label: '-0.03 mm', value: '-0.03 mm' },
+  { label: '-0.035 mm', value: '-0.035 mm' },
+  { label: '-0.04 mm', value: '-0.04 mm' },
+  { label: '-0.045 mm', value: '-0.045 mm' },
+  { label: '-0.05 mm', value: '-0.05 mm' },
+  { label: '-0.06 mm', value: '-0.06 mm' },
+  { label: '-0.07 mm', value: '-0.07 mm' },
+  { label: '-0.08 mm', value: '-0.08 mm' },
+  { label: '-0.09 mm', value: '-0.09 mm' },
+  { label: '-0.10 mm', value: '-0.10 mm' },
+  { label: '-0.20 mm', value: '-0.20 mm' },
+]
+const occlusionTypes = [
+  { label: '+0.10 mm Supra Occlusion', value: '+0.10 mm Supra Occlusion' },
+  { label: '+0.04 mm Supra Occlusion', value: '+0.04 mm Supra Occlusion' },
+  { label: '0.00 mm OUT of Occlusion', value: '0.00 mm OUT of Occlusion' },
+  { label: '-0.07 mm OUT of Occlusion', value: '-0.07 mm OUT of Occlusion' },
+  { label: '-0.08 mm OUT of Occlusion', value: '-0.08 mm OUT of Occlusion' },
+  { label: '-0.10 mm OUT of Occlusion', value: '-0.10 mm OUT of Occlusion' },
+  { label: '-0.12 mm OUT of Occlusion', value: '-0.12 mm OUT of Occlusion' },
+  { label: '-0.15 mm OUT of Occlusion', value: '-0.15 mm OUT of Occlusion' },
+  { label: '-0.20 mm OUT of Occlusion', value: '-0.20 mm OUT of Occlusion' },
+  { label: '-0.25 mm OUT of Occlusion', value: '-0.25 mm OUT of Occlusion' },
+  { label: '-0.30 mm OUT of Occlusion', value: '-0.30 mm OUT of Occlusion' },
+  { label: '-0.32 mm OUT of Occlusion', value: '-0.32 mm OUT of Occlusion' },
+  { label: '-0.35 mm OUT of Occlusion', value: '-0.35 mm OUT of Occlusion' },
+  { label: '-0.37 mm OUT of Occlusion', value: '-0.37 mm OUT of Occlusion' },
+  { label: '-0.40 mm OUT of Occlusion', value: '-0.40 mm OUT of Occlusion' },
+  { label: '-0.45 mm OUT of Occlusion', value: '-0.45 mm OUT of Occlusion' },
+  { label: '-0.50 mm OUT of Occlusion', value: '-0.50 mm OUT of Occlusion' },
+  { label: '-0.60 mm OUT of Occlusion', value: '-0.60 mm OUT of Occlusion' },
+  { label: '-0.70 mm OUT of Occlusion', value: '-0.70 mm OUT of Occlusion' },
+  { label: '-0.80 mm OUT of Occlusion', value: '-0.80 mm OUT of Occlusion' },
+  { label: '-0.90 mm OUT of Occlusion', value: '-0.90 mm OUT of Occlusion' },
+  { label: '-1.00 mm OUT of Occlusion', value: '-1.00 mm OUT of Occlusion' },
+]
+const ponticTypes = [
+  { label: 'Conical', value: 'Conical' },
+  { label: 'Hygenic', value: 'Hygenic' },
+  { label: 'Modified Ridge Lap', value: 'Modified Ridge Lap' },
+  { label: 'Ovate', value: 'Ovate' },
+  { label: 'Saddle Ridge', value: 'Saddle Ridge' },
+]
+const linerTypes = [
+  { label: '0.030 mm - 30 Microns', value: '0.030 mm - 30 Microns' },
+  { label: '0.020 mm - 20 Microns', value: '0.020 mm - 20 Microns' },
+  { label: '0.010 mm - 10 Microns', value: '0.010 mm - 10 Microns' },
+  { label: '0.010 mm - 10 Microns', value: '0.010 mm - 10 Microns' },
+  { label: '0.040 mm - 40 Microns', value: '0.040 mm - 40 Microns' },
+  { label: '0.050 mm - 50 Microns', value: '0.050 mm - 50 Microns' },
+  { label: '0.060 mm - 60 Microns', value: '0.060 mm - 60 Microns' },
+  { label: '0.005 mm - 05 Microns', value: '0.005 mm - 05 Microns' },
+  { label: '0.00 mm - No Liner Spacer', value: '0.00 mm - No Liner Spacer' },
+  { label: '0.015 mm - 15 Microns', value: '0.015 mm - 15 Microns' },
+  { label: '0.150 mm - 150 Microns', value: '0.150 mm - 150 Microns' },
+  { label: '0.200 mm - 200 Microns', value: '0.200 mm  200 Microns' },
+  { label: '0.270 mm - 270 Microns', value: '0.270 mm -270 Microns' },
+]
+
 export default class PrescriptionForm extends Component {
   render () {
-    const { product, productTypes, isLoading, deleteProduct, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx } = this.props
+    const { product, productTypes, isLoading, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx,
+    setContact, setOcclusion, setPontic, setLinerSpacer } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
@@ -37,33 +116,68 @@ export default class PrescriptionForm extends Component {
               <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} />
             </FormItem>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
-              <FormItem hasFeedback validateStatus={product.hasTypeError}>
-                <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                  <div style={{ width: '100%', marginBottom: '12px' }}>Type of Restore</div>
-                  <SelectSearch
-                    label='Restoration type'
-                    options={productTypes}
-                    style={{ width: 200, marginRight: '16px' }}
-                    onChange={value => setType(value, idx)}
-                    value={product.type} />
-                </div>
-              </FormItem>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                  <FormItem>
-                    <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                      <div style={{ width: '100%', marginBottom: '12px' }}>Design Notes</div>
-                      <TextArea
-                        label='Design Notes'
-                        style={{ width: 200, marginRight: '16px' }}
-                        onChange={e => setNotes(e.target.value, idx)}
-                        value={product.notes} />
-                    </div>
-                  </FormItem>
-                </div>
+            <FormItem hasFeedback validateStatus={product.hasTypeError}>
+              <div style={{ lineHeight: 0, marginTop: '24px' }}>
+                <div style={{ width: '100%', marginBottom: '12px' }}>Type of Restore</div>
+                <SelectSearch
+                  label='Restoration type'
+                  options={designTypes}
+                  style={{ width: 200, marginRight: '16px' }}
+                  onChange={value => setType(value, idx)}
+                  value={product.type} />
               </div>
-            </div>
+            </FormItem>
+            <FormItem>
+              <div style={{ lineHeight: 0, marginTop: '24px' }}>
+                <div style={{ width: '100%', marginBottom: '12px' }}>Design Notes</div>
+                <TextArea
+                  label='Design Notes'
+                  style={{ width: 200, marginRight: '16px' }}
+                  onChange={e => setNotes(e.target.value, idx)}
+                  value={product.notes} />
+              </div>
+            </FormItem>
+              <div style={{ lineHeight: 0, marginTop: '24px' }}>
+                <div style={{ width: '100%', marginBottom: '12px' }}>Design Preferences</div>
+                <List bordered>
+                  <List.Item>
+                    <SelectSearch
+                    label='Contact Preferences'
+                    options={contactTypes}
+                    style={{ width: 200, marginRight: '16px' }}
+                    onChange={value => setContact(value, idx)}
+                    value={product.contact} />
+                  </List.Item>
+                  <List.Item>
+                    <SelectSearch
+                      label='Occlusion Preferences'
+                      options={occlusionTypes}
+                      style={{ width: 200, marginRight: '16px' }}
+                      onChange={value => setOcclusion(value, idx)}
+                      value={product.occlusion} />
+                  </List.Item>
+                  <List.Item>
+                    <SelectSearch
+                      label='Pontic Preferences'
+                      options={ponticTypes}
+                      style={{ width: 200, marginRight: '16px' }}
+                      onChange={value => setPontic(value, idx)}
+                      value={product.pontic} />
+                  </List.Item>
+                  <List.Item>
+                    <SelectSearch
+                      label='Liner Spacer Preferences'
+                      options={linerTypes}
+                      style={{ width: 200, marginRight: '16px' }}
+                      onChange={value => setLinerSpacer(value, idx)}
+                      value={product.linerSpacer} />
+                  </List.Item>
+                </List>
           </div>
-        }
+        </div>
+      </div>
+    </div>
+      }
       </div>
     )
   }

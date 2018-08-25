@@ -1,25 +1,27 @@
 import su from 'superagent'
 import shortid from 'shortid'
 
-export const acceptStl = accepted => ({
+export const acceptStl = (accepted, stl) => ({
   type: 'ACCEPT_STL',
   payload: {
     accepted,
+    stl
   }
 })
 
-export const acceptXml = (accepted, xml) => ({
+export const acceptXml = (accepted, jsonFromXML) => ({
   type: 'ACCEPT_XML',
   payload: {
     accepted,
-    xml
+    jsonFromXML
   }
 })
 
-export const acceptZip = accepted => ({
+export const acceptZip = (accepted, jsonFromXML) => ({
   type: 'ACCEPT_ZIP',
   payload: {
     accepted,
+    jsonFromXML
   }
 })
 
@@ -76,32 +78,6 @@ export const setNotes = (notes, idx) => ({
   }
 })
 
-export const setShade = (shade, idx) => ({
-  type: 'SET_SHADE',
-  payload: {
-    shade,
-    idx
-  }
-})
-
-export const setFinish = (finish, variant_id, idx) => ({
-  type: 'SET_FINISH',
-  payload: {
-    finish,
-    variant_id,
-    idx
-  }
-})
-
-export const setLayering = (layering, variant_id, idx) => ({
-  type: 'SET_LAYERING',
-  payload: {
-    layering,
-    variant_id,
-    idx
-  }
-})
-
 export const setUnits = (units, idx) => ({
   type: 'SET_UNITS',
   payload: {
@@ -114,62 +90,6 @@ export const clearUnits = (idx) => ({
   type: 'CLEAR_UNITS',
   payload: {
     idx
-  }
-})
-
-export const setFillType = type => ({
-  type: 'SET_FILL_TYPE',
-  payload: {
-    type
-  }
-})
-
-export const setFillProduct = product => ({
-  type: 'SET_FILL_PRODUCT',
-  payload: {
-    product
-  }
-})
-
-export const setSelectedProducts = (selected) => ({
-  type: 'SET_SELECTED_PRODUCTS',
-  payload: {
-    selected
-  }
-})
-
-export const fetchTypes = () =>
-  dispatch =>
-    su.get('https://cdn.shopify.com/s/files/1/0935/7892/files/data.json?1609093586141030510')
-    .then(res => res.body)
-    .then(products => {
-      const filtered = products.filter(product => !product.product.title.includes('max'))
-      dispatch(populateTypes(filtered))
-    })
-    .catch(err => console.log(err))
-
-export const populateTypes = (productTypes, idx) => ({
-  type: 'POPULATE_TYPES',
-  payload: {
-    productTypes,
-    idx
-  }
-})
-
-export const populateNames = (collection, allProducts, idx) => ({
-  type: 'POPULATE_NAMES',
-  payload: {
-    collection,
-    allProducts,
-    idx
-  }
-})
-
-export const populateFillNames = (collection, allProducts) => ({
-  type: 'POPULATE_FILL_NAMES',
-  payload: {
-    collection,
-    allProducts
   }
 })
 
@@ -205,12 +125,30 @@ export const sendOrders = (products, token) =>
   dispatch => {
     dispatch(setButtonLoading(true))
 
-    const files = products.map(product => product.file)
+    const files = products.map(product => product.file )
 
     su.post('/api/v1/upload/orders')
       .set('Authorization', token)
       .field('file', files)
       .then(({ body }) => {
+        const fileNames = body.files.map(file => file.originalname)
+        const productFilenames = products.map(product => product.filename)
+        products.map((product, i) => {
+          if (fileNames.indexOf(product.filename) !== -1) {
+            const idx = fileNames.indexOf(product.filename)
+            const file = body.files[idx]
+            if (file) {
+              return { ...product, caseFileUrls: file.location }
+            }
+            return product
+          }
+        })
+        body.files.map((file, idx) => {
+          if (productFilenames.indexOf(file.filename) !== -1) {
+
+          }
+        })
+        console.log(body);
         const caseFileUrls = body.files.map(file => file.location )
         const orders = products.map((product, i) => ({ ...product, caseFileUrls: caseFileUrls[i] }) )
         return su.post('/api/v1/orders')
@@ -241,10 +179,10 @@ export const redirectingOrders = () => ({
 
 
 
-export const deleteProduct = idx => ({
+export const deleteProduct = uid => ({
   type: 'DELETE_PRODUCT',
   payload: {
-    idx
+    uid
   }
 })
 
@@ -268,12 +206,5 @@ export const setProgress = (progress, idx) => ({
   payload: {
     progress,
     idx
-  }
-})
-
-export const addNewOrders = orders => ({
-  type: 'ADD_NEW_ORDERS',
-  payload: {
-    orders
   }
 })

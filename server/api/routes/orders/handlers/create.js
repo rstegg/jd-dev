@@ -4,7 +4,7 @@ const uuid = require('uuid/v4')
 
 const { map, merge, pick, length } = require('ramda')
 
-const OrderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
+const OrderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
 
 module.exports = (req, res) => {
   const newOrders = map(order => merge({

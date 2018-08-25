@@ -13,6 +13,7 @@ const ordersReducer = (state = initialState, action) => {
       const puid = action.payload.order.uid
       const idx = uids.indexOf(puid)
       return [ ...state.slice(0, idx),
+              { ...action.payload.order, status: 'canceled' },
               ...state.slice(idx+1) ]
     default:
       return state

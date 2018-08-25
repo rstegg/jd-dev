@@ -20,7 +20,6 @@ export const fetchOrders = token =>
 
 export const cancelOrder = (order, token) =>
   dispatch => {
-    console.log(token);
     dispatch({ type: 'CANCEL_ORDER', payload: { order } })
     su.delete('/api/v1/orders')
       .accept('application/json')

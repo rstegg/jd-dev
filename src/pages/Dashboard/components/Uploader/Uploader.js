@@ -2,11 +2,17 @@ import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import filext from 'file-extension'
-
-import UploadFiles from './UploadFiles'
-import { acceptStl, acceptXml, acceptZip, acceptGeneric, rejectUpload, fetchTypes } from './actions/products'
+import JSZip from 'jszip'
+import xmljs from 'xml-js'
+import { flatten, map, filter, length, pathEq, prop, path } from 'ramda'
 
 import Dropzone from 'react-dropzone'
+
+import UploadFiles from './UploadFiles'
+import { acceptStl, acceptXml, acceptZip, acceptGeneric, rejectUpload } from './actions/products'
+
+
+import { parseXml } from './utils'
 
 class Uploader extends Component {
   constructor() {
@@ -14,9 +20,6 @@ class Uploader extends Component {
     this.state = {
       dropzoneActive: false
     }
-  }
-  componentWillMount() {
-    this.props.fetchTypes()
   }
   onDragEnter = () => {
     this.setState({
@@ -71,12 +74,17 @@ class Uploader extends Component {
           accepted.forEach(accept => {
             switch (filext(accept.name)) {
               case 'stl':
-                this.props.acceptStl(accept);
+                const reader = new FileReader();
+                reader.onload = () => {
+                  this.props.acceptStl(accept, reader.result);
+                };
+                reader.readAsDataURL(accepted);
                 break;
               case 'xml':
                 this.props.acceptXml(accept);
                 break;
               case 'zip':
+
                 this.props.acceptZip(accept);
                 break;
               default:
@@ -102,17 +110,38 @@ class Uploader extends Component {
                     })
                     accepted.forEach(accept => {
                       const reader = new FileReader();
-                      reader.addEventListener("loadend", function(event) { console.log(event.target.result);});
                       switch (filext(accept.name)) {
                         case 'stl':
-                          this.props.acceptStl(accept);
+                          reader.onload = () => {
+                            this.props.acceptStl(accept, reader.result);
+                          };
+                          reader.readAsDataURL(accept);
                           break;
                         case 'xml':
                           const xml = reader.readAsText(accept);
-                          this.props.acceptXml(accept, xml);
+                          const jsonFromXML = parseXml(accept)
+                          this.props.acceptXml(accept, jsonFromXML);
                           break;
                         case 'zip':
-                          this.props.acceptZip(accept);
+                          const new_zip = new JSZip()
+                          new_zip.loadAsync(accept)
+                            .then(zip => {
+                              const strippedName = accept.name.split('.').slice(0, -1).join('')
+                              const xmlName = strippedName + '/' + strippedName + '.xml'
+
+                              const promised = zip.file(xmlName).async('string')
+
+                              promised
+                                .then(xml => {
+                                  const jsonFromXML = parseXml(xml)
+
+                                  this.props.acceptZip(accept, jsonFromXML);
+                                })
+
+
+
+                            })
+                          //
                           break;
                         default:
                           this.props.acceptGeneric(accept)
@@ -163,12 +192,11 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  acceptStl: accepted => dispatch(acceptStl(accepted)),
+  acceptStl: (accepted, stl) => dispatch(acceptStl(accepted, stl)),
   acceptXml: (accepted, xml) => dispatch(acceptXml(accepted, xml)),
-  acceptZip: accepted => dispatch(acceptZip(accepted)),
+  acceptZip: (accepted, zip) => dispatch(acceptZip(accepted, zip)),
   acceptGeneric: accepted => dispatch(acceptGeneric(accepted)),
   rejectUpload: rejected => dispatch(rejectUpload(rejected)),
-  fetchTypes: () => dispatch(fetchTypes())
 })
 
 export default withRouter(connect(
