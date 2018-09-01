@@ -12,6 +12,7 @@ const validFields = apiRequire('middleware/valid-fields')
 const hashPassword = apiRequire('middleware/hash-password')
 
 const validSignupUser = validFields('user', ['email', 'name', 'password'])
+const validLoginUser = validFields('', ['email', 'password'])
 
 const logger = tap(console.log)
 

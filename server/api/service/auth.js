@@ -14,11 +14,17 @@ const localStrategy = new LocalStrategy(
   { usernameField: 'email', session: false },
   (email, password, done) =>
     User.findOne({ where: { email } })
-      .then(user =>
-        !user ? done(null, false, { message: 'Incorrect email' })
-        : !user.validPassword(password) ? done(null, false, { message: 'Incorrect password' })
-        : done(null, user)
-      )
+      .then(user => {
+        if (!user) {
+          return done(null, false, { message: 'Incorrect email' })
+        }
+        return Promise.all([ user.validPassword(password), user ])
+      }).then(([validPassword, user]) => {
+        if (!validPassword) {
+          return done(null, false, { message: 'Incorrect password' })
+        }
+        return done(null, user)
+      })
       .catch(err => done(err))
 )
 
