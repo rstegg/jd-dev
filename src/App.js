@@ -34,7 +34,6 @@ class App extends Component {
         };
 
         this.onWrapperClick = this.onWrapperClick.bind(this);
-        this.createMenu();
     }
 
     onWrapperClick(event) {
@@ -46,21 +45,6 @@ class App extends Component {
         }
 
         this.menuClick = false;
-    }
-
-    createMenu() {
-      if (this.props.user.isAuthenticated) {
-        this.menu = [
-            {label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => { window.location = '#/'}},
-            {label: 'Orders', icon: 'fa fa-fw fa-table', command: () => { window.location = '#/orders'}},
-        ];
-      } else {
-        this.menu = [
-            {label: 'Login', icon: 'fa fa-fw fa-sign-in', command: () => { window.location = '#/login'}},
-            {label: 'Sign up', icon: 'fa fa-fw fa-user-plus', command: () => { window.location = '#/signup'}},
-        ];
-      }
-
     }
 
     addClass(element, className) {

@@ -1,4 +1,4 @@
-@-webkit-keyframes rotation-lr {
+@keyframes rotation-lr {
   from {
     transform: rotate(-90deg);
   }
@@ -22,7 +22,7 @@
     transform: rotate(0);
   }
 }
-@-webkit-keyframes rotation-rl {
+@keyframes rotation-rl {
   from {
     transform: rotate(90deg);
   }
@@ -38,15 +38,7 @@
     transform: rotate(0);
   }
 }
-@keyframes rotation-rl {
-  from {
-    transform: rotate(90deg);
-  }
-  to {
-    transform: rotate(0);
-  }
-}
-@-webkit-keyframes slide-in {
+@keyframes slide-in {
   from {
     opacity: 0;
     transform: translateY(100px);
@@ -63,7 +55,7 @@
   }
   to {
     opacity: 1;
-    transform: translateY(-1000);
+    transform: translateY(-1000px);
   }
 }
 @keyframes slide-in {
@@ -73,13 +65,13 @@
   }
   to {
     opacity: 1;
-    transform: translateY(-1000);
+    transform: translateY(-1000px);
   }
 }
-@-webkit-keyframes slide-out {
+@keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(-1000);
+    transform: translateY(-1000px);
   }
   to {
     opacity: 0;
@@ -89,7 +81,7 @@
 @-moz-keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(-1000);
+    transform: translateY(-1000px);
   }
   to {
     opacity: 0;
@@ -99,31 +91,20 @@
 @keyframes slide-out {
   from {
     opacity: 1;
-    transform: translateY(-1000);
+    transform: translateY(-1000px);
   }
   to {
     opacity: 0;
     transform: translateY(10px);
   }
 }
-.rcw-launcher {
 
+.rcw-launcher {
   cursor: pointer;
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: slide-in;
-  -webkit-animation-fill-mode: forwards;
-  /* this prevents the animation from restarting! */
-  -moz-animation-delay: 0;
-  -moz-animation-duration: 0.5s;
-  -moz-animation-name: slide-in;
-  -moz-animation-fill-mode: forwards;
-  /* this prevents the animation from restarting! */
   animation-delay: 0;
   animation-duration: 0.5s;
   animation-name: slide-in;
   animation-fill-mode: forwards;
-  /* this prevents the animation from restarting! */
   align-self: flex-end;
   background-color: #35cce6;
   border: 0;
@@ -133,6 +114,7 @@
   margin-top: 10px;
   width: 160px;
 }
+
 .rcw-launcher:focus {
   outline: none;
 }
@@ -147,10 +129,10 @@
 }
 
 .rcw-hide-sm {
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: slide-up;
-  -webkit-animation-fill-mode: forwards;
+  animation-delay: 0;
+  animation-duration: 0.5s;
+  animation-name: slide-up;
+  animation-fill-mode: forwards;
   /* this prevents the animation from restarting! */
   -moz-animation-delay: 0;
   -moz-animation-duration: 0.5s;
@@ -166,10 +148,10 @@
 
 .rcw-open-launcher {
   width: 50px;
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: rotation-rl;
-  -webkit-animation-fill-mode: forwards;
+  animation-delay: 0;
+  animation-duration: 0.5s;
+  animation-name: rotation-rl;
+  animation-fill-mode: forwards;
   /* this prevents the animation from restarting! */
   -moz-animation-delay: 0;
   -moz-animation-duration: 0.5s;
@@ -185,10 +167,10 @@
 
 .rcw-close-launcher {
   width: 20px;
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: rotation-lr;
-  -webkit-animation-fill-mode: forwards;
+  animation-delay: 0;
+  animation-duration: 0.5s;
+  animation-name: rotation-lr;
+  animation-fill-mode: forwards;
   /* this prevents the animation from restarting! */
   -moz-animation-delay: 0;
   -moz-animation-duration: 0.5s;

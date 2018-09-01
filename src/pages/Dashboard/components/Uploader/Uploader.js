@@ -3,14 +3,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import filext from 'file-extension'
 import JSZip from 'jszip'
-import xmljs from 'xml-js'
 import { flatten, map, filter, length, pathEq, prop, path } from 'ramda'
 
 import Dropzone from 'react-dropzone'
 
 import UploadFiles from './UploadFiles'
 import { acceptStl, acceptXml, acceptZip, acceptGeneric, rejectUpload } from './actions/products'
-
 
 import { parseXml } from './utils'
 

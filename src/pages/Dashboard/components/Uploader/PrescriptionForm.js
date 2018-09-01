@@ -88,18 +88,14 @@ const linerTypes = [
 ]
 
 export default class PrescriptionForm extends Component {
-  onChangeDueDate = (time, timeString) => {
-    console.log(time);
-    console.log(timeString);
-  }
   render () {
     const { product, productTypes, isLoading, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx,
-    setContact, setOcclusion, setPontic, setLinerSpacer } = this.props
+    setContact, setOcclusion, setPontic, setLinerSpacer, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
         : <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
-            <TimePicker value={product.time} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => this.props.setDueDate(time, idx)}  />
+            <TimePicker value={moment(product.time)} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => setDueDate(time, idx)}  />
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
             <FormItem hasFeedback validateStatus={product.hasUnitError}>
               <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} />
