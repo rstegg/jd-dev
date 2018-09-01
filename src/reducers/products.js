@@ -60,6 +60,10 @@ export default (state = initialState, action) => {
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], time: action.payload.time },
               ...state.slice(action.payload.idx+1) ]
+    case 'SET_DATE':
+      return [ ...state.slice(0, action.payload.idx),
+              { ...state[action.payload.idx], date: action.payload.date },
+              ...state.slice(action.payload.idx+1) ]
     case 'SET_PATIENT':
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], patient: action.payload.patient },

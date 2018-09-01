@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 
 import SelectSearch from './SelectSearch'
 import DentalPicker from '../DentalPicker/Picker'
-import { TimePicker, List, Progress, Input, Icon, Button, Form } from 'antd'
+import { TimePicker, DatePicker, List, Progress, Input, Icon, Button, Form } from 'antd'
 
 import moment from 'moment'
 
@@ -88,14 +88,30 @@ const linerTypes = [
 ]
 
 export default class PrescriptionForm extends Component {
+  state = {
+    startValue: moment()
+  }
+  disabledEndDate = (endValue) => {
+    const startValue = this.state.startValue;
+    if (!endValue || !startValue) {
+      return false;
+    }
+    return endValue.valueOf() <= startValue.valueOf();
+  }
   render () {
     const { product, productTypes, isLoading, toggleRenameCaseID, setType, setName, setNotes, setUnits, clearUnits, idx,
-    setContact, setOcclusion, setPontic, setLinerSpacer, setDueDate } = this.props
+    setContact, setOcclusion, setPontic, setLinerSpacer, setDueTime, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
         : <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
-            <TimePicker value={moment(product.time)} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => setDueDate(time, idx)}  />
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
+            <div style={{ width: '100%' }}>Due by</div>
+            <div style={{display: 'flex', flexDirection: 'row' }}>
+              <TimePicker value={moment(product.time)} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => setDueTime(time, idx)}  />
+              <DatePicker disabledDate={this.disabledEndDate} value={moment(product.time)} allowClear={false} onChange={time => setDueDate(time, idx)}  />
+            </div>
+          </div>
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
             <FormItem hasFeedback validateStatus={product.hasUnitError}>
               <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} />

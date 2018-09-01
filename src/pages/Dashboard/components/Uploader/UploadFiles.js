@@ -7,7 +7,7 @@ import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
 import { Tabs, List, Tag, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
-import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
+import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
 
 const FormItem = Form.Item
 const Search = Input.Search
@@ -151,6 +151,7 @@ class UploadTable extends Component {
                 onCancel={() => this.hideModal(idx)}
                 okText="Save"
                 cancelText="Cancel"
+                style={{ minWidth: '50%' }}
               >
                 <PrescriptionForm {...this.props} product={product} idx={idx} />
               </Modal>
@@ -174,7 +175,8 @@ const mapDispatchToProps = dispatch => ({
   setName: (name, idx) => dispatch(setName(name, idx)),
   setNotes: (notes, idx) => dispatch(setNotes(notes, idx)),
   setUnits: (units, idx) => dispatch(setUnits(units, idx)),
-  setDueDate: (time, idx) => dispatch(setDueDate(time, idx)),
+  setDueTime: (time, idx) => dispatch(setDueTime(time, idx)),
+  setDueDate: (date, idx) => dispatch(setDueDate(date, idx)),
   clearUnits: (idx) => dispatch(clearUnits(idx)),
   deleteProduct: uid => dispatch(deleteProduct(uid)),
   validateForm: (products, token) => dispatch(validateForm(products, token)),
