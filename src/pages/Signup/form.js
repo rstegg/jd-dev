@@ -22,7 +22,7 @@ const SignupForm = ({error, handleSubmit, submitting}) =>
     <Field component={InputField} name="name" type="text" icon={<Icon type="idcard" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Full name' />
     <Field component={InputField} name="password" type="password" icon={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Password' />
     <Field component={InputField} name="repeat" type="password" icon={<Icon type="reload" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Verify Password' />
-    {error && <Alert message={error} type="error" closable />}
+    {error && <Alert message={error} type="error" closable style={{ marginBottom: '20px' }} />}
     <Button loading={submitting} htmlType="submit" type='primary'>Sign up</Button>
   </Form>
 

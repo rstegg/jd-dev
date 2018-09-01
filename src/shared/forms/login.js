@@ -20,7 +20,7 @@ const LoginForm = ({error, handleSubmit, submitting}) =>
   <Form onSubmit={handleSubmit}>
     <Field component={InputField} name="email" type="email" icon={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Email' />
     <Field component={InputField} name="password" type="password" icon={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Password' />
-    {error && <Alert message={error} type="error" closable />}
+    {error && <Alert message={error} type="error" closable style={{ marginBottom: '20px' }} />}
     <Button loading={submitting} htmlType="submit" type='primary'>Log in</Button>
   </Form>
 

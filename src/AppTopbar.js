@@ -22,7 +22,7 @@ export class AppTopbarView extends Component {
     })
   }
   render() {
-    const { user, location } = this.props
+    const { user, location, onLoginSubmit } = this.props
     let defaultOpen = location.pathname && location.pathname.slice(1)
     if (defaultOpen === '') {
       defaultOpen = 'dashboard'
