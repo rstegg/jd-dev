@@ -6,6 +6,7 @@ import { DataViewLayoutOptions} from 'primereact/components/dataview/DataView';
 import {Column} from 'primereact/components/column/Column'
 import {InputText} from 'primereact/components/inputtext/InputText';
 import {Dropdown} from 'primereact/components/dropdown/Dropdown';
+import moment from 'moment'
 
 import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
@@ -42,6 +43,12 @@ class OrdersView extends Component {
      this.setState({
        visible: false
      });
+    }
+
+    unitsCountTemplate = (order) => {
+      return (
+        order.units ? order.units.length : 0
+      )
     }
 
     renderRestorationTypes = (order) => {
@@ -93,6 +100,10 @@ class OrdersView extends Component {
       }
     }
 
+    dueByTemplate = (rowData, column) => {
+      return moment(rowData.dueDate).fromNow()
+    }
+
     render(){
       if (!this.props.user.isAuthenticated) {
         return <Redirect to='/login' from='/' />
@@ -107,9 +118,9 @@ class OrdersView extends Component {
                             <Column field="name" header="Case Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" body={this.renderRestorationTypes} sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
-                            <Column field="unitsCount" header="Units" sortable={true}/>
+                            <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
-                            <Column field="time" header="Due by" sortable={true}/>
+                            <Column body={this.dueByTemplate} header="Due by" sortable={true}/>
                             <Column field="notes" header="Notes" sortable={true}/>
                             <Column body={this.caseFileTemplate} header="Case Files" sortable={true}/>
                             <Column body={this.designFileTemplate} header="Design Files" sortable={true}/>

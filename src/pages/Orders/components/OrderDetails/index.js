@@ -1,13 +1,34 @@
 import React, { Component} from 'react'
 
-import { List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
+import { Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
 
 import moment from 'moment'
 
 import './Styles.css'
 
+const Step = Steps.Step
+
 const { Search, TextArea } = Input
 const FormItem = Form.Item
+
+const OrderSteps = ({ order }) => {
+  const statusNum = order.status === 'sent' ? 0 : 1
+  if (order.status === 'canceled') {
+    return (
+      <Steps current={statusNum} status={'error'}>
+        <Step title="Sent" description="Sent to designer" />
+        <Step title="Canceled" description="Order canceled" />
+      </Steps>
+    )
+  }
+  return (
+    <Steps current={statusNum} status={'process'}>
+      <Step title="Sent" description="Sent to designer" />
+      <Step title="In Process" description="Design in process" />
+      <Step title="Waiting" description="Needs approval" />
+    </Steps>
+  )
+}
 
 export default class PrescriptionForm extends Component {
   state = {
@@ -15,10 +36,8 @@ export default class PrescriptionForm extends Component {
   }
   render () {
     const { order } = this.props
-    const percentage_complete = (moment() - moment(order.createdAt)) / (moment(order.dueDate) - moment(order.createdAt)) * 100;
-    const percentage_rounded = Math.abs(Math.round(percentage_complete * 100) / 100);
     return (
-      <Card title={<Progress percent={percentage_rounded} />}>
+      <Card title={<OrderSteps order={order} />}>
           <p style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
             Due before: {moment(order.dueDate).fromNow()}
           </p>
@@ -27,7 +46,8 @@ export default class PrescriptionForm extends Component {
             type="inner"
             title="Designer Info">
             {order.designers && order.designers.map((designer, i) => <Card.Grid style={{ width: '100%' }}>
-              {designer.name} - {designer.job} - {designer.asignedDate} <Button>Message</Button>
+              {designer.avatar ? <Avatar src={designer.avatar} /> : <Avatar icon="user" />}
+              <Tag>{designer.name}</Tag> - <Tag>{designer.job}</Tag> - Assigned <Tag>{moment(designer.asignedDate).fromNow()}</Tag> <Button>Message</Button>
             </Card.Grid>)}
           </Card>
           <Card
