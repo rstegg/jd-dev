@@ -70,16 +70,19 @@ class Uploader extends Component {
             dropzoneActive: false
           })
           accepted.forEach(accept => {
+            const reader = new FileReader();
             switch (filext(accept.name)) {
               case 'stl':
-                const reader = new FileReader();
                 reader.onload = () => {
                   this.props.acceptStl(accept, reader.result);
                 };
                 reader.readAsDataURL(accepted);
                 break;
               case 'xml':
-                this.props.acceptXml(accept);
+                reader.onload = () => {
+                  const jsonFromXML = parseXml(reader.result)
+                  this.props.acceptXml(accept, jsonFromXML);
+                };
                 break;
               case 'zip':
               const new_zip = new JSZip()
@@ -152,9 +155,10 @@ class Uploader extends Component {
                           reader.readAsDataURL(accept);
                           break;
                         case 'xml':
-                          const xml = reader.readAsText(accept);
-                          const jsonFromXML = parseXml(accept)
-                          this.props.acceptXml(accept, jsonFromXML);
+                          reader.onload = () => {
+                            const jsonFromXML = parseXml(reader.result)
+                            this.props.acceptXml(accept, jsonFromXML);
+                          };
                           break;
                         case 'zip':
                           const new_zip = new JSZip()

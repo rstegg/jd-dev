@@ -8,7 +8,12 @@ export const parseXml = xml => {
 
   var parseString = xml2js.parseString;
 
+  console.log(xml);
+
   parseString(xml, function (err, result) {
+    if (err) {
+
+    }
     const getRootObj = path(['DentalContainer', 'Object'])
     const getMainObj = pipe( getRootObj, head, prop('Object') )
     const getModelList = pipe( getMainObj, find(pathEq(['$', 'name'], 'ModelElementList')), prop('List'), head, prop('Object') )
