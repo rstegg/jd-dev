@@ -31,6 +31,6 @@ module.exports =
       validateBody(prop('email'), 'missing email'),
       validateEmailHandler
     )
-    .get(`/signup/email_confirmation/:permalink/:verify_token`,
+    .get(`/signup/email_confirmation/:permalink/:verifyToken`,
       verifyTokenHandler
     )

@@ -140,6 +140,7 @@ export const notifyErrors = errors => ({
 export const sendOrders = (products, token) =>
   dispatch => {
     dispatch(setButtonLoading(true))
+    dispatch({ type: 'SEND_ORDERS', orders: products })
 
     const files = products.map(product => product.file )
 
@@ -155,6 +156,9 @@ export const sendOrders = (products, token) =>
             const file = body.files[idx]
             if (file) {
               return { ...product, caseFileUrls: file.location }
+            }
+            if (body.files && body.files.length) {
+              return { ...product, caseFileUrls: body.files[0] }
             }
             return product
           }

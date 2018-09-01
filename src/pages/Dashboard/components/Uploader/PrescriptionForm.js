@@ -108,8 +108,8 @@ export default class PrescriptionForm extends Component {
           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '24px'}}>
             <div style={{ width: '100%' }}>Due by</div>
             <div style={{display: 'flex', flexDirection: 'row' }}>
-              <TimePicker value={moment(product.time)} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => setDueTime(time, idx)}  />
-              <DatePicker disabledDate={this.disabledEndDate} value={moment(product.time)} allowClear={false} onChange={time => setDueDate(time, idx)}  />
+              <TimePicker value={moment(product.dueTime)} use12Hours format="hh:mm:ss A" allowEmpty={false} onChange={time => setDueTime(time, idx)}  />
+              <DatePicker disabledDate={this.disabledEndDate} value={moment(product.dueDate)} allowClear={false} onChange={time => setDueDate(time, idx)}  />
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>

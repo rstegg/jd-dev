@@ -7,6 +7,7 @@ const editOrderHandler = require('./handlers/edit')
 const getOrdersHandler = require('./handlers/getAll')
 const getOrderHandler = require('./handlers/get')
 const deleteOrderHandler = require('./handlers/delete')
+const setDesignerOrderHandler = require('./handlers/setDesigner')
 
 const validateBody = apiRequire('middleware/validate-body')
 const validateParams = apiRequire('middleware/validate-params')
@@ -14,6 +15,7 @@ const validFields = apiRequire('middleware/valid-fields')
 const validField = apiRequire('middleware/valid-field')
 
 const validOrder = validField('orders')
+const validSingle = validField('order')
 const validEditOrderParams = validFields(false, [ 'id' ])
 
 module.exports =
@@ -27,7 +29,12 @@ module.exports =
     )
     .post('/',
       validateBody(validOrder),
-      createOrderHandler
+      createOrderHandler,
+      setDesignerOrderHandler
+    )
+    .post('/new_designer',
+      validateBody(validSingle),
+      setDesignerOrderHandler
     )
     .put('/:id',
       validateBody(validOrder),

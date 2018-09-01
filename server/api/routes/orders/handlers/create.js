@@ -4,9 +4,9 @@ const uuid = require('uuid/v4')
 
 const { map, merge, pick, length } = require('ramda')
 
-const OrderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'caseFileUrls', 'designFileUrls' ]
+const OrderParams = [ 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
   const newOrders = map(order => merge({
     userId: req.user.id,
     unitsCount: length(order.units),
@@ -17,7 +17,11 @@ module.exports = (req, res) => {
     caseFileUrls: [ order.caseFileUrls ]
   }))
   return Order.bulkCreate(validatedTypes, { plain: true })
-  .then(orders => res.status(200).json({ orders }))
+  .then(orders => {
+    req.orders = orders
+    res.status(200).json({ orders })
+    next()
+  })
   .catch(error => {
     console.log(error);
     res.status(400).json({ error })

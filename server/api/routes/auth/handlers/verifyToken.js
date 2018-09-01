@@ -6,7 +6,7 @@ const { pathEq } = require('ramda')
 module.exports = (req, res) =>
   User.findOne({ where: { permalink: req.params.permalink }})
     .then(user =>
-      !pathEq(['verify_token'], req.params.verify_token, user) ?
+      !pathEq(['verifyToken'], req.params.verifyToken, user) ?
         res.status(200).send('Invalid verification token. Please try again or contact support.')
         : User.update({ verified: true }, { where: { permalink: req.params.permalink }, returning: true, plain: true })
     )

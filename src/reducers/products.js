@@ -1,5 +1,6 @@
 import uuid from 'uuid/v4'
 import { mergeAll } from 'ramda'
+import moment from 'moment'
 
 const initialState = []
 
@@ -19,26 +20,27 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, preview: action.payload.stl, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(),  }
       ]))
     case 'ACCEPT_XML':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] },
+          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), },
         action.payload.jsonFromXML
       ]))
     case 'ACCEPT_ZIP':
       return state.concat(mergeAll([
         defaultPrefs,
-        { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] },
+        { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, uid: uuid(),
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), },
         action.payload.jsonFromXML
        ]))
     case 'ACCEPT_GENERIC':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [] }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
@@ -58,11 +60,11 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'SET_TIME':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], time: action.payload.time },
+              { ...state[action.payload.idx], dueTime: action.payload.time },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_DATE':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], date: action.payload.date },
+              { ...state[action.payload.idx], dueDate: action.payload.date },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_PATIENT':
       return [ ...state.slice(0, action.payload.idx),
@@ -85,10 +87,8 @@ export default (state = initialState, action) => {
               { ...state[action.payload.idx], progress: action.payload.progress },
               ...state.slice(action.payload.idx+1) ]
     case 'DELETE_PRODUCT':
-      console.log(state);
       const uids = state.map(product => product.uid)
       const idx = uids.indexOf(action.payload.uid)
-      console.log(uids);
       return [ ...state.slice(0, idx),
               ...state.slice(idx+1) ]
     case 'CREATE_ORDERS_SUCCESS':

@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'sent'
     },
     dueDate: DataTypes.STRING,
+    dueTime: DataTypes.STRING,
     caseFileUrls: DataTypes.ARRAY(DataTypes.STRING),
     designFileUrls: DataTypes.ARRAY(DataTypes.STRING),
     contact: DataTypes.STRING,

@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    is_verified: {
+    verified: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
-    is_active: {
+    active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
@@ -32,17 +32,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    verify_token: {
+    verifyToken: {
       type: DataTypes.STRING,
       allowNull: false
     },
     bio: DataTypes.STRING,
-    user_type: {
+    userType: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'individual'
     },
-    ip_address: {
+    priority: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    ipAddress: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

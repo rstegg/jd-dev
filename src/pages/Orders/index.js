@@ -118,6 +118,7 @@ class OrdersView extends Component {
                     </div>
                 </div>
                 <Modal
+                  style={{ minWidth: '50%' }}
                   title={<div style={{ display: 'flex', flexDirection: 'row', fontSize: '12px' }}><div>Order ID: </div><b>{this.state.dataTableSelectValue.name}</b></div>}
                   visible={this.state.visible}
                   onOk={() => this.hideModal()}

@@ -28,13 +28,6 @@ const createPermalink = (email) =>
         .replace(/[^\w\s]/gi, '')
         .trim()
 
-const createThread = user =>
-  Thread.create({ title: user.name }, { plain: true })
-    .then(thread =>
-      !thread ? Promise.reject('Thread not created')
-      : { thread, user }
-    )
-
 const validate = req =>
   User.findOne({
     where: { email: req.body.user.email }
@@ -42,25 +35,26 @@ const validate = req =>
   .then(user =>
       user ?
         Promise.reject('email registered')
-        : createThread(req.body.user)
+        : user
   )
 
 module.exports = (req, res) =>
   validate(req)
-    .then(({thread, user}) => {
+    .then(_ => {
+      const { user } = req.body
       const newUser = merge({
         password: user.password,
-        ip_address: getIp(req),
+        ipAddress: getIp(req),
         verified: false,
         permalink: createPermalink(user.email),
-        verify_token: bytes(20),
-        threadId: thread.id
+        verifyToken: bytes(20),
+        userType: user.userType || 'individual'
       }, pick(['email', 'name'], user))
       return User.create(newUser, { plain: true })
     })
     .then(createdUser => {
-      const { permalink, verify_token } = createdUser
-      const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verify_token}`
+      const { permalink, verifyToken } = createdUser
+      const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
       const resUser = pick(['email', 'email'], createdUser)
