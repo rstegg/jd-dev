@@ -30,11 +30,11 @@ export class AppTopbarView extends Component {
     if (!user.isAuthenticated) {
       return (
         <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
-          <Popover placement="bottomRight" content={<LoginForm onSubmit={onLoginSubmit} />}>
-            <Menu.Item key="signin">
-              <Icon type="down" />Sign in
-            </Menu.Item>
-          </Popover>
+          <Menu.Item key="signin">
+            <Popover placement="bottomRight" content={<LoginForm onSubmit={onLoginSubmit} />}>
+                <NavLink to="/login"><Icon type="down" />Sign in</NavLink>
+            </Popover>
+          </Menu.Item>
           <Menu.Item key="signup">
             <NavLink to="/signup">Sign up</NavLink>
           </Menu.Item>
