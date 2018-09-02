@@ -16,7 +16,7 @@ const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
   product.renameCaseID ?
     <FormItem hasFeedback validateStatus={product.hasNameError}>
       <div style={{ lineHeight: 0, marginTop: '24px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
         <Search
           placeholder='Identifier'
           style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -26,7 +26,7 @@ const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
       </div>
     </FormItem>
     : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
         <b>{product.name}</b>
         <Button size='small' type="primary" onClick={() => toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
       </div>
@@ -103,11 +103,11 @@ class UploadTable extends Component {
               <Card.Grid style={{ width: '25%', textAlign: 'center' }}>
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>
-                    <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
                       {product.renameCaseID ?
                         <FormItem hasFeedback validateStatus={product.hasNameError}>
                           <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <Search
                               placeholder='Identifier'
                               style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -117,7 +117,7 @@ class UploadTable extends Component {
                           </div>
                         </FormItem>
                         : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center' }}>Case Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <b>{product.name}</b>
                             <Button size='small' type="primary" onClick={() => this.props.toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
                           </div>
