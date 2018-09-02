@@ -113,14 +113,14 @@ class OrdersView extends Component {
                 <div className="ui-g-12">
                     <div className="card card-w-title">
                         <h1>Orders</h1>
-                        <DataTable value={this.props.orders} selectionMode="single" header="Orders" paginator={true} rows={10}
+                        <DataTable value={this.props.orders} selectionMode="single" header="Orders" paginator={true} rows={10} sortField='status' sortOrder={-1}
                         responsive={true} selection={this.state.dataTableSelectValue} onSelectionChange={(e) => this.selectionChange(e)}>
                             <Column field="name" header="Case Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" body={this.renderRestorationTypes} sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
                             <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
-                            <Column body={this.dueByTemplate} header="Due by" sortable={true}/>
+                            <Column body={this.dueByTemplate} field='dueBy' header="Due by" sortable={true} />
                             <Column field="notes" header="Notes" sortable={true}/>
                             <Column body={this.caseFileTemplate} header="Case Files" sortable={true}/>
                             <Column body={this.designFileTemplate} header="Design Files" sortable={true}/>

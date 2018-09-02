@@ -75,7 +75,6 @@ const linerTypes = [
   { label: '0.030 mm - 30 Microns', value: '0.030 mm - 30 Microns' },
   { label: '0.020 mm - 20 Microns', value: '0.020 mm - 20 Microns' },
   { label: '0.010 mm - 10 Microns', value: '0.010 mm - 10 Microns' },
-  { label: '0.010 mm - 10 Microns', value: '0.010 mm - 10 Microns' },
   { label: '0.040 mm - 40 Microns', value: '0.040 mm - 40 Microns' },
   { label: '0.050 mm - 50 Microns', value: '0.050 mm - 50 Microns' },
   { label: '0.060 mm - 60 Microns', value: '0.060 mm - 60 Microns' },
