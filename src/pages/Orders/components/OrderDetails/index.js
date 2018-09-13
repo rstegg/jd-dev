@@ -54,7 +54,7 @@ export default class PrescriptionForm extends Component {
             type="inner"
             title="Scan Files"
             extra={<a href="#">Upload</a>} >
-            {order.caseFileUrls && order.caseFileUrls.map((caseFileUrl, i) => <Tag key={`caseFileUrl-${order.uid}-${i}`} color='geekblue'><a href={caseFileUrl}>{decodeURI(caseFileUrl && caseFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+            {order.scanFileUrls && order.scanFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
           </Card>
           <Card
             style={{ marginTop: 16 }}

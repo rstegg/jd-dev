@@ -116,7 +116,7 @@ class UploadTable extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Card title="Orders">
           { this.props.products.map((product, idx) => (
-            <div key={`case-${idx}`}>
+            <div key={`scan-${idx}`}>
               <Card.Grid style={{ width: isMobile() ? '100%' : '25%', textAlign: 'center' }}>
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>

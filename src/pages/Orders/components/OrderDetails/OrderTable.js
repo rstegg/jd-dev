@@ -54,9 +54,9 @@ class OrdersTableView extends Component {
         </Popconfirm>;
     }
 
-    caseFileTemplate = (rowData, column) => {
-      if (rowData.caseFileUrls) {
-        return rowData.caseFileUrls.map(caseFile => <Button key={`${Math.random()}`} href={caseFile} shape="circle" icon="download" />)
+    scanFileTemplate = (rowData, column) => {
+      if (rowData.scanFileUrls) {
+        return rowData.scanFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
@@ -86,7 +86,7 @@ class OrdersTableView extends Component {
                             <Column field="unitsCount" header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
                             <Column field="notes" header="Notes" sortable={true}/>
-                            <Column body={this.caseFileTemplate} header="Scan Files" sortable={true}/>
+                            <Column body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column body={this.designFileTemplate} header="Design Files" sortable={true}/>
                             <Column body={this.actionTemplate} header="Cancel order" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>
