@@ -1,21 +1,14 @@
-import JSZip from 'jszip'
 import xml2js from 'xml2js'
-import { pipe, head, propEq, match, find, trim, replace, findIndex, findLastIndex, mergeAll, flatten, map, filter, length, pathEq, prop, path, sort } from 'ramda'
-
-const designTypes = [/crown/, /coping/, /anatomical coping/, /bridge/, /abutment/, /inlay/, /onlay/, /model/]
+import { pipe, head, find, trim, replace, map, pathEq, prop, path } from 'ramda'
 
 export const parseXml = xml => {
 
   var parseString = xml2js.parseString;
 
-  console.log(xml);
-
   parseString(xml, function (err, result) {
-    if (err) {
-
-    }
     const getRootObj = path(['DentalContainer', 'Object'])
     const getMainObj = pipe( getRootObj, head, prop('Object') )
+
     const getModelList = pipe( getMainObj, find(pathEq(['$', 'name'], 'ModelElementList')), prop('List'), head, prop('Object') )
 
     const modelList = getModelList(result)
@@ -50,7 +43,7 @@ export const parseXml = xml => {
     const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
 
     return { units: teethNumsStr, type: restoTypes, orderComments, orderItems, orderManufacturer, orderFirstname, orderLastname  }
-    console.log(restoTypes);
+    
   });
 
 

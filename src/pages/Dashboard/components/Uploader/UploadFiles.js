@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import './Styles.css'
 
+import isMobile from '../../../../utils/is-mobile'
+
 import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
@@ -33,7 +35,7 @@ const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
 
 
 const OrderPreviewDetails = ({ product, viewMore }) =>
-  <Tabs defaultActiveKey="1">
+  <Tabs defaultActiveKey="1" type={isMobile() ? 'line' : 'card'}>
     <Tabs.TabPane tab="General" key="1">
       <List bordered>
         <List.Item>Restoration Type: {product.type || 'None selected'}</List.Item>
@@ -100,7 +102,7 @@ class UploadTable extends Component {
           <Card title="Orders">
           { this.props.products.map((product, idx) => (
             <div key={`case-${idx}`}>
-              <Card.Grid style={{ width: '25%', textAlign: 'center' }}>
+              <Card.Grid style={{ width: isMobile() ? '100%' : '25%', textAlign: 'center' }}>
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>
                     <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>

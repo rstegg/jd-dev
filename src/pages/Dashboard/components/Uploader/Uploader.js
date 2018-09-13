@@ -79,6 +79,7 @@ class Uploader extends Component {
                 reader.readAsDataURL(accepted);
                 break;
               case 'xml':
+                reader.readAsText(accept)
                 reader.onload = () => {
                   const jsonFromXML = parseXml(reader.result)
                   this.props.acceptXml(accept, jsonFromXML);
@@ -155,7 +156,9 @@ class Uploader extends Component {
                           reader.readAsDataURL(accept);
                           break;
                         case 'xml':
+                          reader.readAsText(accept)
                           reader.onload = () => {
+                            console.log(reader.result);
                             const jsonFromXML = parseXml(reader.result)
                             this.props.acceptXml(accept, jsonFromXML);
                           };
