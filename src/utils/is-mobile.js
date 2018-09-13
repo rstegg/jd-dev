@@ -3,7 +3,7 @@ const isMobile = () => {
     return true;
   }
 
-  if ('screen' in window && window.screen.width < 1366) {
+  if ('screen' in window && window.screen.width < 1081) {
     return true;
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import 'babel-polyfill';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -14,17 +14,16 @@ const Loader = () =>
   <div className="loading-screen">
     <Spin />
   </div>
-  
-ReactDOM.render(
-    <Provider store={store}>
-      <PersistGate loading={<Loader />} persistor={persistor}>
-        <HashRouter>
-          <App />
-        </HashRouter>
-      </PersistGate>
-    </Provider>
-    ,
-    document.getElementById('root')
-);
+
+const Root = () =>
+  <Provider store={store}>
+    <PersistGate loading={<Loader />} persistor={persistor}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </PersistGate>
+  </Provider>
+
+render(<Root />,document.getElementById('root'));
 
 registerServiceWorker();

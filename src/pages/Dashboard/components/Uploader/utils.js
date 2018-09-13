@@ -7,6 +7,11 @@ export const parseXml = xml => {
 
   parseString(xml, function (err, result) {
     const getRootObj = path(['DentalContainer', 'Object'])
+
+    if (!getRootObj(result)) {
+      return { units: '', type: '', orderComments: '', orderItems: [], orderManufacturer: '', orderFirstname: '', orderLastname: ''  }
+    }
+
     const getMainObj = pipe( getRootObj, head, prop('Object') )
 
     const getModelList = pipe( getMainObj, find(pathEq(['$', 'name'], 'ModelElementList')), prop('List'), head, prop('Object') )
@@ -43,7 +48,7 @@ export const parseXml = xml => {
     const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
 
     return { units: teethNumsStr, type: restoTypes, orderComments, orderItems, orderManufacturer, orderFirstname, orderLastname  }
-    
+
   });
 
 

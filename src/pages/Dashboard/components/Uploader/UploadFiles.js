@@ -38,9 +38,24 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
   <Tabs defaultActiveKey="1" type={isMobile() ? 'line' : 'card'}>
     <Tabs.TabPane tab="General" key="1">
       <List bordered>
-        <List.Item>Restoration Type: {product.type || 'None selected'}</List.Item>
-        <List.Item>Units: {product.units && product.units.length || 0}</List.Item>
-        <List.Item>Tooth Numbers: {product.units && product.units.join(', ') || 'None selected'}</List.Item>
+        <List.Item>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Restoration Type</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.type || 'None selected'}</div>
+          </div>
+        </List.Item>
+        <List.Item>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Units</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units && product.units.length || 0}</div>
+          </div>
+          </List.Item>
+        <List.Item>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+            <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Tooth Numbers</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units && product.units.join(', ') || 'None selected'}</div>
+          </div>
+        </List.Item>
       </List>
     </Tabs.TabPane>
     <Tabs.TabPane tab="Notes" key="2">
