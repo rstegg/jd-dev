@@ -79,7 +79,7 @@ class OrdersTableView extends Component {
                 <div className="ui-g-12">
                     <div className="card card-w-title">
                         <h1>Orders</h1>
-                        <DataTable value={this.props.orders} header="Cases" paginator={true} rows={10}>
+                        <DataTable value={this.props.orders} header="Scans" paginator={true} rows={10}>
                             <Column field="name" header="Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>

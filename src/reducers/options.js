@@ -30,7 +30,7 @@ const filterNames = (collection, allProducts) =>
 export default (state=initialState, action) => {
   switch(action.type) {
     case 'ACCEPT_STL':
-      return [ ...state, { ...action.payload.accepted, renameCaseID: false } ]
+      return [ ...state, { ...action.payload.accepted, renameScanID: false } ]
     case 'POPULATE_NAMES':
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], productNames: filterNames(action.payload.collection, action.payload.allProducts) },

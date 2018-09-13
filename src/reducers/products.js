@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const initialState = []
 
-const toggleCaseUnit = (unit, arr) => arr.indexOf(unit) === -1 ? arr.concat(unit)
+const toggleScanUnit = (unit, arr) => arr.indexOf(unit) === -1 ? arr.concat(unit)
   : [ ...arr.slice(0, arr.indexOf(unit)), ...arr.slice(arr.indexOf(unit) + 1) ]
 
 const defaultPrefs = {
@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'TOGGLE_RENAME_CASE_ID':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], renameCaseID: !state[action.payload.idx].renameCaseID || false },
+              { ...state[action.payload.idx], renameScanID: !state[action.payload.idx].renameScanID || false },
               ...state.slice(action.payload.idx+1) ]
     case 'EDIT_NAME':
       return [ ...state.slice(0, action.payload.idx),
@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'SET_NAME':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], name: action.payload.name, renameCaseID: false },
+              { ...state[action.payload.idx], name: action.payload.name, renameScanID: false },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_TIME':
       return [ ...state.slice(0, action.payload.idx),
@@ -76,7 +76,7 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'SET_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: toggleCaseUnit(action.payload.units, state[action.payload.idx].units) },
+              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units) },
               ...state.slice(action.payload.idx+1) ]
     case 'CLEAR_UNITS':
       return [ ...state.slice(0, action.payload.idx),

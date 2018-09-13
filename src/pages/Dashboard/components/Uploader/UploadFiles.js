@@ -9,16 +9,16 @@ import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
 import { Tabs, List, Tag, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
-import { openNotification, deleteProduct, toggleRenameCaseID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
+import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
 
 const FormItem = Form.Item
 const Search = Input.Search
 
-const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
-  product.renameCaseID ?
+const UploaderHeader = ({ name, setName, product, toggleRenameScanID, idx }) =>
+  product.renameScanID ?
     <FormItem hasFeedback validateStatus={product.hasNameError}>
       <div style={{ lineHeight: 0, marginTop: '24px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
         <Search
           placeholder='Identifier'
           style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -28,9 +28,9 @@ const UploaderHeader = ({ name, setName, product, toggleRenameCaseID, idx }) =>
       </div>
     </FormItem>
     : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
         <b>{product.name}</b>
-        <Button size='small' type="primary" onClick={() => toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
+        <Button size='small' type="primary" onClick={() => toggleRenameScanID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
       </div>
 
 
@@ -121,10 +121,10 @@ class UploadTable extends Component {
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>
                     <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
-                      {product.renameCaseID ?
+                      {product.renameScanID ?
                         <FormItem hasFeedback validateStatus={product.hasNameError}>
                           <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
                             <Search
                               placeholder='Identifier'
                               style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -134,9 +134,9 @@ class UploadTable extends Component {
                           </div>
                         </FormItem>
                         : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
                             <b>{product.name}</b>
-                            <Button size='small' type="primary" onClick={() => this.props.toggleRenameCaseID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
+                            <Button size='small' type="primary" onClick={() => this.props.toggleRenameScanID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
                           </div>
                       }
                     </div>
@@ -197,7 +197,7 @@ const mapDispatchToProps = dispatch => ({
   clearUnits: (idx) => dispatch(clearUnits(idx)),
   deleteProduct: uid => dispatch(deleteProduct(uid)),
   validateForm: (products, token) => dispatch(validateForm(products, token)),
-  toggleRenameCaseID: idx => dispatch(toggleRenameCaseID(idx)),
+  toggleRenameScanID: idx => dispatch(toggleRenameScanID(idx)),
   openNotification: () => dispatch(openNotification()),
 })
 

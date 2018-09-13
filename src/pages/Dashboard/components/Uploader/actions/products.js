@@ -39,7 +39,7 @@ export const rejectUpload = rejected => ({
   }
 })
 
-export const toggleRenameCaseID = idx => ({
+export const toggleRenameScanID = idx => ({
   type: 'TOGGLE_RENAME_CASE_ID',
   payload: {
     idx

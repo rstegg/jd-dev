@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Input, Icon, Button } from 'antd'
 const { Search } = Input
 
-class CaseIDForm extends Component {
+class ScanIDForm extends Component {
   render() {
-    return this.props.renameCaseID ?
+    return this.props.renameScanID ?
       <Search
         placeholder='Identifier'
         style={this.props.style}
@@ -15,4 +15,4 @@ class CaseIDForm extends Component {
   }
 }
 
-export default CaseIDForm
+export default ScanIDForm
