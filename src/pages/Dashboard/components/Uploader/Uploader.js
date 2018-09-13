@@ -215,7 +215,7 @@ class Uploader extends Component {
                  >
         	       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                    <span className="fa fa-5x fa-cloud-upload" />
-                   <p>Drag & Drop case files here to create new orders</p>
+                   <p>Drag & Drop Scan Files here to create new orders</p>
                  </div>
         	     </Dropzone>
         	   </div>
