@@ -14,7 +14,6 @@ const toggleScanModel = (model, state) => state.model.indexOf(model) === -1 ? st
   : [ ...state.model.slice(0, state.model.indexOf(model)), ...state.model.slice(state.model.indexOf(model) + 1) ]
 
 const toggleScanModelUnits = (model, state) => {
-  state.units.contains
   if (model === 'top') {
     return state.model.includes('top') ? state.units.filter(x => !upperUnits.includes(x))
     : uniq(state.units.concat(upperUnits)).sort((a,b) => Number(a) - Number(b))
