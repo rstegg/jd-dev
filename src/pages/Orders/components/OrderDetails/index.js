@@ -57,28 +57,27 @@ export default class PrescriptionForm extends Component {
         <Card
           type="inner"
           title="Scan Files"
-          extra={<a href="#">Upload</a>} >
+          extra={<Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />}>
           {order.scanFileUrls && order.scanFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
           type="inner"
-          title="Design Files"
-          extra={<a href="#">Upload</a>} >
+          title="Design Files">
           {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) => <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
           type="inner"
           title="Notes"
-          extra={<a href="#">Add notes</a>}>
+          extra={<a href="#" style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
           <p>{order.notes || 'No notes'}</p>
         </Card>
         <Card
           style={{ marginTop: 16 }}
           type="inner"
           title="Preferences"
-          extra={<a href="#">Edit</a>}
+          extra={<a href="#" style={{ position: 'absolute', right: '10px', top: '10px' }}>Edit</a>}
         >
           <List bordered grid={{ xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 2 }}>
             <List.Item>
