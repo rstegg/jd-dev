@@ -39,16 +39,20 @@ export default class PrescriptionForm extends Component {
     return (
       <Card title={<OrderSteps order={order} />}>
         <p style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
-          Due before: {moment(order.dueDate).fromNow()}
+          Due by: {moment(order.dueDate).fromNow()}
         </p>
-        {order.status}
         <Card
           type="inner"
           title="Designer Info">
-          {order.designers && order.designers.map((designer, i) => <Card.Grid style={{ width: '100%' }}>
-            {designer.avatar ? <Avatar src={designer.avatar} /> : <Avatar icon="user" />}
-            <Tag>{designer.name}</Tag> - <Tag>{designer.job}</Tag> - Assigned <Tag>{moment(designer.asignedDate).fromNow()}</Tag> <Button>Message</Button>
-          </Card.Grid>)}
+          {order.designers && order.designers.map((designer, i) =>
+            <Card.Grid style={{ width: '100%' }}>
+              <Card.Meta
+                avatar={designer.image ? <Avatar src={designer.image} /> : <Avatar icon="user" />}
+                title={designer.name}
+                description={moment(designer.asignedDate).fromNow()}
+              />
+            </Card.Grid>
+          )}
         </Card>
         <Card
           type="inner"
@@ -62,6 +66,13 @@ export default class PrescriptionForm extends Component {
           title="Design Files"
           extra={<a href="#">Upload</a>} >
           {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) => <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+        </Card>
+        <Card
+          style={{ marginTop: 16 }}
+          type="inner"
+          title="Notes"
+          extra={<a href="#">Add notes</a>}>
+          <p>{order.notes || 'No notes'}</p>
         </Card>
         <Card
           style={{ marginTop: 16 }}
