@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const { path } = require('ramda')
 
 const { sendThreadChatMessage } = require('./message/sendmessage')
-const { fetchThreadChatMessages } = require('./message/fetchall')
 const { joinChatThread, leaveChatThread } = require('./threads/join')
 const { sendShopOffer, sendProductOffer } = require('./offer/createoffer')
 const { acceptOffer, rejectOffer } = require('./offer/editoffer')
@@ -16,27 +15,25 @@ const authorize = token =>
     )
   )
 
-const getToken = path(['payload', 'user', 'token'])
+const getToken = path(['payload', 'token'])
 
 module.exports = (io, socket, action) => {
+  console.log(action);
   // TODO: use ramda to check the type of action
   if (!action.type) {
     throw new Error('Action type missing')
   }
-  if (action.type === 'WS/FETCH_THREAD_CHAT_MESSAGES') {
-    return fetchThreadChatMessages(io, socket, action)
-  }
   if (action.type === 'WS/JOIN_THREAD') {
     return joinChatThread(io, socket, action)
   }
+
   authorize(getToken(action))
     .then(token => {
+      console.log(token);
       socket.userId = token.id //TODO: best answer?
       switch(action.type) {
         case 'WS/SEND_THREAD_CHAT_MESSAGE':
           return sendThreadChatMessage(io, socket, action)
-        case 'WS/FETCH_THREAD_CHAT_MESSAGES':
-          return fetchThreadChatMessages(io, socket, action)
         case 'WS/SEND_SHOP_OFFER':
           return sendShopOffer(io, socket, action)
         // case 'WS/SEND_PRODUCT_OFFER':

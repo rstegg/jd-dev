@@ -6,6 +6,13 @@ const { map, merge, pick, length } = require('ramda')
 
 const OrderParams = [ 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
 
+const createThread = order =>
+  Thread.create({ title: order.name, uid: order.uid }, { plain: true })
+    .then(thread =>
+      !thread ? Promise.reject('Thread not created')
+      : thread
+    )
+
 module.exports = (req, res, next) => {
   const newOrders = map(order => merge({
     userId: req.user.id,
@@ -18,6 +25,7 @@ module.exports = (req, res, next) => {
   }))
   return Order.bulkCreate(validatedTypes, { plain: true })
   .then(orders => {
+    orders.map(createThread)
     req.orders = orders
     res.status(200).json({ orders })
     next()

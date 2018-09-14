@@ -19,7 +19,7 @@ export default function(state = initialState, action) {
     })
   case 'FETCH_ORDERS_SUCCESS':
     const safeOrders = action.payload.orders.filter(o => o.designers && o.designers.length)
-    const designers = flatten(safeOrders.map(o => o.designers && o.designers.map(designer => ({ ...designer, case: o.name }))))
+    const designers = flatten(safeOrders.map(o => o.designers && o.designers.map(designer => ({ ...designer, case: o.name, caseUID: o.uid }))))
     return Object.assign({}, state, {
       contacts: state.contacts.concat(designers)
     })

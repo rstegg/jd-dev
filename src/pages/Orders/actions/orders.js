@@ -1,4 +1,5 @@
 import su from 'superagent'
+import { flatten } from 'ramda'
 
 export const fetchOrdersSuccess = res => ({
   type: 'FETCH_ORDERS_SUCCESS',
@@ -12,7 +13,15 @@ export const fetchOrders = token =>
     su.get('/api/v1/orders')
       .accept('application/json')
       .set('Authorization', token)
-      .then(res => dispatch(fetchOrdersSuccess(res)))
+      .then(res => {
+        dispatch(fetchOrdersSuccess(res))
+        const orders = res.body.orders
+        const safeOrders = orders.filter(o => o.designers && o.designers.length)
+        const designers = flatten(safeOrders.map(o => o.designers && o.designers.map(designer => ({ ...designer, case: o.name, caseUID: o.uid }))))
+        designers.map(designer => {
+          dispatch(joinChatThread(designer.caseUID, token))
+        })
+      })
       .catch(err => {
         console.error(err);
       })
@@ -35,5 +44,15 @@ export const cancelOrdersSuccess = res => ({
   type: 'CANCEL_ORDERS_SUCCESS',
   payload: {
     orders: res.body.orders
+  }
+})
+
+
+export const joinChatThread = (threadId, token) =>
+({
+  type: 'WS/JOIN_THREAD',
+  payload: {
+    threadId,
+    token
   }
 })

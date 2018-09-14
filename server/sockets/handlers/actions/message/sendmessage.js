@@ -1,18 +1,21 @@
 const models = requireDb
-const { User, Message } = models
+const { User, Message, Thread } = models
 
 const userAttributes = ['id', 'username', 'image']
 
 const sendThreadChatMessage = (io, socket, action) => {
   // TODO: use ramda to get params from payload
-  const { user, text, threadId } = action.payload
-  const { username, image } = user
+  const { text, threadId } = action.payload
   if (!text.length) {
     return //TODO: user tries to send empty string
   }
   // TODO: store users with their socketIds
-  const newMessage = { text, contentType: 'text', userId: socket.userId, threadId }
-  Message.create(newMessage, { plain: true })
+  Thread.findOne({ where: { uid: threadId }})
+  .then(thread => {
+    const msgThreadId = thread.id
+    const newMessage = { text, contentType: 'text', userId: socket.userId, threadId: msgThreadId }
+    return Message.create(newMessage, { plain: true })
+    })
     .then(savedMessage =>
       Message.findOne({
         include: [

@@ -1,30 +1,29 @@
 const models = requireDb
-const { User, Offer, Message } = models
+const { User, Order, Message, Thread } = models
 
-const offerAttributes = ['id', 'state', 'productName', 'price', 'productId', 'userId', 'sellerId']
-const userAttributes = ['id', 'username', 'image']
+const orderAttributes = ['name', 'units', 'type', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'contact', 'occlusion', 'library', 'pontic', 'linerSpacer']
+const userAttributes = ['id', 'email', 'image']
 
 const joinChatThread = (io, socket, action) => {
-  const { threadId, user } = action.payload
-  Message.findAll({
-    include: [
-      {
-        model: Offer,
-        attributes: offerAttributes
-      },
-      {
-        model: User,
-        attributes: userAttributes
-      }
-    ],
-    where: { threadId }
-  })
+  const { threadId } = action.payload
+  Thread.findOne({ where: { uid: threadId }})
+  .then(thread =>
+    Message.findAll({
+      include: [
+        {
+          model: Order,
+          attributes: orderAttributes
+        },
+        {
+          model: User,
+          attributes: userAttributes
+        }
+      ],
+      where: { threadId: thread.id }
+    })
+  )
   .then(messages => {
-    if (socket.thread) {
-      socket.leave(socket.thread)
-    }
     socket.join(threadId)
-    socket.thread = threadId
     socket.emit('action', {
       type: 'JOIN_THREAD_SUCCESS',
       payload: {

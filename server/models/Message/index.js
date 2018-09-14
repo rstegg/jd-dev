@@ -7,9 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING
   })
 
-  Message.associate = ({ User, Thread }) => {
+  Message.associate = ({ User, Order, Thread }) => {
     Message.belongsTo(User)
     Message.belongsTo(Thread)
+    Message.belongsTo(Order)
   }
 
   return Message

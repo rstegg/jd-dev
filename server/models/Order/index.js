@@ -25,8 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     linerSpacer: DataTypes.STRING
   })
 
-  Order.associate = ({ User }) => {
+  Order.associate = ({ User, Message }) => {
     Order.belongsTo(User)
+    Order.hasMany(Message)
   }
 
   return Order
