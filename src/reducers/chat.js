@@ -1,9 +1,9 @@
-import { flatten, map } from 'ramda'
+import { flatten, map, uniqBy, prop, propEq, findIndex } from 'ramda'
 
 const initialState = {
   isContactsOpened: false,
   contactsUnseen: 0,
-  contacts: [{ name: 'Fred aoijaweoifjaweofijswaiuwhefaiwojefioawjfoaiwjef', email: 'testemail@yahoo.com', localId: '1', isOpen: false, image: null, isShowing: false }],
+  contacts: [{ name: 'Fred aoijaweoifjaweofijswaiuwhefaiwojefioawjfoaiwjef', email: 'testemail@yahoo.com', localId: '1', isOpen: false, image: null, isShowing: false, messages: [], case: 'Test Case', caseUID: '123' }],
   messages: [],
   threadId: null,
   isFetching: null
@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
     const safeOrders = action.payload.orders.filter(o => o.designers && o.designers.length)
     const designers = flatten(safeOrders.map(o => o.designers && o.designers.map(designer => ({ ...designer, case: o.name, caseUID: o.uid }))))
     return Object.assign({}, state, {
-      contacts: state.contacts.concat(designers)
+      contacts: uniqBy(prop('caseUID'), state.contacts.concat(designers))
     })
   case 'CLOSE_CONTACT_CHAT':
     return Object.assign({}, state, {
@@ -57,9 +57,15 @@ export default function(state = initialState, action) {
       threadId: null
     })
   case 'JOIN_THREAD_SUCCESS':
+    const contactIdx = findIndex(propEq('caseUID', action.payload.threadId), state.contacts)
+    const UI_MESSAGES = action.payload.messages.map(msg => ({ text: msg.text, type: 'text', sender: 'client' }))
+    const contactsWithMessages = [
+      ...state.contacts.slice(0, contactIdx),
+      { ...state.contacts[contactIdx], messages: UI_MESSAGES },
+      ...state.contacts.slice(contactIdx+1)
+    ]
     return Object.assign({}, state, {
-      messages: action.payload.messages || [],
-      threadId: action.payload.threadId,
+      contacts: contactsWithMessages,
       isFetching: null
     })
   case 'SEND_MESSAGE_FAILURE':

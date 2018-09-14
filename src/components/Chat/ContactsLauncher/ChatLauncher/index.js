@@ -10,9 +10,6 @@ import { closeContactChat, sendThreadChatMessage } from './actions'
 import avatarPlaceholder from './avatar.png';
 
 class ChatLauncher extends Component {
-  handleNewUserMessage = msg => {
-    this.props.sendThreadChatMessage(msg, )
-  }
   render() {
     const { user, chat, closeContactChat } = this.props
     const { contacts } = chat
@@ -26,6 +23,7 @@ class ChatLauncher extends Component {
                 profileAvatar={contact.avatar || avatarPlaceholder}
                 title={contact.name + ' :: '  + contact.case}
                 subtitle={contact.orderName || ''}
+                messages={contact.messages}
               />
               <div className='contact-launcher-close'>
                 <Icon type='close' onClick={() => closeContactChat(contact, idx)}/>
