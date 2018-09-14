@@ -6,22 +6,6 @@
     transform: rotate(0);
   }
 }
-@-moz-keyframes rotation-lr {
-  from {
-    transform: rotate(-90deg);
-  }
-  to {
-    transform: rotate(0);
-  }
-}
-@keyframes rotation-lr {
-  from {
-    transform: rotate(-90deg);
-  }
-  to {
-    transform: rotate(0);
-  }
-}
 @keyframes rotation-rl {
   from {
     transform: rotate(90deg);
@@ -30,34 +14,6 @@
     transform: rotate(0);
   }
 }
-@-moz-keyframes rotation-rl {
-  from {
-    transform: rotate(90deg);
-  }
-  to {
-    transform: rotate(0);
-  }
-}
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@-moz-keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-1000px);
-  }
-}
 @keyframes slide-in {
   from {
     opacity: 0;
@@ -78,27 +34,6 @@
     transform: translateY(10px);
   }
 }
-@-moz-keyframes slide-out {
-  from {
-    opacity: 1;
-    transform: translateY(-1000px);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-@keyframes slide-out {
-  from {
-    opacity: 1;
-    transform: translateY(-1000px);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-
 .rcw-launcher {
   cursor: pointer;
   animation-delay: 0;
@@ -110,7 +45,8 @@
   border: 0;
   border-radius: 10%;
   box-shadow: 0px 2px 10px 1px #b5b5b5;
-  height: 30px;
+  height: 60px;
+  bottom: 0;
   margin-top: 10px;
   width: 160px;
 }
@@ -122,9 +58,11 @@
 @keyframes slide-up {
   from {
     transform: translateY(0px);
+    opacity: 1;
   }
   to {
-    transform: translateY(-100px);
+    transform: translateY(15px);
+    opacity: 0.5;
   }
 }
 
@@ -184,6 +122,10 @@
   /* this prevents the animation from restarting! */
 }
 
+.rcw-conversation-container {
+  margin-bottom: -70px;
+}
+
 .chat-launcher-contact-column {
   display: flex;
   flex-direction: column;
@@ -199,5 +141,9 @@
 
   .rcw-launcher > .rcw-launcher-close {
     display: none;
+  }
+
+  .rcw-conversation-container {
+    margin-bottom: 0;
   }
 }

@@ -146,13 +146,10 @@ class UploadTable extends Component {
                   : <OrderPreviewDetails product={product} viewMore={(e) => this.openModal(idx)} />}
                 </div>
                 <ul className='ant-card-actions'>
-                  <li style={{ width: '33.3333%' }}>
-                    <Button type='primary' icon='eye' onClick={(e) => this.openModal(idx)} />
-                  </li>
-                  <li style={{ width: '33.3333%' }}>
+                  <li style={{ width: '50%' }}>
                     <Button shape="circle" icon="edit" onClick={(e) => this.openModal(idx)}  />
                   </li>
-                  <li style={{ width: '33.3333%' }}>
+                  <li style={{ width: '50%' }}>
                     {!this.props.isLoading && <Popconfirm title="Are you sure you want to remove this order?" placement="topRight"
                       onConfirm={(e) => this.props.deleteProduct(product.uid)} okText="Yes" cancelText="Cancel">
                         <Button shape="circle" icon="delete" type="danger" />
