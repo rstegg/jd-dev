@@ -41,7 +41,7 @@ class ContactsMenu extends Component {
           <List.Item onClick={() => openContactChat(user, idx)} className='user-list--user'>
             <List.Item.Meta
               avatar={user.image ? <Avatar src={user.image} /> : <Avatar icon="user" />}
-              title={<div className='user-list--user-name'>{user.name}</div>}
+              title={<div className='user-list--user-name'>{user.name + ' :: '  + user.case}</div>}
               description={user.lastMessage ? user.lastMessage : (user.bio ? user.bio : '')}
             />
           </List.Item>

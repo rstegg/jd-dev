@@ -1,4 +1,4 @@
-import { flatten } from 'ramda'
+import { flatten, map } from 'ramda'
 
 const initialState = {
   isContactsOpened: false,
@@ -18,8 +18,8 @@ export default function(state = initialState, action) {
           ...state.contacts.slice(action.payload.idx + 1)]
     })
   case 'FETCH_ORDERS_SUCCESS':
-    const safeOrders = action.payload.orders.filter(o => o.designers)
-    const designers = flatten(safeOrders.map(o => o.designers))
+    const safeOrders = action.payload.orders.filter(o => o.designers && o.designers.length)
+    const designers = flatten(safeOrders.map(o => o.designers && o.designers.map(designer => ({ ...designer, case: o.name }))))
     return Object.assign({}, state, {
       contacts: state.contacts.concat(designers)
     })

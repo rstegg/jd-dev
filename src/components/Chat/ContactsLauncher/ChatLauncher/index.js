@@ -24,7 +24,7 @@ class ChatLauncher extends Component {
               <Widget
                 handleNewUserMessage={this.handleNewUserMessage}
                 profileAvatar={contact.avatar || avatarPlaceholder}
-                title={contact.name}
+                title={contact.name + ' :: '  + contact.case}
                 subtitle={contact.orderName || ''}
               />
               <div className='contact-launcher-close'>

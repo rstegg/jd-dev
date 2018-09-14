@@ -115,7 +115,7 @@ class OrdersView extends Component {
                         <h1>Orders</h1>
                         <DataTable value={this.props.orders} selectionMode="single" header="Orders" paginator={true} rows={10} sortField='status' sortOrder={-1}
                         responsive={true} selection={this.state.dataTableSelectValue} onSelectionChange={(e) => this.selectionChange(e)}>
-                            <Column field="name" header="Scan Identifier" sortable={true}/>
+                            <Column field="name" header="Case Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" body={this.renderRestorationTypes} sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
                             <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>

@@ -18,7 +18,7 @@ const UploaderHeader = ({ name, setName, product, toggleRenameScanID, idx }) =>
   product.renameScanID ?
     <FormItem hasFeedback validateStatus={product.hasNameError}>
       <div style={{ lineHeight: 0, marginTop: '24px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
         <Search
           placeholder='Identifier'
           style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -28,7 +28,7 @@ const UploaderHeader = ({ name, setName, product, toggleRenameScanID, idx }) =>
       </div>
     </FormItem>
     : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
+        <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
         <b>{product.name}</b>
         <Button size='small' type="primary" onClick={() => toggleRenameScanID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
       </div>
@@ -123,7 +123,7 @@ class UploadTable extends Component {
                       {product.renameScanID ?
                         <FormItem hasFeedback validateStatus={product.hasNameError}>
                           <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <Search
                               placeholder='Identifier'
                               style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
@@ -133,7 +133,7 @@ class UploadTable extends Component {
                           </div>
                         </FormItem>
                         : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Scan Identifier</div>
+                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <b>{product.name}</b>
                             <Button size='small' type="primary" onClick={() => this.props.toggleRenameScanID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
                           </div>
