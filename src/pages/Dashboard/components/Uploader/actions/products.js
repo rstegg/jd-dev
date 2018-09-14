@@ -94,6 +94,14 @@ export const setNotes = (notes, idx) => ({
   }
 })
 
+export const setModel = (model, idx) => ({
+  type: 'SET_MODEL',
+  payload: {
+    model,
+    idx
+  }
+})
+
 export const setUnits = (units, idx) => ({
   type: 'SET_UNITS',
   payload: {

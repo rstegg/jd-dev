@@ -9,7 +9,7 @@ import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
 import { Tabs, List, Tag, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
-import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, clearUnits, validateForm } from './actions/products'
+import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, setModel, clearUnits, validateForm } from './actions/products'
 
 const FormItem = Form.Item
 const Search = Input.Search
@@ -53,7 +53,9 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
         <List.Item>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Tooth Numbers</div>
-            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units && product.units.join(', ') || 'None selected'}</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>
+              {product.units && product.units.join(', ') || 'None selected'}
+            </div>
           </div>
         </List.Item>
       </List>
@@ -77,11 +79,8 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
   </Tabs>
 
 class UploadTable extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: {}
-    }
+  state = {
+    visible: {}
   }
   openNotify = () => {
     notification.error({
@@ -94,7 +93,7 @@ class UploadTable extends Component {
     e.preventDefault();
     this.props.validateForm(this.props.products, this.props.token)
   }
-  openModal(idx) {
+  openModal = (idx) => {
     this.setState({
       visible: {
         ...this.state.visible,
@@ -192,6 +191,7 @@ const mapDispatchToProps = dispatch => ({
   setName: (name, idx) => dispatch(setName(name, idx)),
   setNotes: (notes, idx) => dispatch(setNotes(notes, idx)),
   setUnits: (units, idx) => dispatch(setUnits(units, idx)),
+  setModel: (model, idx) => dispatch(setModel(model, idx)),
   setDueTime: (time, idx) => dispatch(setDueTime(time, idx)),
   setDueDate: (date, idx) => dispatch(setDueDate(date, idx)),
   clearUnits: (idx) => dispatch(clearUnits(idx)),

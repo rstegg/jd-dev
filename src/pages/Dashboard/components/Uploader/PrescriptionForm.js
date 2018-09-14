@@ -2,6 +2,7 @@ import React, { Component} from 'react'
 
 import SelectSearch from './SelectSearch'
 import DentalPicker from '../DentalPicker/Picker'
+import ModelPicker from '../ModelPicker/Picker'
 import { TimePicker, DatePicker, List, Progress, Input, Icon, Button, Form } from 'antd'
 
 import moment from 'moment'
@@ -98,7 +99,7 @@ export default class PrescriptionForm extends Component {
     return endValue.valueOf() <= startValue.valueOf();
   }
   render () {
-    const { product, productTypes, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, clearUnits, idx,
+    const { product, productTypes, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
     setContact, setOcclusion, setPontic, setLinerSpacer, setDueTime, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
@@ -113,7 +114,8 @@ export default class PrescriptionForm extends Component {
           </div>
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
             <FormItem hasFeedback validateStatus={product.hasUnitError}>
-              <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} />
+              {product.type === 'Model' ? <ModelPicker idx={idx} product={product} setModel={setModel} clearUnits={clearUnits} />
+              : <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} /> }
             </FormItem>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
             <FormItem hasFeedback validateStatus={product.hasTypeError}>

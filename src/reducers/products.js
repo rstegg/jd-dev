@@ -1,11 +1,29 @@
 import uuid from 'uuid/v4'
-import { mergeAll } from 'ramda'
+import { mergeAll, uniq, flatten, pipe, any } from 'ramda'
 import moment from 'moment'
 
 const initialState = []
 
-const toggleScanUnit = (unit, arr) => arr.indexOf(unit) === -1 ? arr.concat(unit)
+const uniqFlat = pipe(flatten, uniq)
+
+const upperUnits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+const lowerUnits = ['17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32']
+
+const toggleScanUnit = (unit, arr) => arr.indexOf(unit) === -1 ? arr.concat(unit).sort((a,b) => Number(a) > Number(b))
   : [ ...arr.slice(0, arr.indexOf(unit)), ...arr.slice(arr.indexOf(unit) + 1) ]
+
+const toggleScanModel = (model, state) => state.model.indexOf(model) === -1 ? state.model.concat(model).sort()
+  : [ ...state.model.slice(0, state.model.indexOf(model)), ...state.model.slice(state.model.indexOf(model) + 1) ]
+
+const toggleScanModelUnits = (model, state) => {
+  if (model === 'top') {
+    return state.units.indexOf(lowerUnits) === -1 ? uniq(state.units.concat(upperUnits)).sort((a,b) => Number(a) > Number(b))
+    : [ ...state.units.slice(0, state.units.indexOf(upperUnits)), ...state.units.slice(state.units.indexOf(upperUnits) + 1) ]
+  }
+  return state.units.indexOf(lowerUnits) === -1 ? uniq(state.units.concat(lowerUnits)).sort((a,b) => Number(a) > Number(b))
+  : [ ...state.units.slice(0, state.units.indexOf(lowerUnits)), ...state.units.slice(state.units.indexOf(lowerUnits) + 1) ]
+}
+
 
 const defaultPrefs = {
   contact: '-0.03 mm',
@@ -20,27 +38,27 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, preview: action.payload.stl, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(),  }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(),  }
       ]))
     case 'ACCEPT_XML':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), },
+          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), },
         action.payload.jsonFromXML
       ]))
     case 'ACCEPT_ZIP':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), },
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), },
         action.payload.jsonFromXML
        ]))
     case 'ACCEPT_GENERIC':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], dueDate: moment(), dueTime: moment(), }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
@@ -74,13 +92,17 @@ export default (state = initialState, action) => {
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], notes: action.payload.notes },
               ...state.slice(action.payload.idx+1) ]
+    case 'SET_MODEL':
+      return [ ...state.slice(0, action.payload.idx),
+              { ...state[action.payload.idx], model: toggleScanModel(action.payload.model, state[action.payload.idx]), units: toggleScanModelUnits(action.payload.model, state[action.payload.idx], state[action.payload.idx]) },
+              ...state.slice(action.payload.idx+1) ]
     case 'SET_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units) },
+              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units), model: [] },
               ...state.slice(action.payload.idx+1) ]
     case 'CLEAR_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: [] },
+              { ...state[action.payload.idx], units: [], model: [] },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_PROGRESS':
       return [ ...state.slice(0, action.payload.idx),
