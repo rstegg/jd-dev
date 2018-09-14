@@ -15,30 +15,39 @@ module.exports = (req, res) => {
       where: { userType: 'designer' }
     })
     .then(designers => {
-      const assignedDesigner = designers.reduce((a, b) => {
-          return a.priority > b.priority ? a : b;
-      });
-      return User.update({ priority: sequelize.literal('priority + 1') }, { where: { userType: 'designer' }})
-        .then(users => {
-          if (users) {
-            User.update({ priority: 0 }, { where: { id: assignedDesigner.id }, returning: true, plain: true })
-            .then(([_, newDesigner]) => {
-              const oldDesigners = order.designers ? order.designers : []
-              const formattedNewDesigner = {
-                ...newDesigner,
-                job: 'full',
-                asignedDate: moment()
-              }
-              const updatedDesigners = oldDesigners.concat(formattedNewDesigner)
-              const updatedOrder = { designers: updatedDesigners }
-              Order.update(updatedOrder, { where: { userId: req.user.id, uid: order.uid }, returning: true, plain: true })
-                .then(([_, savedOrder]) => {
-                  console.log('ASSIGNED NEW', savedOrder);
-                })
-                .catch(error => console.log('ERROR ASSIGNING NEW', error))
-            })
-          }
-        })
+      if (designers) {
+        const assignedDesigner = designers.reduce((a, b) => {
+            return a.priority > b.priority ? a : b;
+        });
+        return User.update({ priority: sequelize.literal('priority + 1') }, { where: { userType: 'designer' }})
+          .then(users => {
+            if (users) {
+              console.log('designers exist');
+              User.update({ priority: 0 }, { where: { id: assignedDesigner.id }, returning: true, plain: true })
+              .then(([_, newDesigner]) => {
+                const oldDesigners = order.designers ? order.designers : []
+
+                const formattedNewDesigner = {
+                  id: newDesigner.id,
+                  email: newDesigner.email,
+                  priority: newDesigner.priority,
+                  image: newDesigner.image,
+                  name: newDesigner.name,
+                  job: 'full',
+                  asignedDate: moment()
+                }
+
+                const updatedDesigners = oldDesigners.concat(formattedNewDesigner)
+                const updatedOrder = { designers: updatedDesigners }
+                Order.update(updatedOrder, { where: { userId: req.user.id, uid: order.uid }, returning: true, plain: true })
+                  .then(([_, savedOrder]) => {
+                    console.log('ASSIGNED NEW', savedOrder);
+                  })
+                  .catch(error => console.log('ERROR ASSIGNING NEW', error))
+              })
+            }
+          })
+        }
       })
   })
 }

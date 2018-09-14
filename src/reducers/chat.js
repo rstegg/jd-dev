@@ -1,7 +1,9 @@
+import { flatten } from 'ramda'
+
 const initialState = {
   isContactsOpened: false,
   contactsUnseen: 0,
-  contacts: [{ name: 'Fred aoijaweoifjaweofijswaiuwhefaiwojefioawjfoaiwjef', email: 'testemail@yahoo.com', localId: '1', isOpen: false, isShowing: false }],
+  contacts: [{ name: 'Fred aoijaweoifjaweofijswaiuwhefaiwojefioawjfoaiwjef', email: 'testemail@yahoo.com', localId: '1', isOpen: false, image: null, isShowing: false }],
   messages: [],
   threadId: null,
   isFetching: null
@@ -14,6 +16,12 @@ export default function(state = initialState, action) {
       contacts: [...state.contacts.slice(0, action.payload.idx),
           { ...action.payload.contact, isOpen: true, isShowing: true },
           ...state.contacts.slice(action.payload.idx + 1)]
+    })
+  case 'FETCH_ORDERS_SUCCESS':
+    const safeOrders = action.payload.orders.filter(o => o.designers)
+    const designers = flatten(safeOrders.map(o => o.designers))
+    return Object.assign({}, state, {
+      contacts: state.contacts.concat(designers)
     })
   case 'CLOSE_CONTACT_CHAT':
     return Object.assign({}, state, {
