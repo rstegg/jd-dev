@@ -13,9 +13,6 @@ module.exports = (req, res) => {
     const newScanFiles = order.caseFileUrls.concat(req.file.location)
     return Order.update({ caseFileUrls: newScanFiles }, { where: { id: order.id, userId: req.user.id }, returning: true, plain: true })
   })
-  .then(order => {
-    console.log('success?')
-    return res.status(200)
-  })
+  .then(order => res.status(200).json({ file: req.file.location }))
   .catch(console.error)
 }

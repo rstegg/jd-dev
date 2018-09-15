@@ -1,6 +1,6 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 
-import { Upload, Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
+import { Modal, Upload, Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
 
 import moment from 'moment'
 
@@ -32,7 +32,19 @@ const OrderSteps = ({ order }) => {
 
 export default class PrescriptionForm extends Component {
   state = {
-    startDate: moment(),
+    visible: false,
+    note: ''
+  }
+
+  hideModal = () => {
+    this.setState({ visible: false, note: '' })
+  }
+  saveNewNote = () => {
+    this.props.addExtraNote(this.state.note, this.props.order, this.props.user.token)
+    this.setState({ visible: false, note: '' })
+  }
+  showModal = () => {
+    this.setState({ visible: true })
   }
   render () {
     const { order } = this.props
@@ -57,7 +69,7 @@ export default class PrescriptionForm extends Component {
         <Card
           type="inner"
           title="Scan Files"
-          extra={<Upload action={`/api/v1/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onPreview={accept => this.props.addExtraScanFile(accept, order)}>
+          extra={<Upload action={`/api/v1/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onChange={accept => accept.file && accept.file.response && this.props.addExtraScanFile(accept.file.response.file, order)}>
             <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
           </Upload>}
           >
@@ -73,8 +85,8 @@ export default class PrescriptionForm extends Component {
           style={{ marginTop: 16 }}
           type="inner"
           title="Notes"
-          extra={<a href="#" style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
-          <p>{order.notes || 'No notes'}</p>
+          extra={<a onClick={() => this.showModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
+          {order.notes && order.notes.map((note, i) => <Tag key={`note-${order.uid}-${i}`} color='geekblue'>{note}</Tag>)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
@@ -125,6 +137,17 @@ export default class PrescriptionForm extends Component {
             </List.Item>
           </List>
         </Card>
+        <Modal
+          style={{ minWidth: '50%' }}
+          title={'Add a note'}
+          visible={this.state.visible}
+          onOk={() => this.saveNewNote()}
+          onCancel={() => this.hideModal()}
+          okText="Done"
+          cancelText="Cancel"
+        >
+          <Input placeholder='New note' onChange={e => this.setState({ note: e.target.value })} value={this.state.note} />
+        </Modal>
       </Card>
     )
   }

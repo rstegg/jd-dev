@@ -10,16 +10,17 @@ import moment from 'moment'
 
 import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchOrders, cancelOrder, addExtraScanFile } from './actions/orders'
+import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNote } from './actions/orders'
 
 import OrderDetails from './components/OrderDetails'
 
 class OrdersView extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             dataTableValue: [],
+            activeIndex: 0,
             treeData: [],
             treeTableData: [],
             picklistSourceCars: [],
@@ -36,7 +37,10 @@ class OrdersView extends Component {
         this.props.fetchOrders(this.props.user.token)
     }
     selectionChange = (e) => {
-      this.setState({ dataTableSelectValue: e.data, visible: true })
+      const uid = e.data.uid
+      const allUids = this.props.orders.map(o => o.uid)
+      const activeIndex = allUids.indexOf(uid)
+      this.setState({ dataTableSelectValue: e.data, activeIndex, visible: true })
     }
 
     hideModal = (idx) => {
@@ -100,6 +104,14 @@ class OrdersView extends Component {
       }
     }
 
+    notesTemplate = (rowData, column) => {
+      if (rowData.notes) {
+        return rowData.notes.map(note => note.length > 40 ? <Tag>{note.slice(0,40) + '...'}</Tag> : <Tag>{note}</Tag> )
+      } else {
+        return null
+      }
+    }
+
     dueByTemplate = (rowData, column) => {
       return moment(rowData.dueDate).fromNow()
     }
@@ -121,7 +133,7 @@ class OrdersView extends Component {
                             <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
                             <Column body={this.dueByTemplate} field='dueBy' header="Due by" sortable={true} />
-                            <Column field="notes" header="Notes" sortable={true}/>
+                            <Column body={this.notesTemplate} field="notes" header="Notes" sortable={true}/>
                             <Column field="caseFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column field="designFileUrls" body={this.designFileTemplate} header="Design Files" sortable={true}/>
                             <Column body={this.actionTemplate} header="Cancel order" style={{textAlign:'center', width: '6em'}}/>
@@ -137,7 +149,7 @@ class OrdersView extends Component {
                   okText="Done"
                   cancelText="Cancel"
                 >
-                  <OrderDetails {...this.props} order={this.state.dataTableSelectValue} />
+                  <OrderDetails {...this.props} order={this.props.orders[this.state.activeIndex]} />
                 </Modal>
             </div>
         );
@@ -152,6 +164,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchOrders: token => dispatch(fetchOrders(token)),
   addExtraScanFile: (file, order) => dispatch(addExtraScanFile(file, order)),
+  addExtraNote: (note, order, token) => dispatch(addExtraNote(note, order, token)),
   cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
 })
 

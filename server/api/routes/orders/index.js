@@ -36,6 +36,11 @@ module.exports =
       validateBody(validSingle),
       setDesignerOrderHandler
     )
+    .put('/:uid/notes',
+      validateBody(validOrder),
+      validateParams(validEditOrderParams),
+      editOrderHandler
+    )
     .put('/:id',
       validateBody(validOrder),
       validateParams(validEditOrderParams),

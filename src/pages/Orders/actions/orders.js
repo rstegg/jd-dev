@@ -39,6 +39,26 @@ export const cancelOrdersSuccess = res => ({
   }
 })
 
+export const addExtraNote = (note, order, token) =>
+  dispatch => {
+    dispatch({ type: 'ADD_EXTRA_NOTE', payload: { note, order } })
+    su.put(`/api/v1/orders/${order.uid}/notes`)
+      .accept('application/json')
+      .set('Authorization', token)
+      .send({ note })
+      .then(res => dispatch(addExtraNoteSuccess(res)))
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+export const addExtraNoteSuccess = res => ({
+  type: 'ADD_EXTRA_NOTE_SUCCESS',
+  payload: {
+    order: res.body.order
+  }
+})
+
 export const addExtraScanFile = (file, order) => ({
   type: 'ADD_EXTRA_SCAN_FILE',
   payload: {
