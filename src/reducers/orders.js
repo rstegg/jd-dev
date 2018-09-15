@@ -9,11 +9,11 @@ const ordersReducer = (state = initialState, action) => {
     case 'ADD_NEW_ORDERS':
       return state.concat( mapOrdersToothUnits(action.payload.orders) )
     case 'ADD_EXTRA_SCAN_FILE':
-      const uids = state.map(order => order.uid)
-      const idx = uids.indexOf(action.payload.order.uid)
-      return [ ...state.slice(0, idx),
+      const orderUIDs = state.map(order => order.uid)
+      const orderIDX = orderUIDs.indexOf(action.payload.order.uid)
+      return [ ...state.slice(0, orderIDX),
               { ...action.payload.order, scanFileUrls: action.payload.order.scanFileUrls.concat(action.payload.file) },
-              ...state.slice(idx+1) ]
+              ...state.slice(orderIDX+1) ]
     case 'CANCEL_ORDER':
       const uids = state.map(s => s.uid)
       const puid = action.payload.order.uid
