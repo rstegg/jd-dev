@@ -163,10 +163,10 @@ export const sendOrders = (products, token) =>
             const idx = fileNames.indexOf(product.filename)
             const file = body.files[idx]
             if (file) {
-              return { ...product, scanFileUrls: file.location }
+              return { ...product, caseFileUrls: file.location }
             }
             if (body.files && body.files.length) {
-              return { ...product, scanFileUrls: body.files[0] }
+              return { ...product, caseFileUrls: body.files[0] }
             }
             return product
           }

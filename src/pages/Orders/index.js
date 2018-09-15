@@ -85,8 +85,8 @@ class OrdersView extends Component {
     }
 
     scanFileTemplate = (rowData, column) => {
-      if (rowData.scanFileUrls) {
-        return rowData.scanFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
+      if (rowData.caseFileUrls) {
+        return rowData.caseFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
@@ -122,7 +122,7 @@ class OrdersView extends Component {
                             <Column field="status" header="Status" sortable={true}/>
                             <Column body={this.dueByTemplate} field='dueBy' header="Due by" sortable={true} />
                             <Column field="notes" header="Notes" sortable={true}/>
-                            <Column field="scanFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
+                            <Column field="caseFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column field="designFileUrls" body={this.designFileTemplate} header="Design Files" sortable={true}/>
                             <Column body={this.actionTemplate} header="Cancel order" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>

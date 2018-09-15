@@ -55,8 +55,8 @@ class OrdersTableView extends Component {
     }
 
     scanFileTemplate = (rowData, column) => {
-      if (rowData.scanFileUrls) {
-        return rowData.scanFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
+      if (rowData.caseFileUrls) {
+        return rowData.caseFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
