@@ -9,6 +9,7 @@ const imager = require('multer-imager')
 
 const uploadProfileImage = require('./handlers/uploadProfileImage')
 const uploadCaseFile = require('./handlers/uploadCaseFile')
+const uploadExtraCaseFile = require('./handlers/uploadExtraCaseFile')
 
 const debug = require('debug')('aws-s3')
 
@@ -66,6 +67,10 @@ module.exports =
     .post('/profile',
       uploadImg.single('image'),
       uploadProfileImage
+    )
+    .post('/orders/:uid',
+      upload.single('file'),
+      uploadExtraCaseFile
     )
     .post('/orders',
       upload.array('file'),

@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 
-import { Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
+import { Upload, Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
 
 import moment from 'moment'
 
@@ -57,7 +57,10 @@ export default class PrescriptionForm extends Component {
         <Card
           type="inner"
           title="Scan Files"
-          extra={<Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />}>
+          extra={<Upload action={`/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: 'JWT ' + this.props.user.token }} showUploadList={false}>
+            <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
+          </Upload>}
+          >
           {order.scanFileUrls && order.scanFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
         </Card>
         <Card
