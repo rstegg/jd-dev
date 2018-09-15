@@ -57,7 +57,7 @@ export default class PrescriptionForm extends Component {
         <Card
           type="inner"
           title="Scan Files"
-          extra={<Upload action={`/api/v1/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false}>
+          extra={<Upload action={`/api/v1/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onPreview={accept => this.props.addExtraScanFile(accept, order)}>
             <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
           </Upload>}
           >

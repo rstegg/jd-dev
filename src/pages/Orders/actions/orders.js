@@ -38,3 +38,11 @@ export const cancelOrdersSuccess = res => ({
     orders: res.body.orders
   }
 })
+
+export const addExtraScanFile = (file, order) => ({
+  type: 'ADD_EXTRA_SCAN_FILE',
+  payload: {
+    file,
+    order
+  }
+})

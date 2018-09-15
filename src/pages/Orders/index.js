@@ -10,7 +10,7 @@ import moment from 'moment'
 
 import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchOrders, cancelOrder } from './actions/orders'
+import { fetchOrders, cancelOrder, addExtraScanFile } from './actions/orders'
 
 import OrderDetails from './components/OrderDetails'
 
