@@ -4,5 +4,5 @@ const jwt = require('jsonwebtoken')
 
 const routes = require('./routes')
 
-module.exports =
-  router.use('/', routes)
+module.exports = io =>
+  router.use('/', routes(io))

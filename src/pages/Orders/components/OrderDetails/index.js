@@ -57,7 +57,7 @@ export default class PrescriptionForm extends Component {
           type="inner"
           title="Designer Info">
           {order.designers && order.designers.map((designer, i) =>
-            <Card.Grid style={{ width: '100%' }}>
+            <Card.Grid key={`designer-${order.uid}-${i}`} style={{ width: '100%' }}>
               <Card.Meta
                 avatar={designer.image ? <Avatar src={designer.image} /> : <Avatar icon="user" />}
                 title={designer.name}
@@ -86,7 +86,7 @@ export default class PrescriptionForm extends Component {
           type="inner"
           title="Notes"
           extra={<a onClick={() => this.showModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
-          {order.notes && order.notes.map((note, i) => <Tag key={`note-${order.uid}-${i}`} color='geekblue'>{note}</Tag>)}
+          {order.notes && order.notes.map((note, i) => note.length ? <Tag key={`note-${order.uid}-${i}`} color='geekblue'>{note}</Tag> : null)}
         </Card>
         <Card
           style={{ marginTop: 16 }}

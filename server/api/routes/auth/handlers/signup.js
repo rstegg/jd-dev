@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const mailcomposer = require('mailcomposer')
 const shortId = require('shortid')
+const uuid = require('uuid/v4')
 
 const { confirmationMail, sendConfirmation } = apiRequire('service/mail')
 
@@ -48,7 +49,8 @@ module.exports = (req, res) =>
         verified: false,
         permalink: createPermalink(user.email),
         verifyToken: bytes(20),
-        userType: user.userType || 'individual'
+        userType: user.userType || 'individual',
+        uid: uuid()
       }, pick(['email', 'name'], user))
       return User.create(newUser, { plain: true })
     })
@@ -57,7 +59,7 @@ module.exports = (req, res) =>
       const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
-      const resUser = pick(['email', 'email'], createdUser)
+      const resUser = pick(['name', 'email', 'uid'], createdUser)
       const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)
       return res.status(200).json({user: resUser, token})
     })

@@ -99,7 +99,7 @@ export default class PrescriptionForm extends Component {
     return endValue.valueOf() <= startValue.valueOf();
   }
   render () {
-    const { product, productTypes, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
+    const { product, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
     setContact, setOcclusion, setPontic, setLinerSpacer, setDueTime, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

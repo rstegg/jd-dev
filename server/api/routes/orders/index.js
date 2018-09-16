@@ -18,7 +18,7 @@ const validOrder = validField('orders')
 const validSingle = validField('order')
 const validEditOrderParams = validFields(false, [ 'id' ])
 
-module.exports =
+module.exports = io =>
   router
     .use(passport.authenticate('jwt', { session: false }))
     .get('/',
@@ -30,11 +30,11 @@ module.exports =
     .post('/',
       validateBody(validOrder),
       createOrderHandler,
-      setDesignerOrderHandler
+      setDesignerOrderHandler(io)
     )
     .post('/new_designer',
       validateBody(validSingle),
-      setDesignerOrderHandler
+      setDesignerOrderHandler(io)
     )
     .put('/:uid/notes',
       validateBody(validOrder),

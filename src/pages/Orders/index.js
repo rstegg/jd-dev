@@ -90,7 +90,7 @@ class OrdersView extends Component {
 
     scanFileTemplate = (rowData, column) => {
       if (rowData.caseFileUrls) {
-        return rowData.caseFileUrls.map(scanFile => <Button key={`${Math.random()}`} href={scanFile} shape="circle" icon="download" />)
+        return rowData.caseFileUrls.map(scanFile => <Button key={`scanFileUrl-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
@@ -98,7 +98,7 @@ class OrdersView extends Component {
 
     designFileTemplate = (rowData, column) => {
       if (rowData.designFileUrls) {
-        return rowData.designFileUrls.map(designFile => <Button href={designFile} shape="circle" icon="inbox" />)
+        return rowData.designFileUrls.map(designFile => <Button key={`designFileUrl-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`} href={designFile} shape="circle" icon="inbox" />)
       } else {
         return null
       }
@@ -106,7 +106,9 @@ class OrdersView extends Component {
 
     notesTemplate = (rowData, column) => {
       if (rowData.notes) {
-        return rowData.notes.map(note => note.length > 40 ? <Tag>{note.slice(0,40) + '...'}</Tag> : <Tag>{note}</Tag> )
+        return rowData.notes
+          .map(note => note.length > 40 ? <Tag key={`note-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`}>{note.slice(0,40) + '...'}</Tag>
+          : note.length ? <Tag key={`note-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`}>{note}</Tag> : null )
       } else {
         return null
       }

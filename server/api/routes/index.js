@@ -6,10 +6,10 @@ const profile = require('./profile')
 const upload = require('./upload')
 const orders = require('./orders')
 
-module.exports =
+module.exports = io =>
   router
     .use('/auth', auth)
     .use('/stripe', stripe)
     .use('/user', profile)
-    .use('/orders', orders)
+    .use('/orders', orders(io))
     .use('/upload', upload)

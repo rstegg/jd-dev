@@ -46,15 +46,12 @@ class Uploader extends Component {
       zIndex: 100000
     };
 
-    const { files, products, options, productTypes, allProducts, isLoading, errors } = this.props
+    const { files, products, isLoading, errors } = this.props
 
     const uploadedFiles = files.accepted.length && products.length ?
       <UploadFiles
         files={files.accepted}
         products={products}
-        productTypes={productTypes}
-        allProducts={allProducts}
-        options={options}
         isLoading={isLoading}
         errors={errors} /> : null
 
@@ -233,9 +230,6 @@ class Uploader extends Component {
 const mapStateToProps = ({
   files,
   products,
-  options,
-  productTypes,
-  allProducts,
   errors,
   redirects: {
     isLoading,
@@ -243,9 +237,6 @@ const mapStateToProps = ({
 }) => ({
   files,
   products,
-  options,
-  productTypes,
-  allProducts,
   errors,
   isLoading
 })

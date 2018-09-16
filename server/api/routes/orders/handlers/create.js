@@ -14,7 +14,6 @@ const createThread = order =>
     )
 
 module.exports = (req, res, next) => {
-  console.log(req.body.orders);
   const newOrders = map(order => merge({
     userId: req.user.id,
     unitsCount: length(order.units),

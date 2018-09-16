@@ -28,4 +28,4 @@ http.listen(port, () => {
 
 const apiRoutes = require('./api/v1')
 
-app.use(API_HOST, apiRoutes)
+app.use(API_HOST, apiRoutes(io))

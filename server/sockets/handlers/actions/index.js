@@ -4,6 +4,7 @@ const { path } = require('ramda')
 
 const { sendThreadChatMessage } = require('./message/sendmessage')
 const { joinChatThread, leaveChatThread } = require('./threads/join')
+const { joinChatRoom } = require('./rooms/join')
 const { sendShopOffer, sendProductOffer } = require('./offer/createoffer')
 const { acceptOffer, rejectOffer } = require('./offer/editoffer')
 
@@ -18,7 +19,6 @@ const authorize = token =>
 const getToken = path(['payload', 'token'])
 
 module.exports = (io, socket, action) => {
-  console.log(action);
   // TODO: use ramda to check the type of action
   if (!action.type) {
     throw new Error('Action type missing')
@@ -32,6 +32,8 @@ module.exports = (io, socket, action) => {
       console.log(token);
       socket.userId = token.id //TODO: best answer?
       switch(action.type) {
+        case 'WS/JOIN_ROOM':
+          return joinChatRoom(io, socket, action)
         case 'WS/SEND_THREAD_CHAT_MESSAGE':
           return sendThreadChatMessage(io, socket, action)
         case 'WS/SEND_SHOP_OFFER':

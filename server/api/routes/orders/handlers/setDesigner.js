@@ -9,7 +9,7 @@ const { merge, pick } = require('ramda')
 const updateOrderParams = [ 'designers' ]
 const orderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'createdAt' ]
 
-module.exports = (req, res) => {
+module.exports = io => (req, res) => {
   req.orders.map(order => {
     User.findAll({
       where: { userType: 'designer' }
@@ -41,6 +41,12 @@ module.exports = (req, res) => {
                 const updatedOrder = { designers: updatedDesigners }
                 Order.update(updatedOrder, { where: { userId: req.user.id, uid: order.uid }, returning: true, plain: true })
                   .then(([_, savedOrder]) => {
+                    io.to(newDesigner.uid).emit('action', {
+                      type: 'NEW_ORDER_ASSIGNED',
+                      payload: {
+                        order: savedOrder
+                      }
+                    })
                     console.log('ASSIGNED NEW', savedOrder);
                   })
                   .catch(error => console.log('ERROR ASSIGNING NEW', error))
