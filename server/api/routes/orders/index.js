@@ -5,6 +5,7 @@ const { allPass, path, pipe, prop, is } = require('ramda')
 const createOrderHandler = require('./handlers/create')
 const editOrderHandler = require('./handlers/edit')
 const getOrdersHandler = require('./handlers/getAll')
+const getDesignOrdersHandler = require('./handlers/getAllDesign')
 const getOrderHandler = require('./handlers/get')
 const deleteOrderHandler = require('./handlers/delete')
 const setDesignerOrderHandler = require('./handlers/setDesigner')
@@ -21,6 +22,9 @@ const validEditOrderParams = validFields(false, [ 'id' ])
 module.exports = io =>
   router
     .use(passport.authenticate('jwt', { session: false }))
+    .get('/design',
+      getDesignOrdersHandler
+    )
     .get('/',
       getOrdersHandler
     )

@@ -38,7 +38,7 @@ module.exports = io => (req, res) => {
                 }
 
                 const updatedDesigners = oldDesigners.concat(formattedNewDesigner)
-                const updatedOrder = { designers: updatedDesigners }
+                const updatedOrder = { designers: updatedDesigners, designerId: newDesigner.uid }
                 Order.update(updatedOrder, { where: { userId: req.user.id, uid: order.uid }, returning: true, plain: true })
                   .then(([_, savedOrder]) => {
                     io.to(newDesigner.uid).emit('action', {

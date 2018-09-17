@@ -2,15 +2,15 @@ const { User } = requireDb
 
 const { allPass, path, pick, pipe, merge, isNil } = require('ramda')
 
-const profileAttributes = ['id', 'name', 'username', 'image', 'bio', 'website']
+const profileAttributes = ['uid', 'name', 'email', 'image', 'bio', 'website']
 
 const validate = req =>
   User.findOne({
-      where: { username: req.body.profile.username },
+      where: { uid: req.body.profile.uid },
       plain: true
   })
   .then(user =>
-      user && user.id !== req.user.id ?
+      !user || user.id !== req.user.id ?
           Promise.reject('invalid user')
           : req.body.profile
   )
@@ -34,11 +34,9 @@ const makeValidWebsite = website => {
 
 module.exports = (req, res) =>
   validate(req)
-    .then(({ username, id }) => validateUsername(req, username, id))
     .then(validatedUsername => {
       const validWebsite = makeValidWebsite(req.body.profile.website)
       const updatedUser = merge({
-        username: validatedUsername || req.body.profile.username,
         website: validWebsite,
       }, pick(['name', 'dob', 'bio'], req.body.profile))
       return User.update(updatedUser, { where: { id: req.user.id }, returning: true, plain: true })

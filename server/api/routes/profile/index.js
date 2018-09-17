@@ -8,11 +8,11 @@ const getProfileHandler = require('./handlers/get')
 const validateBody = apiRequire('middleware/validate-body')
 const validFields = apiRequire('middleware/valid-fields')
 
-const validProfile = validFields('profile', ['name', 'username'])
+const validProfile = validFields('profile', ['name'])
 
 module.exports =
   router
-    .get('/:username',
+    .get('/:uid',
       getProfileHandler
     )
     .put('/',

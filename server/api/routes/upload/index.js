@@ -6,10 +6,12 @@ const AWS = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const imager = require('multer-imager')
+const shortId = require('shortid')
 
 const uploadProfileImage = require('./handlers/uploadProfileImage')
 const uploadCaseFile = require('./handlers/uploadCaseFile')
 const uploadExtraCaseFile = require('./handlers/uploadExtraCaseFile')
+const uploadDesignFile = require('./handlers/uploadDesignFile')
 
 const debug = require('debug')('aws-s3')
 
@@ -65,12 +67,16 @@ module.exports =
   router
     .use(passport.authenticate('jwt', { session: false }))
     .post('/profile',
-      uploadImg.single('image'),
+      upload.single('file'),
       uploadProfileImage
     )
     .post('/orders/:uid',
       upload.single('file'),
       uploadExtraCaseFile
+    )
+    .post('/design/:uid',
+      upload.single('file'),
+      uploadDesignFile
     )
     .post('/orders',
       upload.array('file'),
