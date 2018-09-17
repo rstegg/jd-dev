@@ -36,27 +36,27 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, preview: action.payload.stl, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(),  }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), model: [], dueDate: moment(), dueTime: moment(),  }
       ]))
     case 'ACCEPT_XML':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), },
-        action.payload.jsonFromXML
+          uid: uuid(), name: action.payload.accepted.name.split('.').slice(0,-1).join(''), model: [], dueDate: moment(), dueTime: moment(), },
+        action.payload.xml
       ]))
     case 'ACCEPT_ZIP':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, uid: uuid(),
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), },
-        action.payload.jsonFromXML
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), model: [], dueDate: moment(), dueTime: moment(), },
+        action.payload.zip
        ]))
     case 'ACCEPT_GENERIC':
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), model: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),

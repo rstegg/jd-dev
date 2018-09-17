@@ -9,19 +9,19 @@ export const acceptStl = (accepted, stl) => ({
   }
 })
 
-export const acceptXml = (accepted, jsonFromXML) => ({
+export const acceptXml = (accepted, xml) => ({
   type: 'ACCEPT_XML',
   payload: {
     accepted,
-    jsonFromXML
+    xml
   }
 })
 
-export const acceptZip = (accepted, jsonFromXML) => ({
+export const acceptZip = (accepted, zip) => ({
   type: 'ACCEPT_ZIP',
   payload: {
     accepted,
-    jsonFromXML
+    zip
   }
 })
 

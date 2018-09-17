@@ -78,8 +78,8 @@ class Uploader extends Component {
               case 'xml':
                 reader.readAsText(accept)
                 reader.onload = () => {
-                  const jsonFromXML = parseXml(reader.result)
-                  this.props.acceptXml(accept, jsonFromXML);
+                  parseXml(reader.result)
+                    .then(jsonFromXML => this.props.acceptXml(accept, jsonFromXML))
                 };
                 break;
               case 'zip':
@@ -95,9 +95,8 @@ class Uploader extends Component {
 
                     promised
                       .then(xml => {
-                        const jsonFromXML = parseXml(xml)
-
-                        this.props.acceptZip(accept, jsonFromXML);
+                        parseXml(reader.result)
+                          .then(jsonFromXML => this.props.acceptZip(accept, jsonFromXML))
                       })
                   } else {
                     const allFilenames = map(file => file.name, zip.files)
@@ -121,7 +120,6 @@ class Uploader extends Component {
                   }
                 }
               })
-                this.props.acceptZip(accept);
                 break;
               default:
                 this.props.acceptGeneric(accept)
@@ -154,8 +152,8 @@ class Uploader extends Component {
                           break;
                         case 'xml':
                           reader.onload = () => {
-                            const jsonFromXML = parseXml(reader.result)
-                            this.props.acceptXml(accept, jsonFromXML);
+                            parseXml(reader.result)
+                              .then(jsonFromXML => this.props.acceptXml(accept, jsonFromXML))
                           };
                           reader.readAsText(accept)
                           break;
@@ -172,9 +170,8 @@ class Uploader extends Component {
 
                                 promised
                                   .then(xml => {
-                                    const jsonFromXML = parseXml(xml)
-
-                                    this.props.acceptZip(accept, jsonFromXML);
+                                    parseXml(xml)
+                                      .then(jsonFromXML => this.props.acceptZip(accept, jsonFromXML))
                                   })
                               } else {
                                 const allFilenames = map(file => file.name, zip.files)
@@ -192,8 +189,8 @@ class Uploader extends Component {
                               if (nextBestGuess) {
                                 zip.file(nextXmlName).async('string')
                                   .then(xml => {
-                                    const jsonFromXML = parseXml(xml)
-                                    this.props.acceptZip(accept, jsonFromXML);
+                                    parseXml(xml)
+                                      .then(jsonFromXML => this.props.acceptZip(accept, jsonFromXML))
                                   })
                               }
                             }

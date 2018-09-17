@@ -11,10 +11,11 @@ const { Search, TextArea } = Input
 const FormItem = Form.Item
 
 const designTypes = [
-  { label: 'Crown', value: 'Crown', },
+  { label: 'Full Crown', value: 'Full Crown', },
   { label: 'Coping', value: 'Coping', },
   { label: 'Anatomical Coping', value: 'Anatomical Coping', },
-  { label: 'Bridge', value: 'Bridge', },
+  { label: 'Full Crown Bridge', value: 'Full Crown Bridge', },
+  { label: 'Coping Bridge', value: 'Coping Bridge', },
   { label: 'Inlay', value: 'Inlay', },
   { label: 'Onlay', value: 'Onlay', },
   { label: 'Model', value: 'Model' },
