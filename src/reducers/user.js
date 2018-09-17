@@ -54,7 +54,7 @@ export default function(state = initialState, action) {
         error: true,
         isLoading: false
       })
-    case 'LOGOUT':
+    case 'LOGOUT_SUBMIT':
       return initialState
     case 'UPLOAD_AVATAR_FAILURE':
     case 'EDIT_PROFILE_FAILURE':

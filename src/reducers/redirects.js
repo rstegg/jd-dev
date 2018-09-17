@@ -23,6 +23,8 @@ export default (state=initialState, action) => {
         redirects: state.redirects,
         isLoading: action.payload.isLoading
       }
+    case 'LOGOUT_SUBMIT':
+      return initialState
     default:
       return state
   }

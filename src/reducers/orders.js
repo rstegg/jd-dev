@@ -28,6 +28,8 @@ const ordersReducer = (state = initialState, action) => {
       return [ ...state.slice(0, idx),
               { ...action.payload.order, status: 'canceled' },
               ...state.slice(idx+1) ]
+    case 'LOGOUT_SUBMIT':
+      return initialState
     default:
       return state
   }

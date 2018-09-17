@@ -94,9 +94,9 @@ export default class PrescriptionForm extends Component {
           title="Preferences"
           extra={<a href="#" style={{ position: 'absolute', right: '10px', top: '10px' }}>Edit</a>}
         >
-          <List bordered grid={{ xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 2 }}>
+          <List grid={{ xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 2 }}>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Contact
                 </div>
@@ -106,7 +106,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Occlusion
                 </div>
@@ -116,7 +116,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Pontic
                 </div>
@@ -126,7 +126,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Liner Spacer
                 </div>

@@ -112,6 +112,7 @@ export default (state = initialState, action) => {
       return [ ...state.slice(0, idx),
               ...state.slice(idx+1) ]
     case 'CREATE_ORDERS_SUCCESS':
+    case 'LOGOUT_SUBMIT':
       return initialState
     default:
       return state

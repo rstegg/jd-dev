@@ -10,6 +10,7 @@ import { AppFooter } from './AppFooter';
 import { AppMenu } from './AppMenu';
 
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -67,6 +68,7 @@ class App extends Component {
                   <Switch>
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/orders" exact component={Orders} />
+                    <Route path="/profile" exact component={Profile} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
                   </Switch>

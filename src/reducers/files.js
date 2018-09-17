@@ -16,7 +16,8 @@ export default (state=initialState, action) => {
     case 'DELETE_PRODUCT':
       return Object.assign({}, state, { accepted: [ ...state.accepted.slice(0, action.payload.idx),
               ...state.accepted.slice(action.payload.idx+1) ] })
-
+    case 'LOGOUT_SUBMIT':
+      return initialState
     default:
       return state
   }

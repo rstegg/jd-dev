@@ -8,6 +8,7 @@ import notifications from './notifications'
 import errors from './errors'
 import orders from './orders'
 import user from './user'
+import profile from './profile'
 
 export default combineReducers({
   products,
@@ -17,5 +18,6 @@ export default combineReducers({
   errors,
   orders,
   user,
+  profile,
   form: formReducer,
 })

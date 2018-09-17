@@ -64,6 +64,7 @@
     "raf": "3.4.0",
     "ramda": "^0.25.0",
     "react": "^16.3.2",
+    "react-avatar-editor": "^11.0.4",
     "react-chat-elements": "^10.0.2",
     "react-chat-widget": "^2.1.4-1",
     "react-dev-utils": "^5.0.1",

@@ -6,6 +6,8 @@ export default (state = initialState, action) => {
       return action.payload.errors
     case 'OPEN_NOTIFICATION':
       return initialState
+    case 'LOGOUT_SUBMIT':
+      return initialState
     default:
       return state
   }
