@@ -56,7 +56,7 @@ export class AppTopbarView extends Component {
         <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.email}</span>}>
           <Menu.ItemGroup title="Account">
             <Menu.Item key="profile"><NavLink to="/profile"><Icon type="user" />Profile</NavLink></Menu.Item>
-            <Menu.Item key="account"><NavLink to="/settings"><Icon type="setting" />Settings</NavLink></Menu.Item>
+            <Menu.Item key="account"><NavLink to="/settings/account"><Icon type="setting" />Settings</NavLink></Menu.Item>
             <Menu.Item key="logout" onClick={() => this.props.onLogoutSubmit(this.props.user.token)}><Icon type="logout" />Logout</Menu.Item>
           </Menu.ItemGroup>
         </Menu.SubMenu>

@@ -15,6 +15,8 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
+import SettingsRouter from './pages/Settings/Router';
+
 import { joinRoom, removeNotification } from './actions'
 
 import 'primereact/resources/themes/omega/theme.css';
@@ -22,12 +24,9 @@ import 'primereact/resources/primereact.min.css';
 import 'fullcalendar/dist/fullcalendar.css';
 import 'font-awesome/css/font-awesome.css';
 import 'antd/dist/antd.css'
+import 'react-credit-cards/es/styles-compiled.css'
 import './App.css';
 import './layout/layout.css';
-
-
-
-
 
 class App extends Component {
     constructor(props) {
@@ -71,6 +70,7 @@ class App extends Component {
                     <Route path="/profile" exact component={Profile} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/signup" exact component={Signup} />
+                    <Route path='/settings' component={SettingsRouter} />
                   </Switch>
                 </div>
 

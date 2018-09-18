@@ -17,7 +17,6 @@ const InputField = ({ input, meta, icon, label, ...rest }) =>
 
 const ProfileForm = ({error, handleSubmit, submitting}) =>
   <Form onSubmit={handleSubmit}>
-    <Field component={InputField} name="email" type="email" icon={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Email' label='E-mail' />
     <Field component={InputField} name="name" type="text" icon={<Icon type="idcard" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Full name' label='Full name' />
     <Field component={InputField} name="bio" type="text" icon={<Icon type="profile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Bio' label='Bio'/>
     <Field component={InputField} name="password" type="password" icon={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Password' label='Password' />

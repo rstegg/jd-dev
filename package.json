@@ -68,6 +68,7 @@
     "react-avatar-editor": "^11.0.4",
     "react-chat-elements": "^10.0.2",
     "react-chat-widget": "^2.1.4-1",
+    "react-credit-cards": "^0.7.0",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.3.2",
     "react-dropzone": "^5.0.1",

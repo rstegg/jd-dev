@@ -9,6 +9,8 @@ import errors from './errors'
 import orders from './orders'
 import user from './user'
 import profile from './profile'
+import card from './card'
+import bank from './bank'
 
 export default combineReducers({
   products,
@@ -19,5 +21,7 @@ export default combineReducers({
   orders,
   user,
   profile,
+  card,
+  bank,
   form: formReducer,
 })
