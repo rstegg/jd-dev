@@ -126,16 +126,15 @@ class UploadTable extends Component {
                             <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <Search
                               placeholder='Identifier'
-                              style={{ width: 300, lineHeight: 0, fontSize: '12px' }}
+                              style={{ width: '100%', lineHeight: 0, fontSize: '12px' }}
                               onSearch={value => this.props.setName(value, idx)}
                               enterButton={<Icon type='check' />}
                               defaultValue={product.name} />
                           </div>
                         </FormItem>
-                        : <div style={{ lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
-                            <div style={{ width: '100%', marginBottom: '12px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
+                        : <div style={{ minHeight: 50, lineHeight: 0, marginTop: '24px', fontSize: '12px' }}>
+                            <div style={{ width: '100%', marginBottom: '24px', textAlign: 'center', fontSize: '14px' }}>Case Identifier</div>
                             <b>{product.name}</b>
-                            <Button size='small' type="primary" onClick={() => this.props.toggleRenameScanID(idx)} style={{marginLeft: '3px'}}><Icon type='edit' /></Button>
                           </div>
                       }
                     </div>
