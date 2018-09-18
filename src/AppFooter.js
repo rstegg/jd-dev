@@ -6,7 +6,7 @@ export class AppFooterView extends Component {
         const { user } = this.props
         return  (
             <div className="layout-footer">
-              <span className="footer-text" style={{'marginRight': '5px'}}>Ryan Stegmann -- Cool guy</span>
+              <span className="footer-text" style={{'marginRight': '5px'}}>Copyright</span>
             </div>
         );
     }
