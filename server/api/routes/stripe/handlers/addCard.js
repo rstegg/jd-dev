@@ -25,18 +25,18 @@ const validate = req => {
   )
 }
 
-const findOrCreateStripeCustomer = (user, stripeToken) => {
+const findOrCreateStripeCustomer = (user, stripeObj) => {
   if (!user.stripeCustomer) {
-    stripe.customers.create({
+    console.log('CREATING STRIPE CUSTOMER');
+    return stripe.customers.create({
       description: `Customer for ${user.email}`,
-      source: stripeToken
+      source: stripeObj.id
     })
-    .then(res => res)
   } else {
-    stripe.customers.update(user.stripeCustomer.id, {
-      source: stripeToken
+    console.log('UPDATING STRIPE CUSTOMER');
+    return stripe.customers.update(user.stripeCustomer.id, {
+      source: stripeObj.id
     })
-    .then(res => res)
   }
 }
 
@@ -44,13 +44,17 @@ module.exports = (req, res) =>
   validate(req)
     .then(validatedUser => findOrCreateStripeCustomer(validatedUser, req.body.stripe))
       .then(customer => {
-        const new_stripe_card = req.body.stripeResponse.card
+        console.log('USER CUSTOMER READY');
+        const new_stripe_card = req.body.stripe.card
         const old_stripeCards = req.user.stripeCards || []
         const updated_stripe = { stripeCards: old_stripeCards.concat(new_stripe_card), stripeCustomer: customer }
-        return User.update(updated_stripe, { where: { id: req.user.id }, returning: true, plain: true })
+        return Promise.all( [ customer, User.update(updated_stripe, { where: { id: req.user.id }, returning: true, plain: true }) ])
       })
-      .then(user => {
-        const stripe_card = req.body.stripeResponse.card
-        res.status(200).json({stripe_card})
+      .then(([customer, user]) => {
+        console.log('UPDATED USER');
+        res.status(200).json({ card: req.body.stripe.card, customer })
       })
-    .catch(error => res.status(400).json({error}))
+    .catch(error => {
+      console.log('USER CUSTOMER ERROR', error);
+      res.status(400).json({error})
+    })

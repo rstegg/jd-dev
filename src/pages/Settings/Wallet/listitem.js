@@ -1,41 +1,17 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Header, Card, Icon } from 'antd'
-
-const renderCardType = type => {
-  switch (type) {
-  case 'Visa':
-    return <Icon name='visa' />
-  case 'MasterCard':
-    return <Icon name='mastercard' />
-  case 'American Express':
-    return <Icon name='american express' />
-  case 'Diners Club':
-    return <Icon name='diners club' />
-  case 'Discover':
-    return <Icon name='discover' />
-  case 'JCB':
-    return <Icon name='japan credit bureau' />
-  case 'Maestro':
-  case 'UnionPay':
-  default:
-    return <Icon name='payment' />
-  }
-}
+import { Alert, Card, Icon } from 'antd'
 
 //TODO: route to wallet ID
 
 const WalletListItem = ({ wallet }) =>
-  <NavLink to='/settings/wallet'>
-    <Card type='inner'>
-      <h4>
-        {wallet.object === 'card' && renderCardType(wallet.brand)} ending in {wallet.last4}
-      </h4>
-      <h4 floated='right'>
-        {wallet.exp_month}/{wallet.exp_year}
-      </h4>
-    </Card>
-  </NavLink>
+  <Card type='inner'
+    title={<div>{wallet.object === 'card' && <Icon type='credit-card' />} ending in {wallet.last4}</div>}
+    >
+    <Alert message={wallet.name} type={wallet.defaultCard ? 'success' : 'warning'} />
+    <br />
+    <p>Expiration: {wallet.exp_month}/{wallet.exp_year}</p>
+  </Card>
 
 export default WalletListItem

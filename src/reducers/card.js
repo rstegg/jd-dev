@@ -1,3 +1,5 @@
+import { findIndex } from 'ramda'
+
 const initialState = {
   list: [],
   isOpen: false,
@@ -20,8 +22,11 @@ export default function(state = initialState, action) {
       isLoading: true
     })
   case 'ADD_STRIPE_CARD_SUCCESS':
+    const customer = action.payload.customer
+    const sources = customer.sources.data.map(source => source.id)
+    const card = { ...action.payload.card, defaultCard: action.payload.card.id === customer.default_source }
     return Object.assign({}, initialState, {
-      list: [ ...state.list, action.payload.stripe_card ],
+      list: [ ...state.list, card ],
       isOpen: false,
       isLoading: false
     })
@@ -42,7 +47,9 @@ export default function(state = initialState, action) {
       isOpen: true
     })
   case 'CLOSE_ADD_CARD':
-    return initialState
+    return Object.assign({}, state, {
+      isOpen: false
+    })
   default:
     return state
   }

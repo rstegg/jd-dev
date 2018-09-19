@@ -67,6 +67,8 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     stripe_customer_id: DataTypes.STRING,
     stripe_account_id: DataTypes.STRING,
+    stripeCustomer: DataTypes.JSONB,
+    stripeCards: DataTypes.ARRAY(DataTypes.JSONB),
     card_accounts: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
       allowNull: false,

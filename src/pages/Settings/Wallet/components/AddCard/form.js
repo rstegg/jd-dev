@@ -10,8 +10,8 @@ import { validate } from './validators'
 import { CardElement, injectStripe } from 'react-stripe-elements'
 
 class CardForm extends Component {
-  onSubmit = values => {
-    this.props.stripe.createToken({ type: 'card', name: this.props.user.name })
+  onSubmit = () => {
+    this.props.stripe.createToken({ name: this.props.user.name })
     .then(({ token, error }) => {
       if (error) {
         console.error('ERROR CREATING TOKEN', error);
@@ -24,7 +24,7 @@ class CardForm extends Component {
   render() {
     const { error, submitting, handleSubmit } = this.props
     return (
-      <form onSubmit={this.onSubmit} ref={ref => this.formComponent = ref}>
+      <form onSubmit={this.onSubmit}>
         <CardElement style={{ base: { fontSize: '18px' }}} />
       </form>
     )
