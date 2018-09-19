@@ -28,7 +28,7 @@ const validate = req => {
 const findOrCreateStripeCustomer = (user, stripeToken) => {
   if (!user.stripeCustomer) {
     stripe.customers.create({
-      description: `Customer for ${user.username}`,
+      description: `Customer for ${user.email}`,
       source: stripeToken
     })
     .then(res => res)
@@ -42,7 +42,7 @@ const findOrCreateStripeCustomer = (user, stripeToken) => {
 
 module.exports = (req, res) =>
   validate(req)
-    .then(validatedUser => findOrCreateStripeCustomer(validatedUser, req.body.stripeResponse.id))
+    .then(validatedUser => findOrCreateStripeCustomer(validatedUser, req.body.stripe))
       .then(customer => {
         const new_stripe_card = req.body.stripeResponse.card
         const old_stripeCards = req.user.stripeCards || []

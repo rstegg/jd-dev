@@ -24,13 +24,12 @@ import 'primereact/resources/primereact.min.css';
 import 'fullcalendar/dist/fullcalendar.css';
 import 'font-awesome/css/font-awesome.css';
 import 'antd/dist/antd.css'
-import 'react-credit-cards/es/styles-compiled.css'
 import './App.css';
 import './layout/layout.css';
 
 class App extends Component {
     constructor(props) {
-        super(props);
+      super(props);
     }
 
     componentWillUpdate(nextProps) {
