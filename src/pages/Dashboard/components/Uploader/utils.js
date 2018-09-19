@@ -58,7 +58,7 @@ export const parseXml = xml => {
         type = 'Full Crown Bridge'
       } else if (restoType.includes('Frame Bridge')) {
         type = 'Coping Bridge'
-      } else if (restoType.includes('Anatomical Coping')) {
+      } else if (restoType.includes('Anatomical Coping') || restoType.includes('Anatomy')) {
         type = 'Anatomical Coping'
       } else if (restoType.includes('Inlay')) {
         type = 'Inlay'
