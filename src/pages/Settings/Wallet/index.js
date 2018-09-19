@@ -11,7 +11,7 @@ import { fetchStripeCards, openAddCard } from './actions'
 class WalletSettings extends Component {
   componentWillMount() {
     const { fetchStripeCards, user } = this.props
-    fetchStripeCards(user)
+    fetchStripeCards(user.token)
   }
   render() {
     const { user, card, openAddCard } = this.props
@@ -41,7 +41,7 @@ const mapStateToProps = ({ user, card }) =>
 const mapDispatchToProps = dispatch =>
 ({
   openAddCard: () => dispatch(openAddCard()),
-  fetchStripeCards: user => dispatch(fetchStripeCards(user)),
+  fetchStripeCards: token => dispatch(fetchStripeCards(token)),
 })
 
 export default connect(

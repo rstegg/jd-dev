@@ -1,6 +1,6 @@
 import xml2js from 'xml2js'
 import { promisify } from 'es6-promisify'
-import { pipe, head, find, trim, replace, map, pathEq, prop, path } from 'ramda'
+import { pipe, head, find, trim, replace, map, pathEq, prop, path, uniq } from 'ramda'
 
 export const parseXml = xml => {
 
@@ -49,7 +49,7 @@ export const parseXml = xml => {
       const orderFirstname = getPropertyByName('Patient_FirstName',itemOrder)
       const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
 
-      const units = orderItems.match(/\d+/g)
+      const units = uniq(orderItems.match(/\d+/g))
 
       let type = restoType.split(' ')[0]
       if (restoType.includes('Crown')) {

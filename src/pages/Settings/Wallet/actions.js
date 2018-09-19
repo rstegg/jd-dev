@@ -1,39 +1,6 @@
-export const openAddBank = () =>
-({
-  type: 'OPEN_ADD_BANK'
-})
-
-export const closeAddBank = () =>
-({
-  type: 'CLOSE_ADD_BANK'
-})
-
-export const openWithdrawBank = () =>
-({
-  type: 'OPEN_WITHDRAW_BANK'
-})
-
-export const closeWithdrawBank = () =>
-({
-  type: 'CLOSE_WITHDRAW_BANK'
-})
-
-export const setFocusedBankField = field =>
-({
-  type: 'SET_FOCUSED_BANK_FIELD',
-  payload: {
-    field
-  }
-})
-
-export const onAddBankFormChange = (field, value) =>
-({
-  type: 'ON_ADD_BANK_FORM_CHANGE',
-  payload: {
-    field,
-    value
-  }
-})
+import su from 'superagent'
+import { path } from 'ramda'
+import { SubmissionError } from 'redux-form'
 
 export const openAddBitcoin = () =>
 ({
@@ -73,19 +40,23 @@ export const onAddBitcoinFormChange = (field, value) =>
 })
 
 
-export const fetchStripeCards = user =>
-({
-  type: 'FETCH_STRIPE_CARDS',
-  payload: {
-    user
+export const fetchStripeCards = token =>
+  dispatch => {
+    dispatch({ type: 'FETCH_STRIPE_CARDS', payload: { token } })
+    return su.get('/api/v1/stripe/cards')
+    .type('application/json')
+    .accept('application/json')
+    .set('Authorization', token)
+    .then(res => dispatch(onFetchStripeCardsSuccess(res)))
+    .catch(err => console.error(err))
   }
-})
 
 export const onFetchStripeCardsSuccess = res =>
 ({
   type: 'FETCH_STRIPE_CARDS_SUCCESS',
   payload: {
-    stripeCards: res.body.stripeCards
+    stripeCards: res.body.stripeCards,
+    stripeCustomer: res.body.stripeCustomer,
   }
 })
 

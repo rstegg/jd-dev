@@ -9,13 +9,15 @@ const initialState = {
   number: '',
   expirationDate: '',
   cvv: '',
+  active: {}
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
   case 'FETCH_STRIPE_CARDS_SUCCESS':
     return Object.assign({}, state, {
-      list: action.payload.stripeCards
+      list: action.payload.stripeCards.map(card => ({ ...card, defaultCard: card.id === action.payload.stripeCustomer.default_source }) ),
+      active: action.payload.stripeCustomer,
     })
   case 'ADD_STRIPE_CARD':
     return Object.assign({}, state, {

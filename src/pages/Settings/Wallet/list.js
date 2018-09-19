@@ -8,16 +8,13 @@ const WalletList =
 ({
   wallet
 }) =>
-  <Card type='inner'>
-    {length(wallet) ? wallet.map((wallet, i) =>
-      <WalletListItem key={`wallet-${i}`} wallet={wallet} />
-    ) :
-      <div>
-        <h4 style={{ textAlign: 'center'}}>
-          <Icon type='meh' /> Empty!
-        </h4>
-      </div>
-    }
-  </Card>
+  length(wallet) ? wallet.map((wallet, i) =>
+    <WalletListItem key={`wallet-${i}`} wallet={wallet} />
+  ) :
+    <div>
+      <h4 style={{ textAlign: 'center'}}>
+        <Icon type='meh' /> Empty!
+      </h4>
+    </div>
 
 export default WalletList

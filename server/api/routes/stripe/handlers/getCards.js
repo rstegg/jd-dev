@@ -1,7 +1,7 @@
 const { User } = requireDb
 const { merge, pick } = require('ramda')
 
-const userAttributes = ['id', 'stripeCards']
+const userAttributes = ['id', 'stripeCards', 'stripeCustomer']
 
 const validate = req =>
   User.findOne({
@@ -16,5 +16,5 @@ const validate = req =>
 
 module.exports = (req, res) =>
   validate(req)
-    .then(({stripeCards}) => res.status(200).json({stripeCards}))
+    .then(({stripeCards, stripeCustomer}) => res.status(200).json({stripeCards, stripeCustomer}))
     .catch(error => res.status(400).json({error}))
