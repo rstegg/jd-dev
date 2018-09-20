@@ -59,7 +59,7 @@ class OrdersTableView extends Component {
         )
       }
       return (
-        <Tag>{order.type}</Tag>
+        <div>{order.type}</div>
       )
     }
 
@@ -103,9 +103,10 @@ class OrdersTableView extends Component {
 
     notesTemplate = (rowData, column) => {
       if (rowData.notes) {
-        return rowData.notes
-          .map(note => note.length > 40 ? <Tag key={`note-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`}>{note.slice(0,40) + '...'}</Tag>
-          : note.length ? <Tag key={`note-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`}>{note}</Tag> : null )
+        return <div>{rowData.notes
+          .map((note, idx) => note.length > 40 ? <div key={`note-${rowData.uid}-${idx}`}>"{note.slice(0,40) + '...'}"</div>
+          : note.length ? <div key={`note-${rowData.uid}-${idx}`}>"{note}"</div> : null )
+        }</div>
       } else {
         return null
       }

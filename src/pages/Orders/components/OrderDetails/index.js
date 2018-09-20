@@ -89,10 +89,11 @@ const linerTypes = [
 const Step = Steps.Step
 
 const OrderSteps = ({ order }) => {
-  const statusNum = order.status === 'process' ? 0 : 1
+  const statusNum = order.status === 'process' ? 1 : 2
   if (order.status === 'canceled') {
     return (
       <Steps current={statusNum} status={'error'}>
+        <Step title="Sent" description="Sent to designer" />
         <Step title="In Process" description="Design in process" />
         <Step title="Canceled" description="Order canceled" />
       </Steps>
@@ -180,7 +181,7 @@ export default class OrderDetails extends Component {
           type="inner"
           title="Notes"
           extra={<a onClick={() => this.showNotesModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
-          {order.notes && order.notes.map((note, i) => note.length ? <Tag key={`note-${order.uid}-${i}`} color='geekblue'>{note}</Tag> : null)}
+          {order.notes && order.notes.map((note, idx) => note.length ? <p key={`note-${order.uid}-${idx}`} color='geekblue'>"{note}"</p> : null)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
