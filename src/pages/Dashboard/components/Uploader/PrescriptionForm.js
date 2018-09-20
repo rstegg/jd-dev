@@ -121,9 +121,8 @@ export default class PrescriptionForm extends Component {
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
             <FormItem hasFeedback validateStatus={product.hasTypeError}>
               <div style={{ lineHeight: 0, marginTop: '24px' }}>
-                <div style={{ width: '100%', marginBottom: '12px' }}>Type of Restore</div>
                 <SelectSearch
-                  label='Restoration type'
+                  label='Type of Restoration'
                   options={designTypes}
                   style={{ width: 200, marginRight: '16px' }}
                   onChange={value => setType(value, idx)}
@@ -136,7 +135,7 @@ export default class PrescriptionForm extends Component {
                 <TextArea
                   label='Design Notes'
                   style={{ width: 200, marginRight: '16px' }}
-                  onChange={e => setNotes(e.target.value, idx)}
+                  onChange={e => setNotes([ e.target.value ], idx)}
                   value={product.notes} />
               </div>
             </FormItem>

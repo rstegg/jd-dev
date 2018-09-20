@@ -1,6 +1,6 @@
 import xml2js from 'xml2js'
 import { promisify } from 'es6-promisify'
-import { pipe, head, find, trim, replace, map, pathEq, prop, path, uniq } from 'ramda'
+import { pipe, head, find, trim, replace, map, pathEq, prop, path, uniq, range } from 'ramda'
 
 export const parseXml = xml => {
 
@@ -48,8 +48,25 @@ export const parseXml = xml => {
       const orderManufacturer = getPropertyByName('ManufName',itemOrder)
       const orderFirstname = getPropertyByName('Patient_FirstName',itemOrder)
       const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
-      
-      const units = uniq(orderItems.match(/\d+/g))
+
+      const getUnitRanges = itms => itms.split(' ').reduce((acc, item) => {
+        if (item.includes('-')) {
+          const workingItem = item.replace(/,/g, '').split('-')
+          const workingNumbersStart = workingItem[0].replace(/,/g, '')
+          const workingNumbersEnd = workingItem[1].replace(/,/g, '')
+          return acc.concat(
+            range(Number(workingNumbersStart), Number(workingNumbersEnd))
+              .map(String)
+              .concat(workingNumbersEnd)
+          )
+        }
+        return acc
+      }, [])
+
+      console.log(orderItems);
+      console.log(getUnitRanges(orderItems));
+
+      const units = orderItems.includes('-') ? uniq(getUnitRanges(orderItems)) : uniq(orderItems.match(/\d+/g))
 
       let type = restoType.split(' ')[0]
       if (restoType.includes('Crown')) {
