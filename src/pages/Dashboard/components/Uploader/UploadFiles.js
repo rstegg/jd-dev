@@ -9,7 +9,7 @@ import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
 import { Tabs, List, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
-import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, setModel, clearUnits, validateForm } from './actions/products'
+import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, setModel, setPreference, clearUnits, validateForm } from './actions/products'
 
 const FormItem = Form.Item
 const Search = Input.Search
@@ -190,6 +190,7 @@ const mapDispatchToProps = dispatch => ({
   setModel: (model, idx) => dispatch(setModel(model, idx)),
   setDueTime: (time, idx) => dispatch(setDueTime(time, idx)),
   setDueDate: (date, idx) => dispatch(setDueDate(date, idx)),
+  setPreference: (key, value, idx) => dispatch(setPreference(key, value, idx)),
   clearUnits: (idx) => dispatch(clearUnits(idx)),
   deleteProduct: uid => dispatch(deleteProduct(uid)),
   validateForm: (products, token) => dispatch(validateForm(products, token)),

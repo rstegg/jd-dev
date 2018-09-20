@@ -109,6 +109,15 @@ export const setUnits = (units, idx) => ({
   }
 })
 
+export const setPreference = (key, value, idx) => ({
+  type: 'SET_PREFERENCE',
+  payload: {
+    key,
+    value,
+    idx
+  }
+})
+
 export const clearUnits = (idx) => ({
   type: 'CLEAR_UNITS',
   payload: {

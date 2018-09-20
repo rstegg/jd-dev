@@ -5,20 +5,22 @@ const Option = Select.Option
 class SelectSearch extends Component {
   render() {
     const options = this.props.options && this.props.options.map(d => <Option key={d.value}>{d.label}</Option>);
+    const selectStyle = { ...this.props.style, alignSelf: 'flex-end' }
     return (
-      <div>
-        <div style={{ width: '100%', marginBottom: '12px' }}>{this.props.label}:</div>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div>{this.props.label}:</div>
         <Select
           value={this.props.value}
           placeholder={this.props.label}
-          style={this.props.style}
+          style={selectStyle}
           showArrow={true}
           filterOption={true}
           disabled={this.props.disabled}
           onChange={this.props.onChange}
-        >
-          {options}
-        </Select>
+          defaultValue={this.props.defaultValue}
+          >
+            {options}
+          </Select>
       </div>
     );
   }

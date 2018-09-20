@@ -101,7 +101,7 @@ export default class PrescriptionForm extends Component {
   }
   render () {
     const { product, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
-    setContact, setOcclusion, setPontic, setLinerSpacer, setDueTime, setDueDate } = this.props
+    setPreference, setDueTime, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
@@ -148,7 +148,7 @@ export default class PrescriptionForm extends Component {
                     label='Contact Preferences'
                     options={contactTypes}
                     style={{ width: 200, marginRight: '16px' }}
-                    onChange={value => setContact(value, idx)}
+                    onChange={value => setPreference('contact', value, idx)}
                     value={product.contact} />
                   </List.Item>
                   <List.Item>
@@ -156,7 +156,7 @@ export default class PrescriptionForm extends Component {
                       label='Occlusion Preferences'
                       options={occlusionTypes}
                       style={{ width: 200, marginRight: '16px' }}
-                      onChange={value => setOcclusion(value, idx)}
+                      onChange={value => setPreference('occlusion', value, idx)}
                       value={product.occlusion} />
                   </List.Item>
                   <List.Item>
@@ -164,7 +164,7 @@ export default class PrescriptionForm extends Component {
                       label='Pontic Preferences'
                       options={ponticTypes}
                       style={{ width: 200, marginRight: '16px' }}
-                      onChange={value => setPontic(value, idx)}
+                      onChange={value => setPreference('pontic', value, idx)}
                       value={product.pontic} />
                   </List.Item>
                   <List.Item>
@@ -172,7 +172,7 @@ export default class PrescriptionForm extends Component {
                       label='Liner Spacer Preferences'
                       options={linerTypes}
                       style={{ width: 200, marginRight: '16px' }}
-                      onChange={value => setLinerSpacer(value, idx)}
+                      onChange={value => setPreference('linerSpacer', value, idx)}
                       value={product.linerSpacer} />
                   </List.Item>
                 </List>

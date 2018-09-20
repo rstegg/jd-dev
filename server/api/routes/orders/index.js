@@ -17,6 +17,7 @@ const validField = apiRequire('middleware/valid-field')
 
 const validOrder = validField('orders')
 const validSingle = validField('order')
+const validPrefs = validField('prefs')
 const validEditOrderParams = validFields(false, [ 'id' ])
 
 module.exports = io =>
@@ -42,6 +43,11 @@ module.exports = io =>
     )
     .put('/:uid/notes',
       validateBody(validOrder),
+      validateParams(validEditOrderParams),
+      editOrderHandler
+    )
+    .put('/:uid/prefs',
+      validateBody(validPrefs),
       validateParams(validEditOrderParams),
       editOrderHandler
     )

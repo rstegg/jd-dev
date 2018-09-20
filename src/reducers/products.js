@@ -106,6 +106,10 @@ export default (state = initialState, action) => {
       return [ ...state.slice(0, action.payload.idx),
               { ...state[action.payload.idx], progress: action.payload.progress },
               ...state.slice(action.payload.idx+1) ]
+    case 'SET_PREFERENCE':
+      return [ ...state.slice(0, action.payload.idx),
+              { ...state[action.payload.idx], [action.payload.key]: action.payload.value },
+              ...state.slice(action.payload.idx+1) ]
     case 'DELETE_PRODUCT':
       const uids = state.map(product => product.uid)
       const idx = uids.indexOf(action.payload.uid)
