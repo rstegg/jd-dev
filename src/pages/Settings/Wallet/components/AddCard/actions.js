@@ -1,8 +1,4 @@
 import su from 'superagent'
-import { path } from 'ramda'
-import { SubmissionError } from 'redux-form'
-
-import { promisify } from 'es6-promisify'
 
 export const addStripeCard = (stripe, token) =>
   dispatch => {

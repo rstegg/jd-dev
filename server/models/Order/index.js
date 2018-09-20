@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('order', {
     designers: DataTypes.JSONB,
-    designerId: DataTypes.INTEGER,
+    designerId: DataTypes.STRING,
     name: DataTypes.STRING,
     units: DataTypes.ARRAY(DataTypes.STRING),
     unitsCount: DataTypes.STRING,

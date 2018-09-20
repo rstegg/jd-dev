@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-import { Field, reduxForm } from 'redux-form'
-
-import { Spin, Col, Alert, Form, Button, Input, Icon } from 'antd'
+import { Form } from 'antd'
 
 import { normalizeCCNumber, normalizeExpiry, normalizeCVV } from './normalize'
 import { validate } from './validators'
@@ -24,9 +22,9 @@ class CardForm extends Component {
   render() {
     const { error, submitting, handleSubmit } = this.props
     return (
-      <form onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit}>
         <CardElement style={{ base: { fontSize: '18px' }}} />
-      </form>
+      </Form>
     )
   }
 }

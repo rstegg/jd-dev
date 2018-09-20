@@ -7,7 +7,6 @@ import { prop, head } from 'ramda'
 
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
-import { AppMenu } from './AppMenu';
 
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -28,57 +27,53 @@ import './App.css';
 import './layout/layout.css';
 
 class App extends Component {
-    constructor(props) {
-      super(props);
+  componentWillUpdate(nextProps) {
+    if (!this.props.user.token && nextProps.user.token) {
+      this.props.joinRoom(nextProps.user.uid, nextProps.user.token)
     }
 
-    componentWillUpdate(nextProps) {
-      if (!this.props.user.token && nextProps.user.token) {
-        this.props.joinRoom(nextProps.user.uid, nextProps.user.token)
-      }
+    if (!this.props.notifications.length && nextProps.notifications.length) {
 
-      if (!this.props.notifications.length && nextProps.notifications.length) {
+      const key = prop('uid', head(this.props.notifications))
 
-        const key = prop('uid', head(this.props.notifications))
+      const btn = (
+        <Button type="primary" size="small" onClick={() => {}}>
+          View Order
+        </Button>
+      );
 
-        const btn = (
-          <Button type="primary" size="small" onClick={() => {}}>
-            View Order
-          </Button>
-        );
+      notification.open({
+        message: 'Assigned new order',
+        description: 'You have been assigned a new order.',
+        btn,
+        key,
+      })
 
-        notification.open({
-          message: 'Assigned new order',
-          description: 'You have been assigned a new order.',
-          btn,
-          key,
-        })
-
-        this.props.removeNotification(key)
-      }
+      this.props.removeNotification(key)
     }
+  }
 
-    render() {
-        return (
-            <div className='layout-wrapper'>
-                <AppTopbar />
-                <div className="layout-main">
-                  <Switch>
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/orders" exact component={Orders} />
-                    <Route path="/profile" exact component={Profile} />
-                    <Route path="/login" exact component={Login} />
-                    <Route path="/signup" exact component={Signup} />
-                    <Route path='/settings' component={SettingsRouter} />
-                  </Switch>
-                </div>
+  render() {
+      return (
+          <div className='layout-wrapper'>
+              <AppTopbar />
+              <div className="layout-main">
+                <Switch>
+                  <Route path="/" exact component={Dashboard} />
+                  <Route path="/orders" exact component={Orders} />
+                  <Route path="/profile" exact component={Profile} />
+                  <Route path="/login" exact component={Login} />
+                  <Route path="/signup" exact component={Signup} />
+                  <Route path='/settings' component={SettingsRouter} />
+                </Switch>
+              </div>
 
-                <AppFooter />
+              <AppFooter />
 
-                <div className="layout-mask"></div>
-            </div>
-        );
-    }
+              <div className="layout-mask"></div>
+          </div>
+      );
+  }
 }
 
 const mapStateToProps = ({ user, notifications }) => ({ user, notifications })

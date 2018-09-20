@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 
-import { Modal, Upload, Avatar, Steps, List, Tag, Card, Progress, Input, Icon, Button, Form } from 'antd'
+import { Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } from 'antd'
 
 import moment from 'moment'
 
 import './Styles.css'
 
 const Step = Steps.Step
-
-const { Search, TextArea } = Input
-const FormItem = Form.Item
 
 const OrderSteps = ({ order }) => {
   const statusNum = order.status === 'sent' ? 0 : 1
@@ -30,21 +27,32 @@ const OrderSteps = ({ order }) => {
   )
 }
 
-export default class PrescriptionForm extends Component {
+export default class OrderDetails extends Component {
   state = {
-    visible: false,
-    note: ''
+    noteVisible: false,
+    note: '',
+    prefs: ''
   }
 
-  hideModal = () => {
-    this.setState({ visible: false, note: '' })
+  hideNotesModal = () => {
+    this.setState({ noteVisible: false, note: '' })
   }
   saveNewNote = () => {
-    this.props.addExtraNote(this.state.note, this.props.order, this.props.user.token)
-    this.setState({ visible: false, note: '' })
+    this.props.setOrderPrefs(this.state.note, this.props.order, this.props.user.token)
+    this.setState({ noteVisible: false, note: '' })
   }
-  showModal = () => {
-    this.setState({ visible: true })
+  showNotesModal = () => {
+    this.setState({ noteVisible: true })
+  }
+  hidePrefsModal = () => {
+    this.setState({ prefVisible: false, prefs: '' })
+  }
+  saveNewPref = () => {
+    this.props.addExtraPref(this.state.prefs, this.props.order, this.props.user.token)
+    this.setState({ prefVisible: false, prefs: '' })
+  }
+  showPrefsModal = () => {
+    this.setState({ prefVisible: true })
   }
   render () {
     const { order } = this.props
@@ -85,14 +93,14 @@ export default class PrescriptionForm extends Component {
           style={{ marginTop: 16 }}
           type="inner"
           title="Notes"
-          extra={<a onClick={() => this.showModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
+          extra={<a onClick={() => this.showNotesModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
           {order.notes && order.notes.map((note, i) => note.length ? <Tag key={`note-${order.uid}-${i}`} color='geekblue'>{note}</Tag> : null)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
           type="inner"
           title="Preferences"
-          extra={<a href="#" style={{ position: 'absolute', right: '10px', top: '10px' }}>Edit</a>}
+          extra={<a onClick={() => this.showPrefModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Edit</a>}
         >
           <List grid={{ xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 2 }}>
             <List.Item>
@@ -140,9 +148,9 @@ export default class PrescriptionForm extends Component {
         <Modal
           style={{ minWidth: '50%' }}
           title={'Add a note'}
-          visible={this.state.visible}
+          noteVisible={this.state.noteVisible}
           onOk={() => this.saveNewNote()}
-          onCancel={() => this.hideModal()}
+          onCancel={() => this.hideNotesModal()}
           okText="Done"
           cancelText="Cancel"
         >

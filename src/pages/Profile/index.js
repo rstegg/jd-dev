@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, Button, Avatar, Tag, Dimmer, Spin } from 'antd'
+import { Card } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import AvatarUpload from './components/AvatarUpload'
@@ -8,18 +8,16 @@ import ImageCropper from './components/ImageCropper'
 
 import ProfileForm from './form'
 
-import { onProfileSubmit, switchToProfileUser, openProfileCropper, closeProfileCropper, uploadProfileImage, onUploadProfileImageFailure, editProfileField } from './actions/profile'
+import { onProfileSubmit, openProfileCropper, closeProfileCropper, uploadProfileImage, onUploadProfileImageFailure } from './actions/profile'
 
 class ProfileView extends Component {
   render() {
     const {
       onProfileSubmit,
-      editProfileField,
       openProfileCropper,
       closeProfileCropper,
       uploadProfileImage,
       onUploadProfileImageFailure,
-      switchToProfileUser,
       profile,
       user
     } = this.props
@@ -53,8 +51,6 @@ const mapDispatchToProps = dispatch =>
   closeProfileCropper: () => dispatch(closeProfileCropper()),
   uploadProfileImage: (img, token) => dispatch(uploadProfileImage(img, token)),
   onUploadProfileImageFailure: () => dispatch(onUploadProfileImageFailure()),
-  switchToProfileUser: () => dispatch(switchToProfileUser()),
-  editProfileField: field => dispatch(editProfileField(field))
 })
 
 export default connect(

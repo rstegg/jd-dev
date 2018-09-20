@@ -1,5 +1,4 @@
 import su from 'superagent'
-import shortid from 'shortid'
 
 export const acceptStl = (accepted, stl) => ({
   type: 'ACCEPT_STL',
@@ -157,20 +156,20 @@ export const sendOrders = (products, token) =>
       .field('file', files)
       .then(({ body }) => {
         const fileNames = body.files.map(file => file.originalname)
-        const productFilenames = products.map(product => product.filename)
-        const orders = products.map((product, i) => {
+        const orders = products.reduce((acc, product, arr, i) => {
           if (fileNames.indexOf(product.filename) !== -1) {
             const idx = fileNames.indexOf(product.filename)
             const file = body.files[idx]
             if (file) {
-              return { ...product, caseFileUrls: file.location }
+              return acc.concat({ ...product, caseFileUrls: file.location })
             }
             if (body.files && body.files.length) {
-              return { ...product, caseFileUrls: body.files[0] }
+              return acc.concat({ ...product, caseFileUrls: body.files[0] })
             }
-            return product
+            return acc.concat(product)
           }
-        })
+          return acc
+        }, [])
         return su.post('/api/v1/orders')
           .set('Authorization', token)
           .send({ orders })

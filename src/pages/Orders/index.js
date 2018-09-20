@@ -10,11 +10,11 @@ import moment from 'moment'
 
 import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNote } from './actions/orders'
+import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNote, setOrderPrefs } from './actions/orders'
 
 import OrderDetails from './components/OrderDetails'
 
-class OrdersView extends Component {
+class OrdersTableView extends Component {
 
     constructor(props) {
         super(props);
@@ -167,7 +167,8 @@ const mapDispatchToProps = dispatch => ({
   fetchOrders: token => dispatch(fetchOrders(token)),
   addExtraScanFile: (file, order) => dispatch(addExtraScanFile(file, order)),
   addExtraNote: (note, order, token) => dispatch(addExtraNote(note, order, token)),
+  setOrderPrefs: (prefs, order, token) => dispatch(setOrderPrefs(prefs, order, token)),
   cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrdersView))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrdersTableView))

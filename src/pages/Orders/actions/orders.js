@@ -1,5 +1,4 @@
 import su from 'superagent'
-import { flatten } from 'ramda'
 
 export const fetchOrdersSuccess = res => ({
   type: 'FETCH_ORDERS_SUCCESS',
@@ -64,5 +63,25 @@ export const addExtraScanFile = (file, order) => ({
   payload: {
     file,
     order
+  }
+})
+
+export const setOrderPrefs = (prefs, order, token) =>
+  dispatch => {
+    dispatch({ type: 'SET_ORDER_PREFS', payload: { prefs, order } })
+    su.put(`/api/v1/orders/${order.uid}/prefs`)
+      .accept('application/json')
+      .set('Authorization', token)
+      .send({ prefs })
+      .then(res => dispatch(setOrderPrefsSuccess(res)))
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+export const setOrderPrefsSuccess = res => ({
+  type: 'SET_ORDER_PREFS_SUCCESS',
+  payload: {
+    order: res.body.order
   }
 })

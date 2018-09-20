@@ -1,5 +1,4 @@
 import su from 'superagent'
-import { path } from 'ramda'
 import { SubmissionError } from 'redux-form'
 
 export const onLoginSubmit = ({ email, password }) =>

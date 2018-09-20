@@ -21,7 +21,7 @@ function beforeUpload(file) {
   return isJPG && isLt2M;
 }
 
-class AvatarUpload extends React.Component {
+class AvatarUpload extends Component {
   state = {
     loading: false,
   };

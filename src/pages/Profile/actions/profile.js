@@ -1,6 +1,4 @@
 import su from 'superagent'
-import { path } from 'ramda'
-import { SubmissionError } from 'redux-form'
 
 export const uploadProfileImage = (image, token) =>
   dispatch => {
@@ -33,17 +31,6 @@ export const closeProfileCropper = () =>
 ({
   type: 'CLOSE_PROFILE_CROPPER'
 })
-
-export const switchToProfileAdmin = () =>
-({
-  type: 'SWITCH_TO_PROFILE_ADMIN'
-})
-
-export const switchToProfileUser = () =>
-({
-  type: 'SWITCH_TO_PROFILE_USER'
-})
-
 
 export const onUploadProfileImageFailure = () =>
 ({

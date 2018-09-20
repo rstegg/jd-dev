@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { InputText } from 'primereact/components/inputtext/InputText'
-import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom'
-import { Menu, Button, Popover, Icon } from 'antd'
+import { Menu, Popover, Icon } from 'antd'
 import LoginForm from './shared/forms/login'
 import { onLoginSubmit, onLogoutSubmit } from './shared/actions/login'
 

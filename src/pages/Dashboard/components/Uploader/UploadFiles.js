@@ -8,7 +8,7 @@ import isMobile from '../../../../utils/is-mobile'
 import STLViewer from 'stl-viewer'
 
 import PrescriptionForm from './PrescriptionForm'
-import { Tabs, List, Tag, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
+import { Tabs, List, Input, Icon, Popconfirm, Progress, Card, Modal, notification, Button, Form } from 'antd'
 import { openNotification, deleteProduct, toggleRenameScanID, setType, setName, setDueTime, setDueDate, setNotes, setUnits, setModel, clearUnits, validateForm } from './actions/products'
 
 const FormItem = Form.Item
@@ -47,14 +47,14 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
         <List.Item>
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Units</div>
-            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units && product.units.length || 0}</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units ? product.units.length : 0}</div>
           </div>
           </List.Item>
         <List.Item>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Tooth Numbers</div>
             <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>
-              {product.units && product.units.join(', ') || 'None selected'}
+              {product.units ? product.units.join(', ') : 'None selected'}
             </div>
           </div>
         </List.Item>
@@ -149,10 +149,10 @@ class UploadTable extends Component {
                     <Button shape="circle" icon="edit" onClick={(e) => this.openModal(idx)}  />
                   </li>
                   <li style={{ width: '50%' }}>
-                    {!this.props.isLoading && <Popconfirm title="Are you sure you want to remove this order?" placement="topRight"
+                    {!this.props.isLoading ? <Popconfirm title="Are you sure you want to remove this order?" placement="topRight"
                       onConfirm={(e) => this.props.deleteProduct(product.uid)} okText="Yes" cancelText="Cancel">
                         <Button shape="circle" icon="delete" type="danger" />
-                      </Popconfirm>}
+                      </Popconfirm> : null }
                   </li>
                 </ul>
               </Card.Grid>

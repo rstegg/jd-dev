@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import { mergeAll, uniq, contains } from 'ramda'
+import { mergeAll, uniq } from 'ramda'
 import moment from 'moment'
 
 const initialState = []

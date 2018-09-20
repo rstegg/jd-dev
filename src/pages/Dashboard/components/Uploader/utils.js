@@ -48,7 +48,7 @@ export const parseXml = xml => {
       const orderManufacturer = getPropertyByName('ManufName',itemOrder)
       const orderFirstname = getPropertyByName('Patient_FirstName',itemOrder)
       const orderLastname = getPropertyByName('Patient_LastName',itemOrder)
-
+      
       const units = uniq(orderItems.match(/\d+/g))
 
       let type = restoType.split(' ')[0]
