@@ -62,7 +62,7 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
     </Tabs.TabPane>
     <Tabs.TabPane tab="Notes" key="2">
       <List bordered>
-        <List.Item>{product.notes ? 'Notes:' + product.notes : 'No notes'}</List.Item>
+        <List.Item>{product.notes ? 'Notes: ' + product.notes : 'No notes'}</List.Item>
       </List>
     </Tabs.TabPane>
     {product.filename.indexOf('.stl') !== -1 ? <Tabs.TabPane tab="STL Preview" key="3">
