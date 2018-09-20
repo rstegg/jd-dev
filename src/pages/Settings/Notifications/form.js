@@ -2,15 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
-import { Button, Input, Form, Radio, Tag, Divider } from 'antd'
-
-const InputField = ({ input, meta, icon, label, ...rest }) =>
-  <Form.Item label={label} hasFeedback validateStatus={meta.touched ? (meta.error ? 'error' : 'success') : ''} help={meta.touched && meta.error ? meta.error : ''}>
-    <Input
-      {...input}
-      prefix={icon}
-      {...rest} />
-  </Form.Item>
+import { Button, Form, Radio, Tag, Divider } from 'antd'
 
 const RadioField = ({ input: { value, onChange }, meta: { touched, error }, label, onSubmit, placeholder, options }) =>
   <Form.Item>

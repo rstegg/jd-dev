@@ -3,11 +3,11 @@ import React, { Component} from 'react'
 import SelectSearch from './SelectSearch'
 import DentalPicker from '../DentalPicker/Picker'
 import ModelPicker from '../ModelPicker/Picker'
-import { TimePicker, DatePicker, List, Progress, Input, Icon, Button, Form } from 'antd'
+import { TimePicker, DatePicker, List, Progress, Input, Form } from 'antd'
 
 import moment from 'moment'
 
-const { Search, TextArea } = Input
+const { TextArea } = Input
 const FormItem = Form.Item
 
 const designTypes = [
@@ -100,7 +100,7 @@ export default class PrescriptionForm extends Component {
     return endValue.valueOf() <= startValue.valueOf();
   }
   render () {
-    const { product, isLoading, toggleRenameScanID, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
+    const { product, isLoading, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
     setPreference, setDueTime, setDueDate } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

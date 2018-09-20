@@ -1,0 +1,8 @@
+.default-cc-card-row {
+  background-color: rgba(0, 0, 0, .15);
+}
+
+.cc-card-row {
+  justify-content: center;
+  align-items: center;
+}

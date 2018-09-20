@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
-import {DataTable} from 'primereact/components/datatable/DataTable';
-import { DataViewLayoutOptions} from 'primereact/components/dataview/DataView';
-import {Column} from 'primereact/components/column/Column'
-import {InputText} from 'primereact/components/inputtext/InputText';
-import {Dropdown} from 'primereact/components/dropdown/Dropdown';
+import { DataTable } from 'primereact/components/datatable/DataTable';
+import { Column } from 'primereact/components/column/Column'
 import moment from 'moment'
 
 import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';

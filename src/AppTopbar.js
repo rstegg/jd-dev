@@ -5,11 +5,6 @@ import { Menu, Popover, Icon } from 'antd'
 import LoginForm from './shared/forms/login'
 import { onLoginSubmit, onLogoutSubmit } from './shared/actions/login'
 
-const HeadNavLink = ({ to, className, label, icon, style, activeClassName }) =>
-  <NavLink to={to} className={className || 'router--link'} style={{ marginRight: '12px' }} activeClassName={activeClassName || 'link--active'}>
-      {label}
-  </NavLink>
-
 export class AppTopbarView extends Component {
   state = {
     current: ''

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import filext from 'file-extension'
 import JSZip from 'jszip'
-import { flatten, map, filter, length, pathEq, prop, path } from 'ramda'
+import { map } from 'ramda'
 
 import Dropzone from 'react-dropzone'
 

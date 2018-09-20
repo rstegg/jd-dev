@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import { Button, Input, Form, Divider } from 'antd'
 
-import { validate, asyncValidate } from './validators'
+import { validate } from './validators'
 
 const InputField = ({ input, meta, icon, label, ...rest }) =>
   <Form.Item label={label} hasFeedback validateStatus={meta.touched ? (meta.error ? 'error' : 'success') : ''} help={meta.touched && meta.error ? meta.error : ''}>

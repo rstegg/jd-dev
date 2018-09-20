@@ -8,6 +8,8 @@ import AddCardModal from './components/AddCard'
 
 import { fetchStripeCards, openAddCard } from './actions'
 
+import './Styles.css'
+
 class WalletSettings extends Component {
   componentWillMount() {
     const { fetchStripeCards, user } = this.props
