@@ -58,7 +58,6 @@ class App extends Component {
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
                   <Route path="/" component={LibRouter} />
-
                 </Switch>
               </div>
 

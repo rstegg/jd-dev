@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import './Styles.css'
 
-import isMobile from '../../../../utils/is-mobile'
+import isMobile from '../../../../../../utils/is-mobile'
 
 import STLViewer from 'stl-viewer'
 
