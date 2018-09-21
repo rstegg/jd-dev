@@ -1,6 +1,7 @@
 import xml2js from 'xml2js'
 import { promisify } from 'es6-promisify'
-import { pipe, head, find, trim, replace, map, pathEq, prop, path, uniq, range } from 'ramda'
+import { map, pipe, head, find, pathEq, prop, path, uniq, range } from 'ramda'
+import JSZip from 'jszip'
 
 export const parseXml = xml => {
 
@@ -86,4 +87,59 @@ export const parseXml = xml => {
     })
     .catch(err => console.log(err))
 
+}
+
+export const dropStlFile = (accept, acceptStl) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    acceptStl(accept, reader.result);
+  };
+  reader.readAsDataURL(accept);
+}
+
+export const dropXmlFile = (accept, acceptXml) => {
+  const reader = new FileReader()
+  reader.readAsText(accept)
+  reader.onload = () => {
+    parseXml(reader.result)
+      .then(jsonFromXML => acceptXml(accept, jsonFromXML))
+  };
+}
+
+export const dropZipFile = (accept, acceptZip) => {
+  const new_zip = new JSZip()
+  const reader = new FileReader()
+  new_zip.loadAsync(accept)
+    .then(zip => {
+      const strippedName = accept.name.split('.').slice(0, -1).join('')
+      const xmlName = strippedName + '/' + strippedName + '.xml'
+
+      const bestGuess = zip.file(xmlName)
+      if (bestGuess) {
+        const promised = zip.file(xmlName).async('string')
+
+        promised
+          .then(xml => parseXml(xml))
+          .then(jsonFromXML => acceptZip(accept, jsonFromXML))
+      } else {
+        const xmlFiles = Object.keys(zip.files).filter((fileName, idx) => {
+          if (/\.xml$/.test(fileName)) {
+            const xmlFileTest = fileName.split('/')[1].replace('.xml', '')
+            const originalFile = strippedName.split(' ')[0]
+            const firstFewCharsEq = xmlFileTest.slice(0, 8) === originalFile.slice(0,8)
+            return xmlFileTest.includes(originalFile) || firstFewCharsEq
+          }
+          return false
+        })
+      const nextXmlName = xmlFiles[0]
+      const nextBestGuess = zip.file(nextXmlName)
+      if (nextBestGuess) {
+        zip.file(nextXmlName).async('string')
+          .then(xml => {
+            const jsonFromXML = parseXml(xml)
+            this.props.acceptZip(accept, jsonFromXML);
+          })
+      }
+    }
+  })
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AvatarEditor from 'react-avatar-editor'
 
-import { Modal, Button } from 'antd'
+import { Modal } from 'antd'
 
 class ImageCropper extends Component {
   onSave = () => {

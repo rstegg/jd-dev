@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
 
-import { Card, Button } from 'antd'
+import { Card } from 'antd'
 
 import { onSignupSubmit } from './actions/signup'
 
@@ -10,11 +10,8 @@ import SignupForm from './form'
 import RouterButton from './components/RouterButton'
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { user, post, onSignupSubmit } = this.props
+    const { user, onSignupSubmit } = this.props
     if (user.isAuthenticated) {
       return <Redirect to='/' from='/signup' />
     }

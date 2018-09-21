@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-
 import { Form } from 'antd'
-
-import { normalizeCCNumber, normalizeExpiry, normalizeCVV } from './normalize'
-import { validate } from './validators'
-
 import { CardElement, injectStripe } from 'react-stripe-elements'
 
 class CardForm extends Component {
@@ -20,7 +15,6 @@ class CardForm extends Component {
   }
 
   render() {
-    const { error, submitting, handleSubmit } = this.props
     return (
       <Form onSubmit={this.onSubmit}>
         <CardElement style={{ base: { fontSize: '18px' }}} />

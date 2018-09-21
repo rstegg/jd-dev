@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
-import { Col, Button, Input, Form, Select, Tag, Divider } from 'antd'
+import { Alert, Col, Button, Input, Form, Select, Divider } from 'antd'
 
 import countries from './countries'
 
@@ -28,7 +28,7 @@ const SelectField = ({ input: { value, onChange }, meta: { touched, error }, lab
       onSelect={onChange}>
         {options.map(option => <Select.Option key={`option-${option.value}`} value={option.value}>{option.label}</Select.Option>)}
       </Select>
-    {touched && error && <Tag color='red' pointing>{error}</Tag>}
+    {touched && error && <Alert message={error} type="error" closable style={{ marginBottom: '20px' }} />}
   </Form.Item>
 
 const AddressForm = ({ handleSubmit, submitting }) =>

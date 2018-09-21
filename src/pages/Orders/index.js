@@ -5,7 +5,7 @@ import { DataTable } from 'primereact/components/datatable/DataTable';
 import { Column } from 'primereact/components/column/Column'
 import moment from 'moment'
 
-import { Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
+import { Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
 import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNote, setOrderPrefs } from './actions/orders'
 
@@ -103,8 +103,7 @@ class OrdersTableView extends Component {
 
     notesTemplate = (rowData, column) => {
       if (rowData.notes) {
-        return <div>{rowData.notes
-          .map((note, idx) => note.length > 40 ? <div key={`note-${rowData.uid}-${idx}`}>"{note.slice(0,40) + '...'}"</div>
+        return <div>{rowData.notes.map((note, idx) => note.length > 40 ? <div key={`note-${rowData.uid}-${idx}`}>"{note.slice(0,40) + '...'}"</div>
           : note.length ? <div key={`note-${rowData.uid}-${idx}`}>"{note}"</div> : null )
         }</div>
       } else {

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'process'
+      defaultValue: 'processed'
     },
     dueDate: DataTypes.STRING,
     dueTime: DataTypes.STRING,

@@ -12,12 +12,10 @@ const columns = [{
   title: 'Expiration Month',
   dataIndex: 'exp_month',
   key: 'exp_month',
-  render: exp_month => <p>{exp_month}</p>
 }, {
   title: 'Expiration Year',
   dataIndex: 'exp_year',
   key: 'exp_year',
-  render: exp_year => <p>{exp_year}</p>
 }]
 
 const WalletList =

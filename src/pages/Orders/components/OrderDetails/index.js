@@ -89,7 +89,7 @@ const linerTypes = [
 const Step = Steps.Step
 
 const OrderSteps = ({ order }) => {
-  const statusNum = order.status === 'process' ? 1 : 2
+  const statusNum = order.status === 'processed' ? 1 : 2
   if (order.status === 'canceled') {
     return (
       <Steps current={statusNum} status={'error'}>
@@ -100,7 +100,7 @@ const OrderSteps = ({ order }) => {
     )
   }
   return (
-    <Steps current={statusNum} status={'process'}>
+    <Steps current={statusNum} status={'processed'}>
       <Step title="Sent" description="Sent to designer" />
       <Step title="In Process" description="Design in process" />
       <Step title="Complete" description="Design complete" />
@@ -168,13 +168,17 @@ export default class OrderDetails extends Component {
             <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
           </Upload>}
           >
-          {order.caseFileUrls && order.caseFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+          {order.caseFileUrls && order.caseFileUrls.map((scanFileUrl, i) =>
+            <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>
+          )}
         </Card>
         <Card
           style={{ marginTop: 16 }}
           type="inner"
           title="Design Files">
-          {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) => <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+          {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) =>
+            <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>
+          )}
         </Card>
         <Card
           style={{ marginTop: 16 }}

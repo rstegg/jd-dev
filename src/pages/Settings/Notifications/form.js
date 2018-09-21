@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
-import { Button, Form, Radio, Tag, Divider } from 'antd'
+import { Alert, Button, Form, Radio, Divider } from 'antd'
 
 const RadioField = ({ input: { value, onChange }, meta: { touched, error }, label, onSubmit, placeholder, options }) =>
   <Form.Item>
@@ -10,7 +10,7 @@ const RadioField = ({ input: { value, onChange }, meta: { touched, error }, labe
       <Radio value="on">On</Radio>
       <Radio value="off">Off</Radio>
     </Radio.Group>
-    {touched && error && <Tag color='red' pointing>{error}</Tag>}
+    {touched && error && <Alert message={error} type="error" closable style={{ marginBottom: '20px' }} />}
   </Form.Item>
 
 const NotificationsForm = ({ handleSubmit, submitting }) =>
