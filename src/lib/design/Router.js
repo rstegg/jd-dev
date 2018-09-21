@@ -2,8 +2,8 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 
 import Cases from './pages/Cases'
-import Profile from './pages/Profile'
-import SettingsRouter from './pages/Settings/Router'
+import Profile from '../shared/pages/Profile'
+import SettingsRouter from '../shared/pages/Settings/Router'
 
 const DesignRouter = () =>
   <Switch>
