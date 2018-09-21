@@ -6,7 +6,7 @@ import SelectSearch from './SelectSearch'
 import DentalPicker from '../DentalPicker/Picker'
 import ModelPicker from '../ModelPicker/Picker'
 
-import { CONTACT_TYPES, OCCLUSION_TYPES, PONTIC_TYPES, LINER_SPACER_TYPES, } from '../../../utils/constants'
+import { DESIGN_TYPES, CONTACT_TYPES, OCCLUSION_TYPES, PONTIC_TYPES, LINER_SPACER_TYPES, } from '../../../../utils/constants'
 
 const { TextArea } = Input
 const FormItem = Form.Item

@@ -5,7 +5,7 @@ import { Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } fr
 import moment from 'moment'
 
 import SelectSearch from './SelectSearch'
-import { CONTACT_TYPES, OCCLUSION_TYPES, PONTIC_TYPES, LINER_SPACER_TYPES, } from '../../../utils/constants'
+import { CONTACT_TYPES, OCCLUSION_TYPES, PONTIC_TYPES, LINER_SPACER_TYPES, } from '../../../../utils/constants'
 
 import './Styles.css'
 

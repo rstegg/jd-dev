@@ -1,3 +1,14 @@
+export const DESIGN_TYPES = [
+  { label: 'Full Crown', value: 'Full Crown', },
+  { label: 'Coping', value: 'Coping', },
+  { label: 'Anatomical Coping', value: 'Anatomical Coping', },
+  { label: 'Full Crown Bridge', value: 'Full Crown Bridge', },
+  { label: 'Coping Bridge', value: 'Coping Bridge', },
+  { label: 'Inlay', value: 'Inlay', },
+  { label: 'Onlay', value: 'Onlay', },
+  { label: 'Model', value: 'Model' },
+  { label: 'Dentures', value: 'Dentures' },
+]
 export const CONTACT_TYPES = [
   { label: '+0.05 mm Open Contact', value: '+0.05 mm Open Contact' },
   { label: '+0.04 mm Open Contact', value: '+0.04 mm Open Contact' },
