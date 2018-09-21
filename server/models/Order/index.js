@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     designFileUrls: DataTypes.ARRAY(DataTypes.STRING),
     contact: DataTypes.STRING,
     occlusion: DataTypes.STRING,
-    notes: DataTypes.ARRAY(DataTypes.STRING),
+    notes: DataTypes.ARRAY(DataTypes.JSONB),
     library: DataTypes.STRING,
     pontic: DataTypes.STRING,
     linerSpacer: DataTypes.STRING

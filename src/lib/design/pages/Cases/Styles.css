@@ -1,0 +1,3 @@
+.c-details > * {
+  flex-direction: row !important;
+}

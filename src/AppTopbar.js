@@ -34,26 +34,45 @@ export class AppTopbarView extends Component {
         </Menu>
       )
     }
+    if (user.userType && user.userType === 'designer') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white' }}>
+          <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
+            <Menu.Item key="dashboard">
+              <NavLink to="/">Orders</NavLink>
+            </Menu.Item>
+          </Menu>
+          <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
+            <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.email}</span>}>
+              <Menu.ItemGroup title="Account">
+                <Menu.Item key="profile"><NavLink to="/profile"><Icon type="user" />Profile</NavLink></Menu.Item>
+                <Menu.Item key="account"><NavLink to="/settings/account"><Icon type="setting" />Settings</NavLink></Menu.Item>
+                <Menu.Item key="logout" onClick={() => this.props.onLogoutSubmit(this.props.user.token)}><Icon type="logout" />Logout</Menu.Item>
+              </Menu.ItemGroup>
+            </Menu.SubMenu>
+          </Menu>
+        </div>
+      )
+    }
     return (
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white' }}>
-
-      <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
-        <Menu.Item key="dashboard">
-          <NavLink to="/">Dashboard</NavLink>
-        </Menu.Item>
-        <Menu.Item key="orders">
-          <NavLink to="/orders">Orders</NavLink>
-        </Menu.Item>
-      </Menu>
-      <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
-        <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.email}</span>}>
-          <Menu.ItemGroup title="Account">
-            <Menu.Item key="profile"><NavLink to="/profile"><Icon type="user" />Profile</NavLink></Menu.Item>
-            <Menu.Item key="account"><NavLink to="/settings/account"><Icon type="setting" />Settings</NavLink></Menu.Item>
-            <Menu.Item key="logout" onClick={() => this.props.onLogoutSubmit(this.props.user.token)}><Icon type="logout" />Logout</Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
-      </Menu>
+        <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
+           <Menu.Item key="dashboard">
+            <NavLink to="/">Dashboard</NavLink>
+          </Menu.Item>
+          <Menu.Item key="orders">
+            <NavLink to="/orders">Orders</NavLink>
+          </Menu.Item>
+        </Menu>
+        <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>
+          <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.email}</span>}>
+            <Menu.ItemGroup title="Account">
+              <Menu.Item key="profile"><NavLink to="/profile"><Icon type="user" />Profile</NavLink></Menu.Item>
+              <Menu.Item key="account"><NavLink to="/settings/account"><Icon type="setting" />Settings</NavLink></Menu.Item>
+              <Menu.Item key="logout" onClick={() => this.props.onLogoutSubmit(this.props.user.token)}><Icon type="logout" />Logout</Menu.Item>
+            </Menu.ItemGroup>
+          </Menu.SubMenu>
+        </Menu>
       </div>
     )
   }

@@ -7,6 +7,7 @@ import redirects from './redirects'
 import notifications from './notifications'
 import errors from './errors'
 import orders from './orders'
+import cases from './cases'
 import user from './user'
 import profile from './profile'
 import card from './card'
@@ -19,6 +20,7 @@ export default combineReducers({
   notifications,
   errors,
   orders,
+  cases,
   user,
   profile,
   card,

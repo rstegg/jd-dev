@@ -1,15 +1,15 @@
-const { Product } = requireDb
+const { Order } = requireDb
 
 const shortId = require('shortid')
 
 const { merge, pick } = require('ramda')
 
-const updateProductParams = ['name', 'isPublic', 'description', 'layout', 'category', 'subCategory', 'price', 'image']
+const updateOrderParams = ['name', 'isPublic', 'description', 'layout', 'category', 'subCategory', 'price', 'image']
 const productParams = ['id', 'name', 'slug', 'isPublic', 'description', 'gallery', 'layout', 'themes', 'category', 'subCategory', 'price', 'image', 'userId']
 
 const getValidSlug = (slug, userId, productId) =>
   new Promise(resolve =>
-    Product.findOne({
+    Order.findOne({
       where: { slug, userId, id: { $ne: productId } }
     })
     .then(product =>
@@ -20,7 +20,7 @@ const getValidSlug = (slug, userId, productId) =>
   )
 
 const getValidParams = (productId, userId, slug) =>
-  Product.findOne({
+  Order.findOne({
     where: { id: productId, userId }
   })
   .then(shop =>
@@ -30,7 +30,7 @@ const getValidParams = (productId, userId, slug) =>
 
 const validate = req => {
   const slug =
-    req.body.product.name
+    req.body.order.name
       .replace("'", '')
       .replace(/[^a-z0-9]/gi, '-')
       .toLowerCase()
@@ -42,13 +42,13 @@ const validate = req => {
 module.exports = (req, res) =>
   validate(req)
     .then(slug => {
-      const updatedProduct = merge({
+      const updatedOrder = merge({
         slug
-      }, pick(updateProductParams, req.body.product))
-      return Product.update(updatedProduct, { where: { id: req.params.id, userId: req.params.userId, userId: req.user.id }, returning: true, plain: true })
+      }, pick(updateOrderParams, req.body.product))
+      return Order.update(updatedOrder, { where: { id: req.params.id, userId: req.params.userId, userId: req.user.id }, returning: true, plain: true })
     })
-    .then(savedProduct => {
-      const product = pick(productParams, savedProduct[1])
+    .then(savedOrder => {
+      const product = pick(productParams, savedOrder[1])
       res.status(200).json({ product })
     })
     .catch(error => res.status(400).json({ error }))

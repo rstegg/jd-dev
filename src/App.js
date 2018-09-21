@@ -8,13 +8,9 @@ import { prop, head } from 'ramda'
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
 
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import Orders from './pages/Orders';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-
-import SettingsRouter from './pages/Settings/Router';
+import Login from './auth/pages/Login';
+import Signup from './auth/pages/Signup';
+import LibRouter from './lib/Router';
 
 import { joinRoom, removeNotification } from './actions'
 
@@ -59,12 +55,10 @@ class App extends Component {
               <AppTopbar />
               <div className="layout-main">
                 <Switch>
-                  <Route path="/" exact component={Dashboard} />
-                  <Route path="/orders" exact component={Orders} />
-                  <Route path="/profile" exact component={Profile} />
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
-                  <Route path='/settings' component={SettingsRouter} />
+                  <Route path="/" component={LibRouter} />
+
                 </Switch>
               </div>
 

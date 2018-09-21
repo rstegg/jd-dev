@@ -1,0 +1,44 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.settings-nav {
+    display: flex;
+    position: absolute !important;
+    flex-direction: column;
+    margin-top: 1em;
+    align-items: flex-end;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px 0 #D4D4D5, 0 0 0 1px #D4D4D5 !important;
+
+    animation-duration: 0.1s;
+    animation-fill-mode: both;
+    transform-origin: center center;
+    animation-name: settingsSlide;
+}
+
+.settings-nav-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    list-style: none;
+}
+
+@keyframes settingsSlide {
+    0% {
+        transform: translateX(0);
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        transform: translateX(-240px);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+a.active > .ant-btn {
+  color: #1890ff;
+}

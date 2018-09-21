@@ -59,7 +59,7 @@ module.exports = (req, res) =>
       const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
-      const resUser = pick(['name', 'email', 'uid'], createdUser)
+      const resUser = pick(['name', 'email', 'uid', 'userType'], createdUser)
       const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)
       return res.status(200).json({user: resUser, token})
     })
