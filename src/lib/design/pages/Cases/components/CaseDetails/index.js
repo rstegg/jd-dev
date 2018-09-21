@@ -51,7 +51,7 @@ export default class PrescriptionForm extends Component {
     return (
       <Card title={<CaseSteps activeCase={activeCase} />}>
         <div style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
-          <p>Sent: {moment(activeCase.createdAt).fromNow()}</p>
+
           <p>Due by: {moment(activeCase.dueDate).fromNow()}</p>
           <p>Latest change: {moment(activeCase.updatedAt).fromNow()}</p>
         </div>
@@ -63,7 +63,7 @@ export default class PrescriptionForm extends Component {
               <Card.Meta
                 avatar={activeCase.userImage ? <Avatar src={activeCase.userImage} /> : <Avatar icon="user" />}
                 title={activeCase.userName}
-                description={activeCase.userMail}
+                description={<p>Sent: {moment(activeCase.createdAt).fromNow()}</p>}
               />
             </Card.Grid>
           }
@@ -95,7 +95,7 @@ export default class PrescriptionForm extends Component {
           title="Preferences">
           <List grid={{ xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 2 }}>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column', bc: '1px solid #ccc' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Contact
                 </div>
@@ -105,7 +105,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column', bc: '1px solid #ccc' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Occlusion
                 </div>
@@ -115,7 +115,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column', bc: '1px solid #ccc' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Pontic
                 </div>
@@ -125,7 +125,7 @@ export default class PrescriptionForm extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div style={{ display: 'flex', flexDirection: 'column', bc: '1px solid #ccc' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
                   Liner Spacer
                 </div>

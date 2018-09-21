@@ -98,10 +98,9 @@ class CasesView extends Component {
     }
 
     notesTemplate = (rowData, column) => {
-      if (rowData.notes) {
-        return rowData.notes
-          .map((note, idx) => note.text && note.text.length > 40 ? <div key={`note-${rowData.uid}-${idx}`}>{note.user}: "{note.text.slice(0,40) + '...'}"</div>
-          : note.text ? <div key={`note-${rowData.uid}-${idx}`}>{note.user}: "{note.text}"</div> : null )
+      if (rowData.notes && rowData.notes.length) {
+        const lastNote = rowData.notes[rowData.notes.length - 1]
+        return <div>{lastNote.user}: "{lastNote.text && lastNote.text.length > 15 ? lastNote.text.slice(0,15) + '...' : lastNote.text}"</div>
       } else {
         return null
       }
@@ -159,7 +158,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCases: token => dispatch(fetchCases(token)),
   addDesignFile: (file, c) => dispatch(addDesignFile(file, c)),
-  addDesignNote: (note, c, token) => dispatch(addDesignNote(note, c, token)),
+  addDesignNote: (note, order, token) => dispatch(addDesignNote(note, order, token)),
   cancelCase: (c, token) => dispatch(cancelCase(c, token))
 })
 

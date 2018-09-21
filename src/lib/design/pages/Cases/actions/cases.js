@@ -19,13 +19,13 @@ export const fetchCases = token =>
       })
   }
 
-export const cancelCase = (c, token) =>
+export const cancelCase = (order, token) =>
   dispatch => {
-    dispatch({ type: 'CANCEL_CASE', payload: { c } })
+    dispatch({ type: 'CANCEL_CASE', payload: { order } })
     su.delete('/api/v1/orders')
       .accept('application/json')
       .set('Authorization', token)
-      .send({ c })
+      .send({ order })
       .then(res => dispatch(cancelCasesSuccess(res)))
       .catch(err => {
         console.error(err);
@@ -59,10 +59,10 @@ export const addDesignNoteSuccess = res => ({
   }
 })
 
-export const addDesignFile = (file, c) => ({
+export const addDesignFile = (file, order) => ({
   type: 'ADD_DESIGN_FILE',
   payload: {
     file,
-    c
+    order
   }
 })
