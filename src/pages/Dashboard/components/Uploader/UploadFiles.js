@@ -41,13 +41,17 @@ const OrderPreviewDetails = ({ product, viewMore }) =>
         <List.Item>
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Restoration Type</div>
-            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.type || 'None selected'}</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>
+              {product.type || 'None selected'}
+            </div>
           </div>
         </List.Item>
         <List.Item>
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ padding: '5px', justifyContent: 'center', display: 'flex', width: '100%', backgroundColor: 'gray', color: 'white'}}>Units</div>
-            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>{product.units ? product.units.length : 0}</div>
+            <div style={{ margin: '5px', justifyContent: 'center', alignItems: 'center', display: 'flex', width: '100%', backgroundColor: 'white', color: 'gray'}}>
+              {product.units ? product.units.length : 0}
+            </div>
           </div>
           </List.Item>
         <List.Item>

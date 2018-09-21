@@ -19,6 +19,7 @@ const designTypes = [
   { label: 'Inlay', value: 'Inlay', },
   { label: 'Onlay', value: 'Onlay', },
   { label: 'Model', value: 'Model' },
+  { label: 'Dentures', value: 'Dentures' },
 ]
 const contactTypes = [
   { label: '+0.05 mm Open Contact', value: '+0.05 mm Open Contact' },

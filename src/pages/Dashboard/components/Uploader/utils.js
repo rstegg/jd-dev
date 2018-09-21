@@ -80,6 +80,8 @@ export const parseXml = xml => {
         type = 'Anatomical Coping'
       } else if (restoType.includes('Inlay')) {
         type = 'Inlay'
+      } else if (restoType.includes('Artificial')) {
+        type = 'Dentures'
       }
 
       return { units: teethNumsStr, type, notes: [ orderComments ], units, orderManufacturer, orderFirstname, orderLastname  }
@@ -124,7 +126,8 @@ export const dropZipFile = (accept, acceptZip) => {
       } else {
         const xmlFiles = Object.keys(zip.files).filter((fileName, idx) => {
           if (/\.xml$/.test(fileName)) {
-            const xmlFileTest = fileName.split('/')[1].replace('.xml', '')
+            const fileTest = fileName.split('/')[1]
+            const xmlFileTest = fileTest.replace('.xml', '')
             const originalFile = strippedName.split(' ')[0]
             const firstFewCharsEq = xmlFileTest.slice(0, 8) === originalFile.slice(0,8)
             return xmlFileTest.includes(originalFile) || firstFewCharsEq
