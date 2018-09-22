@@ -49,7 +49,7 @@ module.exports = (req, res) =>
         verified: false,
         permalink: createPermalink(user.email),
         verifyToken: bytes(20),
-        userType: user.userType || 'individual',
+        userType: 'individual',
         uid: uuid()
       }, pick(['email', 'name'], user))
       return User.create(newUser, { plain: true })
