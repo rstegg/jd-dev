@@ -19,7 +19,7 @@ const middleware = applyMiddleware(
 const persistConfig = {
   key: 'root',
   storage: localForage,
-  blacklist: ['products']
+  blacklist: ['products', 'files']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

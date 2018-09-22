@@ -1,0 +1,19 @@
+const { User } = requireDb
+
+const UserAttrs = [ 'email', 'name', 'uid', 'userType', 'banned' ]
+
+const validate = req =>
+  User.findOne({
+    where: { id: req.user.id, userType: 'admin' }
+  })
+  .then(user =>
+      !user ?
+        Promise.reject('Unauthorized')
+        : user
+  )
+
+module.exports = (req, res) =>
+  validate(req)
+    .then(_ => User.findAll({ attributes: UserAttrs }))
+    .then(users => res.status(200).json({ users }))
+    .catch(error => res.status(400).json({ error }))
