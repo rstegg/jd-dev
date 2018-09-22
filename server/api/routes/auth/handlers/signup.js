@@ -56,7 +56,7 @@ module.exports = (req, res) =>
     })
     .then(createdUser => {
       const { permalink, verifyToken } = createdUser
-      const permalink_url = `https://freecontour.com/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
+      const permalink_url = `https://jawdrop.io/api/v1/auth/signup/email_confirmation/${permalink}/${verifyToken}`
       const mail = confirmationMail(createdUser, permalink_url)
       sendConfirmation(mail, createdUser)
       const resUser = pick(['name', 'email', 'uid', 'userType'], createdUser)

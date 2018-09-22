@@ -42,7 +42,7 @@ const uploadImg = multer({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'us-east-1',
-    bucket: 'freecontour-images',
+    bucket: 'jawdrop-images',
     acl: 'public-read',
     contentType: imager.AUTO_CONTENT_TYPE,
     metadata: (req, file, cb) => {
