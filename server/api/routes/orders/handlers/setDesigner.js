@@ -43,9 +43,7 @@ module.exports = io => (req, res) => {
                   .then(([_, savedOrder]) => {
                     io.to(newDesigner.uid).emit('action', {
                       type: 'NEW_ORDER_ASSIGNED',
-                      payload: {
-                        order: savedOrder
-                      }
+                      payload: { order: savedOrder }
                     })
                     console.log('ASSIGNED NEW', savedOrder);
                   })
