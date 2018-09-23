@@ -2,7 +2,7 @@ const { Order, Thread } = requireDb
 const shortId = require('shortid')
 const uuid = require('uuid/v4')
 
-const { map, merge, pick, length } = require('ramda')
+const { map, merge, pick, length, prop, head } = require('ramda')
 
 const OrderParams = [  'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
 
@@ -22,7 +22,8 @@ module.exports = (req, res, next) => {
   }, pick(OrderParams, order)), req.body.orders)
   const validatedTypes = newOrders.map(order => ({
     ...order,
-    caseFileUrls: [ order.caseFileUrls ]
+    caseFileUrls: [ order.caseFileUrls ],
+    notes: length(prop('text', head(order.notes))) ? order.notes : null
   }))
   return Order.bulkCreate(validatedTypes, { plain: true })
   .then(orders => {

@@ -33,7 +33,7 @@ class App extends Component {
       const key = prop('uid', head(this.props.notifications))
 
       const btn = (
-        <Button type="primary" size="small" onClick={() => {}}>
+        <Button type="primary" size="small" onClick={() => { console.log(this.props) }}>
           View Order
         </Button>
       );
