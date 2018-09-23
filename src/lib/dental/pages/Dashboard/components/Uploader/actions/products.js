@@ -1,4 +1,5 @@
 import su from 'superagent'
+import { length, flatten } from 'ramda'
 
 export const acceptStl = (accepted, stl) => ({
   type: 'ACCEPT_STL',
@@ -128,18 +129,21 @@ export const clearUnits = (idx) => ({
 export const validateForm = (products, token) =>
   dispatch => {
     const errors = products.map((product, i) => {
-      let errs = []
+      let errs = {}
       if (!product.type) {
-        errs.push({ type: 'Required' })
+        errs.type = 'Required'
       }
-      if (!product.units) {
-        errs.push({ units: 'Required' })
+      if (!length(product.units)) {
+        errs.units = 'Required'
       }
       return errs
     })
-    .filter(errs => errs.length)
 
-    if (errors.length) {
+
+    const errLengths = errors
+      .filter(errs => length(Object.keys(errs)))
+
+    if (errLengths.length) {
       dispatch(notifyErrors(errors))
     } else {
       dispatch(sendOrders(products, token))

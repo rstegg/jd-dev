@@ -25,7 +25,7 @@ export default class PrescriptionForm extends Component {
   }
   render () {
     const { product, isLoading, setType, setName, setNotes, setUnits, setModel, clearUnits, idx,
-    setPreference, setDueTime, setDueDate } = this.props
+    setPreference, setDueTime, setDueDate, errors } = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {isLoading ? <Progress style={{marginTop: '36px', marginLeft: '16px'}} percent={product.progress} />
@@ -38,12 +38,12 @@ export default class PrescriptionForm extends Component {
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'row', marginTop: '36px'}}>
-            <FormItem hasFeedback validateStatus={product.hasUnitError}>
+            <FormItem hasFeedback validateStatus={errors[idx] && errors[idx].units}>
               {product.type === 'Model' ? <ModelPicker idx={idx} product={product} setModel={setModel} clearUnits={clearUnits} />
               : <DentalPicker idx={idx} product={product} setUnits={setUnits} clearUnits={clearUnits} /> }
             </FormItem>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '50px'}}>
-            <FormItem hasFeedback validateStatus={product.hasTypeError}>
+            <FormItem hasFeedback validateStatus={errors[idx] && errors[idx].type}>
               <div style={{ lineHeight: 0, marginTop: '24px' }}>
                 <SelectSearch
                   label='Type of Restoration'

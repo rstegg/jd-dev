@@ -181,9 +181,10 @@ class UploadTable extends Component {
   }
 }
 
-const mapStateToProps = ({ user, redirects }) => ({
+const mapStateToProps = ({ user, redirects, errors }) => ({
   token: user.token,
-  isLoading: redirects.isLoading
+  isLoading: redirects.isLoading,
+  errors,
 })
 
 const mapDispatchToProps = dispatch => ({
