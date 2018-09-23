@@ -12,8 +12,6 @@ const ordersReducer = (state = initialState, action) => {
       return mapOrders(action.payload.orders)
     case 'ADD_NEW_ORDERS':
       return state.concat( mapOrders(action.payload.orders) )
-    case 'NEW_ORDER_ASSIGNED':
-      return state.concat( mapSingleOrder(action.payload.order) )
     case 'ADD_EXTRA_SCAN_FILE':
     case 'ADMIN_ADD_EXTRA_SCAN_FILE':
       const scanOrdersUIDs = state.map(order => order.uid)

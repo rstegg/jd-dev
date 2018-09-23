@@ -1,11 +1,16 @@
 const initialState = []
 
-const mapCases = cases => cases.map(c => ({ ...c, userImage: c.user.image, userName: c.user.name, userMail: c.user.email, unitsView: c.units ? c.units.join(', ') : null }))
+const mapOrders = orders => orders.map(mapSingleOrder)
+
+const mapSingleOrder = order => order.user ? { ...order, userImage: order.user.image, userName: order.user.name, userMail: order.user.email, unitsView: order.units ? order.units.join(', ') : null }
+  : { ...order, unitsView: order.units ? order.units.join(', ') : null }
 
 const casesReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'FETCH_CASES_SUCCESS':
-      return mapCases(action.payload.cases)
+      return mapOrders(action.payload.cases)
+    case 'NEW_ORDER_ASSIGNED':
+      return state.concat( mapSingleOrder(action.payload.order) )
     case 'ADD_DESIGN_FILE':
       const scanCaseUIDs = state.map(order => order.uid)
       const scanOrderIDX = scanCaseUIDs.indexOf(action.payload.order.uid)

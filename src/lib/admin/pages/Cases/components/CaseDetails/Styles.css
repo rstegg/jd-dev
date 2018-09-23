@@ -1,0 +1,16 @@
+.ant-list-item-content > div > div > div > .ant-card-head-title {
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+.ant-list-item-content > div > .ant-card-body {
+  font-size: 10pt;
+}
+
+.ui-state-highlight a.ant-btn {
+  color: #222222;
+}
+
+.ui-state-highlight a.ant-btn:hover {
+  color: #40a9ff;
+}

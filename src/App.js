@@ -23,6 +23,11 @@ import './App.css';
 import './layout/layout.css';
 
 class App extends Component {
+  componentWillMount() {
+    if (this.props.user.token) {
+      this.props.joinRoom(this.props.user.uid, this.props.user.token)
+    }
+  }
   componentWillUpdate(nextProps) {
     if (!this.props.user.token && nextProps.user.token) {
       this.props.joinRoom(nextProps.user.uid, nextProps.user.token)

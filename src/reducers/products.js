@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), model: [], dueDate: moment(), dueTime: moment(), }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
@@ -96,7 +96,7 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'SET_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units), model: [], isValid: toggleScanUnit(action.payload.units, state[action.payload.idx].units).length && state[action.payload.idx].type },
+              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units || []), model: [], isValid: toggleScanUnit(action.payload.units, state[action.payload.idx].units || []).length && state[action.payload.idx].type },
               ...state.slice(action.payload.idx+1) ]
     case 'CLEAR_UNITS':
       return [ ...state.slice(0, action.payload.idx),

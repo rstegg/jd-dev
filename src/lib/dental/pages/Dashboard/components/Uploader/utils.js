@@ -139,8 +139,11 @@ export const dropZipFile = (accept, acceptZip) => {
         zip.file(nextXmlName).async('string')
           .then(xml => {
             const jsonFromXML = parseXml(xml)
-            this.props.acceptZip(accept, jsonFromXML);
+            acceptZip(accept, jsonFromXML);
           })
+      } else {
+        const jsonFromXML = { units: '', type: '', orderComments: '', orderItems: [], orderManufacturer: '', orderFirstname: '', orderLastname: '', isValid: false  }
+        acceptZip(accept, jsonFromXML);
       }
     }
   })
