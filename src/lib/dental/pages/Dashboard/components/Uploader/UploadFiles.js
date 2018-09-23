@@ -120,7 +120,7 @@ class UploadTable extends Component {
           <Card title="Orders">
           { this.props.products.map((product, idx) => (
             <div key={`scan-${idx}`}>
-              <Card.Grid style={{ width: isMobile() ? '100%' : '25%', textAlign: 'center' }}>
+              <Card.Grid style={{ width: isMobile() ? '100%' : '25%', textAlign: 'center', border: product.isValid ? '2px solid #52c41a' : '' }}>
                 <div className='ant-card-head' style={{padding: 0, overflow: 'none' }}>
                   <div className='ant-card-head-wrapper' style={{padding: 0 }}>
                     <div className='ant-card-head-title' style={{ display: 'flex', padding: 0, alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>

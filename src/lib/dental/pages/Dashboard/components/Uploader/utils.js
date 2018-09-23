@@ -1,6 +1,6 @@
 import xml2js from 'xml2js'
 import { promisify } from 'es6-promisify'
-import { map, pipe, head, find, pathEq, prop, path, uniq, range } from 'ramda'
+import { length, map, pipe, head, find, pathEq, prop, path, uniq, range } from 'ramda'
 import JSZip from 'jszip'
 
 export const parseXml = xml => {
@@ -12,7 +12,7 @@ export const parseXml = xml => {
       const getRootObj = path(['DentalContainer', 'Object'])
 
       if (!getRootObj(result)) {
-        return { units: '', type: '', orderComments: '', orderItems: [], orderManufacturer: '', orderFirstname: '', orderLastname: ''  }
+        return { units: '', type: '', orderComments: '', orderItems: [], orderManufacturer: '', orderFirstname: '', orderLastname: '', isValid: false  }
       }
 
       const getMainObj = pipe( getRootObj, head, prop('Object') )
@@ -81,7 +81,9 @@ export const parseXml = xml => {
         type = 'Dentures'
       }
 
-      return { units: teethNumsStr, type, notes: [ orderComments ], units, orderManufacturer, orderFirstname, orderLastname  }
+      const isValid = type && length(units)
+
+      return { units: teethNumsStr, type, notes: [ orderComments ], units, orderManufacturer, orderFirstname, orderLastname, isValid }
 
     })
     .catch(err => console.log(err))

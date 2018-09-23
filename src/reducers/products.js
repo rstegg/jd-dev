@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], type: action.payload.type, product: undefined, id: undefined, variant_id: undefined, shade: undefined, finish: undefined, layering: undefined },
+              { ...state[action.payload.idx], type: action.payload.type, isValid: state[action.payload.idx].units && state[action.payload.idx].units.length },
               ...state.slice(action.payload.idx+1) ]
     case 'TOGGLE_RENAME_CASE_ID':
       return [ ...state.slice(0, action.payload.idx),
@@ -96,11 +96,11 @@ export default (state = initialState, action) => {
               ...state.slice(action.payload.idx+1) ]
     case 'SET_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units), model: [] },
+              { ...state[action.payload.idx], units: toggleScanUnit(action.payload.units, state[action.payload.idx].units), model: [], isValid: toggleScanUnit(action.payload.units, state[action.payload.idx].units).length && state[action.payload.idx].type },
               ...state.slice(action.payload.idx+1) ]
     case 'CLEAR_UNITS':
       return [ ...state.slice(0, action.payload.idx),
-              { ...state[action.payload.idx], units: [], model: [] },
+              { ...state[action.payload.idx], units: [], model: [], isValid: false },
               ...state.slice(action.payload.idx+1) ]
     case 'SET_PROGRESS':
       return [ ...state.slice(0, action.payload.idx),
