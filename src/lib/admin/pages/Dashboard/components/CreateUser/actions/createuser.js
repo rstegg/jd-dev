@@ -12,7 +12,7 @@ export const onCreateUserSubmit = (user, token) =>
       .catch(err => {
         console.log(err);
         throw new SubmissionError({
-          _error: 'CreateUser failed!'
+          _error: 'Create User failed!'
         })
       })
 }

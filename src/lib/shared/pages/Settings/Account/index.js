@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card } from 'antd'
+import { Card, message } from 'antd'
 import { Redirect } from 'react-router-dom'
+import { reset } from 'redux-form'
 
 import SettingsForm from './form'
 
-import { onSaveAccountSettings } from './actions'
+import { onSaveAccountSettings, resetAccountSettings } from './actions'
 
 class Settings extends Component {
+  componentWillUpdate(nextProps) {
+    if (!this.props.account.isSuccessful && nextProps.account.isSuccessful) {
+      message.success('Password updated successfully', 5);
+      this.props.resetAccountSettings()
+    }
+  }
   render() {
     const { user, onSaveAccountSettings } = this.props
     if (!user.isAuthenticated) {
@@ -15,20 +22,22 @@ class Settings extends Component {
     }
     return (
       <Card title='Account Settings' style={{ width: 350 }}>
-        <SettingsForm onSubmit={account => onSaveAccountSettings(account, user)} />
+        <SettingsForm onSubmit={account => onSaveAccountSettings(account, user.token)} loading={this.props.account.isLoading} />
       </Card>
     )
   }
 }
 
-const mapStateToProps = ({ user }) =>
+const mapStateToProps = ({ user, account }) =>
 ({
-  user
+  user,
+  account
 })
 
 const mapDispatchToProps = dispatch =>
 ({
-  onSaveAccountSettings: (account, user) => dispatch(onSaveAccountSettings(account, user))
+  onSaveAccountSettings: (account, token) => dispatch(onSaveAccountSettings(account, token)),
+  resetAccountSettings: () => dispatch(resetAccountSettings()) && dispatch(reset('accountSettings')),
 })
 
 export default connect(

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form';
 
+import account from './account'
 import admin from './admin'
 import bank from './bank'
 import card from './card'
@@ -16,6 +17,7 @@ import redirects from './redirects'
 import user from './user'
 
 export default combineReducers({
+  account,
   admin,
   bank,
   card,

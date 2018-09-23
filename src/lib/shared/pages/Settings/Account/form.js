@@ -15,7 +15,7 @@ const InputField = ({ input, meta, icon, label, ...rest }) =>
   </Form.Item>
 
 
-const SettingsForm = ({ handleSubmit, submitting }) =>
+const AccountForm = ({ handleSubmit, submitting, loading }) =>
   <Form onSubmit={handleSubmit}>
     <Field component={InputField} name='oldPassword' type='password' label='Old Password *' placeholder='************' />
     <Field component={InputField} name='newPassword' type='password' label='New Password' placeholder='************' />
@@ -23,17 +23,17 @@ const SettingsForm = ({ handleSubmit, submitting }) =>
     <br />
     * changing your email will require re-verification
     <Divider />
-    <Button loading={submitting} type='primary' htmlType='submit'>Save</Button>
+    <Button loading={loading || submitting} type='primary' htmlType='submit'>Save</Button>
   </Form>
 
-const ConnectedSettingsForm = reduxForm({
+const ConnectedAccountForm = reduxForm({
   form: 'accountSettings',
   validate,
-})(SettingsForm)
+})(AccountForm)
 
 const mapStateToProps = ({ user }) =>
 ({
   initialValues: user
 })
 
-export default connect(mapStateToProps)(ConnectedSettingsForm)
+export default connect(mapStateToProps)(ConnectedAccountForm)
