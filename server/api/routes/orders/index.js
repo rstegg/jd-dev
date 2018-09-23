@@ -4,6 +4,7 @@ const { allPass, path, pipe, prop, is } = require('ramda')
 
 const createOrderHandler = require('./handlers/create')
 const getOrdersHandler = require('./handlers/getAll')
+const getOrdersCountHandler = require('./handlers/getAllCount')
 const getDesignOrdersHandler = require('./handlers/getAllDesign')
 const getOrderHandler = require('./handlers/get')
 const deleteOrderHandler = require('./handlers/delete')
@@ -27,6 +28,9 @@ module.exports = io =>
     .use(passport.authenticate('jwt', { session: false }))
     .get('/design',
       getDesignOrdersHandler
+    )
+    .get('/dashboard',
+      getOrdersCountHandler
     )
     .get('/',
       getOrdersHandler

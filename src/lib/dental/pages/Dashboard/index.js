@@ -5,9 +5,12 @@ import { Panel } from 'primereact/components/panel/Panel';
 import Uploader from './components/Uploader/Uploader';
 import { Icon } from 'antd'
 
-import { redirectToOrders } from './actions'
+import { redirectToOrders, fetchDashboard } from './actions'
 
 class Dashboard extends Component {
+    componentWillMount = () => {
+      this.props.fetchDashboard(this.props.user.token)
+    }
     componentDidUpdate = () => {
       if (this.props.redirects.shouldRedirect) {
         this.props.redirectToOrders()
@@ -20,6 +23,7 @@ class Dashboard extends Component {
       if (this.props.redirects.shouldRedirect) {
         return <Redirect to='/orders' from='/' />
       }
+      const { dashboard } = this.props
         return (
           <div className="ui-g ui-fluid dashboard">
             <div className="ui-g-12 ui-md-6 ui-lg-3">
@@ -28,21 +32,21 @@ class Dashboard extends Component {
                       <Icon type="double-right" />
                     </div>
                     <div className="card">
-                        <span className="fa fa-question-circle"/>
-                        <span>Rush</span>
-                        <span className="count">81</span>
+                        <span className="fa fa-chevron-right"/>
+                        <span> In Process</span>
+                        <span className="count">{dashboard.processedOrders || 0}</span>
                     </div>
                 </div>
             </div>
             <div className="ui-g-12 ui-md-6 ui-lg-3">
                 <div className="highlight-box">
                     <div className="initials" style={{backgroundColor:'#20d077',color:'#038d4a'}}>
-                      <Icon type="verticle-left" />
+                      <Icon type="close" />
                     </div>
                     <div className="card">
-                        <span className="fa fa-question-circle-o"/>
-                        <span>Hold</span>
-                        <span className="count">21</span>
+                        <span className="fa fa-close"/>
+                        <span> Canceled</span>
+                        <span className="count">{dashboard.canceledOrders || 0}</span>
                     </div>
                 </div>
             </div>
@@ -53,8 +57,8 @@ class Dashboard extends Component {
                     </div>
                     <div className="card">
                         <span className="fa fa-check"/>
-                        <span>Needs Approval</span>
-                        <span className="count">60</span>
+                        <span> Completed</span>
+                        <span className="count">{dashboard.completedOrders || 0}</span>
                     </div>
                 </div>
             </div>
@@ -64,9 +68,9 @@ class Dashboard extends Component {
                       <Icon type="tags" />
                     </div>
                     <div className="card">
-                        <span className="fa fa-eye"/>
-                        <span>New Orders</span>
-                        <span className="count">1</span>
+                        <span className="fa fa-tags"/>
+                        <span> Total New</span>
+                        <span className="count">{dashboard.newOrders || 0}</span>
                     </div>
                 </div>
             </div>
@@ -80,9 +84,10 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = ({ user, redirects }) => ({ user, redirects })
+const mapStateToProps = ({ user, redirects, dashboard }) => ({ user, redirects, dashboard })
 
 const mapDispatchToProps = dispatch => ({
+  fetchDashboard: (token) => dispatch(fetchDashboard(token)),
   redirectToOrders: () => dispatch(redirectToOrders())
 })
 

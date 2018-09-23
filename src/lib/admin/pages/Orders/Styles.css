@@ -1,0 +1,3 @@
+.order-details > * {
+  flex-direction: row !important;
+}

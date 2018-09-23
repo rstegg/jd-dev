@@ -4,6 +4,7 @@ const { allPass, path, pipe, prop, is, tap } = require('ramda')
 
 const createUserHandler = require('./handlers/createUser')
 const getUsersHandler = require('./handlers/getAllUsers')
+const getCountsHandler = require('./handlers/getAllCounts')
 const getOrdersHandler = require('./handlers/getAllOrders')
 const banUserHandler = require('./handlers/banUser')
 
@@ -35,4 +36,7 @@ module.exports =
     )
     .get('/orders',
       getOrdersHandler
+    )
+    .get('/counts',
+      getCountsHandler
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import { connect } from 'react-redux'
 
+import AdminRouter from './admin/Router'
 import DesignRouter from './design/Router'
 import DentalRouter from './dental/Router'
 
@@ -11,10 +12,14 @@ class LibRouter extends Component {
     if (!user.isAuthenticated) {
       return <Redirect to='/login' from='/' />
     }
-    if (user.userType === 'designer') {
-      return <DesignRouter />
+    switch(user.userType) {
+      case 'admin':
+        return <AdminRouter />
+      case 'designer':
+        return <DesignRouter />
+      default:
+        return <DentalRouter />
     }
-    return <DentalRouter />
   }
 }
 

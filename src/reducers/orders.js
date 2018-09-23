@@ -5,23 +5,37 @@ const mapOrdersToothUnits = orders => orders.map(order => ({ ...order, unitsView
 const ordersReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'FETCH_ORDERS_SUCCESS':
+    case 'ADMIN_FETCH_ORDERS_SUCCESS':
       return mapOrdersToothUnits(action.payload.orders)
     case 'ADD_NEW_ORDERS':
       return state.concat( mapOrdersToothUnits(action.payload.orders) )
     case 'ADD_EXTRA_SCAN_FILE':
+    case 'ADMIN_ADD_EXTRA_SCAN_FILE':
       const scanOrdersUIDs = state.map(order => order.uid)
       const scanOrderIDX = scanOrdersUIDs.indexOf(action.payload.order.uid)
       return [ ...state.slice(0, scanOrderIDX),
               { ...action.payload.order, caseFileUrls: action.payload.order.caseFileUrls.concat(action.payload.file) },
               ...state.slice(scanOrderIDX+1) ]
     case 'ADD_EXTRA_NOTE':
+    case 'ADMIN_ADD_EXTRA_NOTE':
       const noteOrderUIDs = state.map(order => order.uid)
       const noteOrderIDX = noteOrderUIDs.indexOf(action.payload.order.uid)
       const currNotes = action.payload.order.notes || []
       return [ ...state.slice(0, noteOrderIDX),
               { ...action.payload.order, notes: currNotes.concat(action.payload.note) },
               ...state.slice(noteOrderIDX+1) ]
+    case 'SET_ORDER_PREFS':
+    case 'ADMIN_SET_ORDER_PREFS':
+      const prefsOrderUIDs = state.map(order => order.uid)
+      const prefsOrderIDX = noteOrderUIDs.indexOf(action.payload.order.uid)
+      const currPrefs = { contact: state.orders[prefsOrderIDX].contact, occlusion: state.orders[prefsOrderIDX].contact, pontic: state.orders[prefsOrderIDX].contact, linerSpacer: state.orders[prefsOrderIDX].contact }
+      return [ ...state.slice(0, noteOrderIDX),
+              { ...action.payload.order, contact: action.payload.prefs.contact || currPrefs.contact,
+              occlusion: action.payload.prefs.occlusion || currPrefs.occlusion, pontic: action.payload.prefs.pontic || currPrefs.pontic,
+              linerSpacer: action.payload.prefs.linerSpacer || currPrefs.linerSpacer },
+              ...state.slice(noteOrderIDX+1) ]
     case 'CANCEL_ORDER':
+    case 'ADMIN_CANCEL_ORDER':
       const uids = state.map(s => s.uid)
       const puid = action.payload.order.uid
       const idx = uids.indexOf(puid)
