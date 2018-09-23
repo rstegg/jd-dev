@@ -41,11 +41,11 @@ export class AppTopbarView extends Component {
             <Menu.Item key="dashboard">
               <NavLink to="/">Dashboard</NavLink>
             </Menu.Item>
-            <Menu.Item key="uploader">
-              <NavLink to="/uploader">Uploader</NavLink>
-            </Menu.Item>
             <Menu.Item key="orders">
               <NavLink to="/orders">Orders</NavLink>
+            </Menu.Item>
+            <Menu.Item key="users">
+              <NavLink to="/users">Users</NavLink>
             </Menu.Item>
           </Menu>
           <Menu mode="horizontal" defaultSelectedKeys={[ defaultOpen ]} onClick={this.handleClick} selectedKeys={[ defaultOpen, this.state.current ]}>

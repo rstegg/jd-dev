@@ -27,12 +27,12 @@ export default function(state = initialState, action) {
     case 'FETCH_USERS_SUCCESS':
     case 'BAN_USER_SUCCESS':
       return Object.assign({}, state, {
-        list: action.payload.users
+        users: action.payload.users
       })
     case 'CREATE_USER_SUCCESS':
-      const userList = state.list || []
+      const userList = state.users || []
       return Object.assign({}, state, {
-        list: userList.concat(action.payload.user),
+        users: userList.concat(action.payload.user),
         createUserLoading: false,
         createUserSuccess: true,
       })
