@@ -4,7 +4,7 @@ const uuid = require('uuid/v4')
 
 const { map, merge, pick, length, prop, head } = require('ramda')
 
-const OrderParams = [  'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
+const OrderParams = [ 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
 
 const createThread = order =>
   Thread.create({ title: order.name, uid: order.uid }, { plain: true })
