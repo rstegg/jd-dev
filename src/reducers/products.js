@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
       return state.concat(mergeAll([
         defaultPrefs,
         { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], model: [], dueDate: moment(), dueTime: moment(), }
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: '', type: '', model: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),

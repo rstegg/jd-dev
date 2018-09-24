@@ -83,7 +83,7 @@ export const parseXml = xml => {
 
       const isValid = type && length(units)
 
-      return { units: teethNumsStr, type, notes: [ orderComments ], units, orderManufacturer, orderFirstname, orderLastname, isValid }
+      return { type, notes: [ orderComments ], units, orderManufacturer, orderFirstname, orderLastname, isValid }
 
     })
     .catch(err => console.log(err))
