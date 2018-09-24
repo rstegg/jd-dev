@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom'
+import { NavLink, withRouter, Redirect } from 'react-router-dom'
 import { Panel } from 'primereact/components/panel/Panel';
-import { Spin, Button, Modal, Icon } from 'antd'
+import { Drawer, Spin, Button, Modal, Icon } from 'antd'
 import { reset, submit } from 'redux-form'
 
 import { resetCreateUser, fetchAdminDashboard } from './actions'
@@ -12,6 +12,7 @@ class Dashboard extends Component {
   state = {
     createUserVisible: false,
     createUserLoading: false,
+    adminDrawerVisible: false,
   }
   componentWillMount = () => {
     this.props.fetchAdminDashboard(this.props.user.token)
@@ -41,6 +42,12 @@ class Dashboard extends Component {
   openCreateUserModal = () => {
     this.setState({ createUserVisible: true })
   }
+  showAdminDrawer = () => {
+    this.setState({ adminDrawerVisible: true })
+  }
+  hideAdminDrawer = () => {
+    this.setState({ adminDrawerVisible: false })
+  }
 
     render() {
       if (!this.props.user.isAuthenticated) {
@@ -48,68 +55,71 @@ class Dashboard extends Component {
       }
       const { admin } = this.props
         return (
-          <div className="ui-g ui-fluid dashboard">
-            <div className="ui-g-12 ui-md-6 ui-lg-3">
-                <div className="highlight-box">
-                    <div className="initials" style={{backgroundColor:'#ef6262',color:'#a83d3b'}}>
-                      <Icon type="double-right" />
-                    </div>
-                    <div className="card">
-                        <span className="fa fa-question-circle"/>
-                        <span>Active Users</span>
-                        <span className="count">{admin.userCount || 0}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="ui-g-12 ui-md-6 ui-lg-3">
-                <div className="highlight-box">
-                    <div className="initials" style={{backgroundColor:'#20d077',color:'#038d4a'}}>
-                      <Icon type="verticle-left" />
-                    </div>
-                    <div className="card">
-                        <span className="fa fa-question-circle-o"/>
-                        <span>Total Orders</span>
-                        <span className="count">{admin.orderCount || 0}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="ui-g-12 ui-md-6 ui-lg-3">
-                <div className="highlight-box">
-                    <div className="initials" style={{backgroundColor:'#f9c851',color:'#b58c2b'}}>
-                      <Icon type="swap" />
-                    </div>
-                    <div className="card">
-                        <span className="fa fa-check"/>
-                        <span>Total Designers</span>
-                        <span className="count">{admin.designerCount || 0}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="ui-g-12 ui-md-6 ui-lg-3">
-                <div className="highlight-box">
-                    <div className="initials" style={{backgroundColor:'#007be5',color:'#00448f'}}>
-                      <Icon type="tags" />
-                    </div>
-                    <div className="card">
-                        <span className="fa fa-eye"/>
-                        <span>Completed Orders</span>
-                        <span className="count">{admin.finishedOrderCount || 0}</span>
-                    </div>
-                </div>
-            </div>
-            <Button onClick={() => this.openCreateUserModal()} type='primary' style={{ width: '100%' }}>Add User</Button>
-            <Modal
-              style={{ minWidth: '50%' }}
-              title={'Add a note'}
-              visible={this.state.createUserVisible}
-              onOk={() => this.createNewUser()}
-              onCancel={() => this.hideCreateUserModal()}
-              okText="Done"
-              cancelText="Cancel"
-            >
-              { this.state.createUserLoading ? <Spin />
-                : <CreateUser /> }
-            </Modal>
+          <div>
+            <Button icon='user-add' onClick={() => this.openCreateUserModal()} type='dashed'>Create a New User</Button>
+            <div className="ui-g ui-fluid dashboard">
+              <div className="ui-g-12 ui-md-6 ui-lg-3">
+                  <div className="highlight-box">
+                      <div className="initials" style={{backgroundColor:'#ef6262',color:'#a83d3b'}}>
+                        <Icon type="user" />
+                      </div>
+                      <div className="card">
+                          <span className="fa fa-user"/>
+                          <span> Users</span>
+                          <span className="count">{admin.userCount || 0}</span>
+                      </div>
+                  </div>
+              </div>
+              <div className="ui-g-12 ui-md-6 ui-lg-3">
+                  <div className="highlight-box">
+                      <div className="initials" style={{backgroundColor:'#20d077',color:'#038d4a'}}>
+                        <Icon type="tags" />
+                      </div>
+                      <div className="card">
+                          <span className="fa fa-tags"/>
+                          <span> Orders</span>
+                          <span className="count">{admin.orderCount || 0}</span>
+                      </div>
+                  </div>
+              </div>
+              <div className="ui-g-12 ui-md-6 ui-lg-3">
+                  <div className="highlight-box">
+                      <div className="initials" style={{backgroundColor:'#f9c851',color:'#b58c2b'}}>
+                        <Icon type="coffee" />
+                      </div>
+                      <div className="card">
+                          <span className="fa fa-coffee"/>
+                          <span> Designers</span>
+                          <span className="count">{admin.designerCount || 0}</span>
+                      </div>
+                  </div>
+              </div>
+              <div className="ui-g-12 ui-md-6 ui-lg-3">
+                  <div className="highlight-box">
+                      <div className="initials" style={{backgroundColor:'#007be5',color:'#00448f'}}>
+                        <Icon type="rocket" />
+                      </div>
+                      <div className="card">
+                          <span className="fa fa-rocket"/>
+                          <span> Completed</span>
+                          <span className="count">{admin.finishedOrderCount || 0}</span>
+                      </div>
+                  </div>
+              </div>
+
+              <Modal
+                style={{ minWidth: '50%' }}
+                title='Create a user'
+                visible={this.state.createUserVisible}
+                onOk={() => this.createNewUser()}
+                onCancel={() => this.hideCreateUserModal()}
+                okText="Done"
+                cancelText="Cancel"
+              >
+                { this.state.createUserLoading ? <Spin />
+                  : <CreateUser /> }
+              </Modal>
+          </div>
         </div>
       )
     }
