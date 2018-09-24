@@ -55,8 +55,8 @@ export default (state = initialState, action) => {
     case 'ACCEPT_GENERIC':
       return state.concat(mergeAll([
         defaultPrefs,
-        { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name,
-          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: '', type: '', model: [], dueDate: moment(), dueTime: moment(), }
+        { file: action.payload.accepted, ...action.payload.accepted, filename: action.payload.accepted.name, uid: uuid(),
+          name: action.payload.accepted.name.split('.').slice(0,-1).join(''), units: [], notes: [], type: '', model: [], dueDate: moment(), dueTime: moment(), }
         ]))
     case 'SET_TYPE':
       return [ ...state.slice(0, action.payload.idx),

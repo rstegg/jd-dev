@@ -11,6 +11,8 @@ export default (state=initialState, action) => {
       return Object.assign({}, state, { accepted: [ ...state.accepted, action.payload.accepted ] })
     case 'ACCEPT_ZIP':
       return Object.assign({}, state, { accepted: [ ...state.accepted, action.payload.accepted ] })
+    case 'ACCEPT_GENERIC':
+      return Object.assign({}, state, { accepted: [ ...state.accepted, action.payload.accepted ] })
     case 'REJECT_STL':
       return Object.assign({}, state, { rejected: [ ...state.rejected, action.payload.rejected ] })
     case 'DELETE_PRODUCT':
