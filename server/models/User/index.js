@@ -87,7 +87,6 @@ module.exports = (sequelize, DataTypes) => {
     send_method: DataTypes.STRING,
     receive_method: DataTypes.STRING,
     legal_entity: DataTypes.JSONB,
-    verify_needed: DataTypes.JSONB
   })
 
   User.associate = ({ Thread, Order, Message }) => {
