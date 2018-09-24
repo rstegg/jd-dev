@@ -15,7 +15,7 @@ module.exports = io => (req, res) => {
       where: { userType: 'designer' }
     })
     .then(designers => {
-      if (designers) {
+      if (designers && designers.length) {
         const assignedDesigner = designers.reduce((a, b) => {
             return a.priority > b.priority ? a : b;
         });
