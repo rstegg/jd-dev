@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     dueDate: DataTypes.STRING,
     dueTime: DataTypes.STRING,
-    caseFileUrls: DataTypes.ARRAY(DataTypes.STRING),
+    scanFileUrls: DataTypes.ARRAY(DataTypes.STRING),
     designFileUrls: DataTypes.ARRAY(DataTypes.STRING),
     contact: DataTypes.STRING,
     occlusion: DataTypes.STRING,

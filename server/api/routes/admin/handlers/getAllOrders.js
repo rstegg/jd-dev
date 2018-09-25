@@ -1,7 +1,7 @@
 const { User, Order } = requireDb
 
 const UserAttrs = [ 'email', 'name', 'uid', 'userType' ]
-const OrderAttrs = [ 'uid', 'designers', 'name', 'notes', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'createdAt', 'updatedAt' ]
+const OrderAttrs = [ 'uid', 'designers', 'name', 'notes', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls', 'createdAt', 'updatedAt' ]
 
 const validate = req =>
   User.findOne({

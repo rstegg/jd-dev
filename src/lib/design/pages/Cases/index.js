@@ -10,11 +10,11 @@ import moment from 'moment'
 
 import { Avatar, Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchCases, cancelCase, addDesignFile, addDesignNote } from './actions/cases'
+import { fetchOrders, reassignOrder, addDesignFile, addDesignNote } from './actions/cases'
 
-import CaseDetails from './components/CaseDetails'
+import OrderDetails from './components/OrderDetails'
 
-class CasesView extends Component {
+class OrdersView extends Component {
 
     constructor(props) {
         super(props);
@@ -27,7 +27,7 @@ class CasesView extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchCases(this.props.user.token)
+        this.props.fetchOrders(this.props.user.token)
     }
     selectionChange = (e) => {
       const uid = e.data.uid
@@ -73,17 +73,17 @@ class CasesView extends Component {
         )
       }
       return <Popconfirm
-          title="Are you sure you want to cancel this c?"
+          title="Assign this case to a new designer?"
           placement="topRight"
-          onConfirm={() => this.props.cancelCase(rowData, this.props.user.token)}
+          onConfirm={() => this.props.reassignOrder(rowData, this.props.user.token)}
           okText="Yes" cancelText="Cancel">
           <Button type="danger" icon="close" />
         </Popconfirm>;
     }
 
     scanFileTemplate = (rowData, column) => {
-      if (rowData.caseFileUrls) {
-        return rowData.caseFileUrls.map((scanFile, idx) => <Button key={`scanFileUrl-${rowData.uid}-${idx}`} href={scanFile} shape="circle" icon="download" />)
+      if (rowData.scanFileUrls) {
+        return rowData.scanFileUrls.map((scanFile, idx) => <Button key={`scanFileUrl-${rowData.uid}-${idx}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
@@ -118,10 +118,10 @@ class CasesView extends Component {
             <div className="ui-g">
                 <div className="ui-g-12">
                     <div className="card card-w-title">
-                        <h1>Cases</h1>
-                        <DataTable value={this.props.cases} selectionMode="single" header="Assigned Cases" paginator={true} rows={10} sortField='status' sortCase={-1}
+                        <h1>Orders</h1>
+                        <DataTable value={this.props.cases} selectionMode="single" header="Assigned Orders" paginator={true} rows={10} sortField='status' sortOrder={-1}
                         responsive={true} selection={this.state.dataTableSelectValue} onSelectionChange={(e) => this.selectionChange(e)}>
-                            <Column field="name" header="Case Identifier" sortable={true}/>
+                            <Column field="name" header="Order Identifier" sortable={true}/>
                             <Column field="type" header="Restoration Type" body={this.renderRestorationTypes} sortable={true}/>
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
                             <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>
@@ -130,20 +130,20 @@ class CasesView extends Component {
                             <Column body={this.notesTemplate} field="notes" header="Notes" sortable={true}/>
                             <Column field="cFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column field="designFileUrls" body={this.designFileTemplate} header="Design Files" sortable={true}/>
-                            <Column body={this.actionTemplate} header="Cancel case" style={{textAlign:'center', width: '6em'}}/>
+                            <Column body={this.actionTemplate} header="Reassign Order" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>
                     </div>
                 </div>
                 <Modal
                   style={{ minWidth: '50%' }}
-                  title={<div style={{ display: 'flex', flexDirection: 'row', fontSize: '12px' }}><div>Case ID: </div><b>{this.state.dataTableSelectValue.name}</b></div>}
+                  title={<div style={{ display: 'flex', flexDirection: 'row', fontSize: '12px' }}><div>Order ID: </div><b>{this.state.dataTableSelectValue.name}</b></div>}
                   visible={this.state.visible}
                   onOk={() => this.hideModal()}
                   onCancel={() => this.hideModal()}
                   okText="Done"
                   cancelText="Cancel"
                 >
-                  <CaseDetails {...this.props} activeCase={this.props.cases[this.state.activeIndex]} />
+                  <OrderDetails {...this.props} activeOrder={this.props.cases[this.state.activeIndex]} />
                 </Modal>
             </div>
         );
@@ -156,10 +156,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCases: token => dispatch(fetchCases(token)),
+  fetchOrders: token => dispatch(fetchOrders(token)),
   addDesignFile: (file, c) => dispatch(addDesignFile(file, c)),
   addDesignNote: (note, order, token) => dispatch(addDesignNote(note, order, token)),
-  cancelCase: (c, token) => dispatch(cancelCase(c, token))
+  reassignOrder: (order, token) => dispatch(reassignOrder(order, token))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CasesView)
+export default connect(mapStateToProps, mapDispatchToProps)(OrdersView)

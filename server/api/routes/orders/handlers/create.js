@@ -4,7 +4,7 @@ const uuid = require('uuid/v4')
 
 const { map, merge, pick, length, prop, head } = require('ramda')
 
-const OrderParams = [ 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls' ]
+const OrderParams = [ 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls' ]
 
 const createThread = order =>
   Thread.create({ title: order.name, uid: order.uid }, { plain: true })
@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
   }, pick(OrderParams, order)), req.body.orders)
   const validatedTypes = newOrders.map(order => ({
     ...order,
-    caseFileUrls: [ order.caseFileUrls ],
+    scanFileUrls: [ order.scanFileUrls ],
     notes: order.notes && length(prop('text', head(order.notes))) ? order.notes : null
   }))
   return Order.bulkCreate(validatedTypes, { plain: true })

@@ -82,8 +82,8 @@ class CasesView extends Component {
     }
 
     scanFileTemplate = (rowData, column) => {
-      if (rowData.caseFileUrls) {
-        return rowData.caseFileUrls.map((scanFile, idx) => <Button key={`scanFileUrl-${rowData.uid}-${idx}`} href={scanFile} shape="circle" icon="download" />)
+      if (rowData.scanFileUrls) {
+        return rowData.scanFileUrls.map((scanFile, idx) => <Button key={`scanFileUrl-${rowData.uid}-${idx}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }

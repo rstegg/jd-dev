@@ -1,7 +1,7 @@
 const { Order, User } = requireDb
 const moment = require('moment')
 
-const OrderAttrs = [ 'uid', 'designers', 'name', 'notes', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'createdAt', 'updatedAt' ]
+const OrderAttrs = [ 'uid', 'designers', 'name', 'notes', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls', 'createdAt', 'updatedAt' ]
 const userAttributes = [ 'uid', 'name', 'email', 'image', 'active' ]
 
 module.exports = (req, res) =>

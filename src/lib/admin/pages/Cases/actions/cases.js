@@ -1,14 +1,14 @@
 import su from 'superagent'
 import { flatten } from 'ramda'
 
-export const fetchCasesSuccess = res => ({
-  type: 'FETCH_CASES_SUCCESS',
+export const fetchDesignerOrdersSuccess = res => ({
+  type: 'FETCH_DESIGN_ORDERS_SUCCESS',
   payload: {
     cases: res.body.orders
   }
 })
 
-export const fetchCases = token =>
+export const fetchDesignerOrders = token =>
   dispatch => {
     su.get('/api/v1/admin/orders')
       .accept('application/json')
@@ -19,10 +19,10 @@ export const fetchCases = token =>
       })
   }
 
-export const cancelCase = (order, token) =>
+export const reassignDesigner = (order, token) =>
   dispatch => {
-    dispatch({ type: 'CANCEL_CASE', payload: { order } })
-    su.delete('/api/v1/orders')
+    dispatch({ type: 'ORDER_REASSIGN_DESIGNER', payload: { order } })
+    su.delete('/api/v1/orders/reassign_designer')
       .accept('application/json')
       .set('Authorization', token)
       .send({ order })
@@ -33,7 +33,7 @@ export const cancelCase = (order, token) =>
   }
 
 export const cancelCasesSuccess = res => ({
-  type: 'CANCEL_CASES_SUCCESS',
+  type: 'ORDER_REASSIGN_DESIGNER_SUCCESS',
   payload: {
     cases: res.body.cases
   }

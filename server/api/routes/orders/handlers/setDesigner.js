@@ -7,7 +7,7 @@ const sequelize = require('sequelize')
 
 const { merge, pick } = require('ramda')
 const updateOrderParams = [ 'designers' ]
-const orderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'createdAt' ]
+const orderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls', 'createdAt' ]
 
 module.exports = io => (req, res) => {
   req.orders.map(order => {

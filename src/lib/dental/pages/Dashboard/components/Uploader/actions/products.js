@@ -174,10 +174,10 @@ export const sendOrders = (products, token) =>
             const idx = fileNames.indexOf(product.filename)
             const file = body.files[idx]
             if (file) {
-              return acc.concat({ ...product, caseFileUrls: file.location })
+              return acc.concat({ ...product, scanFileUrls: file.location })
             }
             if (body.files && body.files.length) {
-              return acc.concat({ ...product, caseFileUrls: body.files[0] })
+              return acc.concat({ ...product, scanFileUrls: body.files[0] })
             }
             return acc.concat(product)
           }

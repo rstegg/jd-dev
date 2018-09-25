@@ -19,9 +19,9 @@ export const fetchCases = token =>
       })
   }
 
-export const cancelCase = (order, token) =>
+export const reassignDesigner = (order, token) =>
   dispatch => {
-    dispatch({ type: 'CANCEL_CASE', payload: { order } })
+    dispatch({ type: 'REASSIGN_DESIGNER', payload: { order } })
     su.delete('/api/v1/orders')
       .accept('application/json')
       .set('Authorization', token)
@@ -32,8 +32,8 @@ export const cancelCase = (order, token) =>
       })
   }
 
-export const cancelCasesSuccess = res => ({
-  type: 'CANCEL_CASES_SUCCESS',
+export const reassignDesignerSuccess = res => ({
+  type: 'REASSIGN_DESIGNER_SUCCESS',
   payload: {
     cases: res.body.cases
   }

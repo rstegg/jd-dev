@@ -105,7 +105,7 @@ export default class OrderDetails extends Component {
             <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
           </Upload>}
           >
-          {order.caseFileUrls && order.caseFileUrls.map((scanFileUrl, i) =>
+          {order.scanFileUrls && order.scanFileUrls.map((scanFileUrl, i) =>
             <Tag key={`scanFileUrl-${order.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>
           )}
         </Card>

@@ -71,7 +71,7 @@ export default class PrescriptionForm extends Component {
         <Card
           type="inner"
           title="Scan Files">
-          {activeCase.caseFileUrls && activeCase.caseFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${activeCase.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
+          {activeCase.scanFileUrls && activeCase.scanFileUrls.map((scanFileUrl, i) => <Tag key={`scanFileUrl-${activeCase.uid}-${i}`} color='geekblue'><a href={scanFileUrl}>{decodeURI(scanFileUrl && scanFileUrl.split('/').slice(-1)[0])}</a></Tag>)}
         </Card>
         <Card
           style={{ marginTop: 16 }}

@@ -1,7 +1,7 @@
 const models = requireDb
 const { User, Order, Message, Thread } = models
 
-const orderAttributes = ['name', 'units', 'type', 'status', 'dueDate', 'dueTime', 'caseFileUrls', 'designFileUrls', 'contact', 'occlusion', 'library', 'pontic', 'linerSpacer']
+const orderAttributes = ['name', 'units', 'type', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls', 'contact', 'occlusion', 'library', 'pontic', 'linerSpacer']
 const userAttributes = ['id', 'email', 'image']
 
 const joinChatThread = (io, socket, action) => {
