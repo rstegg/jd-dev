@@ -14,15 +14,18 @@ const casesReducer = (state = initialState, action) => {
     case 'ADD_DESIGN_FILE':
       const scanCaseUIDs = state.map(order => order.uid)
       const scanOrderIDX = scanCaseUIDs.indexOf(action.payload.order.uid)
+      const previousOrderDesignUrls = action.payload.order.designFileUrls || []
       return [ ...state.slice(0, scanOrderIDX),
-              { ...action.payload.order, designFileUrls: action.payload.order.designFileUrls.concat(action.payload.file) },
+              { ...action.payload.order, designFileUrls: previousOrderDesignUrls.concat(action.payload.file) },
               ...state.slice(scanOrderIDX+1) ]
     case 'ADD_DESIGN_NOTE':
       const noteOrderUIDs = state.map(order => order.uid)
       const noteOrderIDX = noteOrderUIDs.indexOf(action.payload.order.uid)
       const currNotes = action.payload.order.notes || []
+      const designers = action.payload.order.designers
+      const lastDesigner = designers[designers.length - 1]
       return [ ...state.slice(0, noteOrderIDX),
-              { ...action.payload.order, notes: currNotes.concat(action.payload.note) },
+              { ...action.payload.order, notes: currNotes.concat({ user: lastDesigner.name, text: action.payload.note }) },
               ...state.slice(noteOrderIDX+1) ]
     case 'CANCEL_CASE':
       const uids = state.map(s => s.uid)

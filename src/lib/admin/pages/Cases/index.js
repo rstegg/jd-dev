@@ -126,7 +126,7 @@ class CasesView extends Component {
                             <Column field="unitsView" header="Tooth #" sortable={true}/>
                             <Column body={this.unitsCountTemplate} header="Units" sortable={true}/>
                             <Column field="status" header="Status" sortable={true}/>
-                            <Column body={this.dueByTemplate} field='dueBy' header="Due by" sortable={true} />
+                            <Column body={this.dueByTemplate} field='dueDate' header="Due by" sortable={true} />
                             <Column body={this.notesTemplate} field="notes" header="Notes" sortable={true}/>
                             <Column field="cFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column field="designFileUrls" body={this.designFileTemplate} header="Design Files" sortable={true}/>
