@@ -24,7 +24,7 @@ module.exports = io => (req, res) => {
             console.log('designers exist');
             User.update({ priority: 0 }, { where: { id: assignedDesigner.id }, returning: true, plain: true })
             .then(([_, newDesigner]) => {
-              const oldDesigners = order.designers ? order.designers : []
+              const oldDesigners = req.body.order.designers ? req.body.order.designers : []
 
               const formattedNewDesigner = {
                 id: newDesigner.id,
@@ -38,8 +38,12 @@ module.exports = io => (req, res) => {
 
               const updatedDesigners = oldDesigners.concat(formattedNewDesigner)
               const updatedOrder = { designers: updatedDesigners, designerId: newDesigner.uid }
-              Order.update(updatedOrder, { where: { userId: req.user.id, uid: order.uid }, returning: true, plain: true })
+              Order.update(updatedOrder, { where: { designerId: req.user.uid, uid: req.body.order.uid }, returning: true, plain: true })
                 .then(([_, savedOrder]) => {
+                  io.to(req.user.uid).emit('action', {
+                    type: 'NEW_ORDER_UNASSIGNED',
+                    payload: { order: savedOrder }
+                  })
                   io.to(newDesigner.uid).emit('action', {
                     type: 'NEW_ORDER_ASSIGNED',
                     payload: { order: savedOrder }

@@ -7,6 +7,8 @@ const signupHandler = require('./handlers/signup')
 const validateEmailHandler = require('./handlers/validateEmail')
 const verifyTokenHandler = require('./handlers/verifyToken')
 const changePasswordHandler = require('./handlers/changePassword')
+const requestResetPasswordHandler = require('./handlers/requestReset')
+// const verifyResetPasswordHandler = require('./handlers/verifyReset')
 
 const validateBody = apiRequire('middleware/validate-body')
 const validFields = apiRequire('middleware/valid-fields')
@@ -40,4 +42,14 @@ module.exports =
       passport.authenticate('jwt', { session: false }),
       validateBody(validChangePassword),
       changePasswordHandler
+     )
+    .post(`/password/request_reset`,
+      passport.authenticate('jwt', { session: false }),
+      validateBody(validChangePassword),
+      requestResetPasswordHandler
+     )
+    .post(`/password/reset_password/:permalink/:verifyToken`,
+      passport.authenticate('jwt', { session: false }),
+      validateBody(validChangePassword),
+      // verifyResetPasswordHandler
      )

@@ -9,7 +9,7 @@ const getDesignOrdersHandler = require('./handlers/getAllDesign')
 const getOrderHandler = require('./handlers/get')
 const deleteOrderHandler = require('./handlers/delete')
 const setDesignerOrderHandler = require('./handlers/setDesigner')
-const reassignDesignerOrderHandler = require('./handlers/reassignDesigner')
+const reassignOrderHandler = require('./handlers/reassign')
 const addOrderNoteHandler = require('./handlers/addNotes')
 const setOrderPrefsHandler = require('./handlers/setPrefs')
 
@@ -44,9 +44,9 @@ module.exports = io =>
       createOrderHandler,
       setDesignerOrderHandler(io)
     )
-    .post('/reassign_designer',
+    .post('/reassign',
       validateBody(validSingle),
-      reassignDesignerOrderHandler(io)
+      reassignOrderHandler(io)
     )
     .put('/:uid/notes',
       validateBody(validNote),

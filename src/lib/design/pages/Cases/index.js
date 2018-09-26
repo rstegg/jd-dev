@@ -10,7 +10,7 @@ import moment from 'moment'
 
 import { Avatar, Tag, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchOrders, reassignOrder, addDesignFile, addDesignNote } from './actions/cases'
+import { fetchCases, reassignOrder, addDesignFile, addDesignNote } from './actions/cases'
 
 import OrderDetails from './components/OrderDetails'
 
@@ -27,7 +27,7 @@ class OrdersView extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchOrders(this.props.user.token)
+        this.props.fetchCases(this.props.user.token)
     }
     selectionChange = (e) => {
       const uid = e.data.uid
@@ -156,8 +156,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrders: token => dispatch(fetchOrders(token)),
-  addDesignFile: (file, c) => dispatch(addDesignFile(file, c)),
+  fetchCases: token => dispatch(fetchCases(token)),
+  addDesignFile: (file, order) => dispatch(addDesignFile(file, order)),
   addDesignNote: (note, order, token) => dispatch(addDesignNote(note, order, token)),
   reassignOrder: (order, token) => dispatch(reassignOrder(order, token))
 })

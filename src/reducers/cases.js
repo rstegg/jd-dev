@@ -27,6 +27,11 @@ const casesReducer = (state = initialState, action) => {
       return [ ...state.slice(0, noteOrderIDX),
               { ...action.payload.order, notes: currNotes.concat({ user: lastDesigner.name, text: action.payload.note }) },
               ...state.slice(noteOrderIDX+1) ]
+    case 'NEW_ORDER_UNASSIGNED':
+      const assignedUids = state.map(s => s.uid)
+      const assignedIdx = assignedUids.indexOf(action.payload.order.uid)
+      return [ ...state.slice(0, assignedIdx),
+              ...state.slice(assignedIdx+1) ]
     case 'CANCEL_CASE':
       const uids = state.map(s => s.uid)
       const puid = action.payload.order.uid

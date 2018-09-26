@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } from 'antd'
+import { Divider, Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } from 'antd'
 
 import moment from 'moment'
 
@@ -75,8 +75,19 @@ export default class OrderDetails extends Component {
         <Card
           type="inner"
           title="Designer Info">
-          {order.designers && order.designers.map((designer, i) =>
-            <Card.Grid key={`designer-${order.uid}-${i}`} style={{ width: '100%' }}>
+          {order.designers && order.designers.map((designer, idx) =>
+            idx < order.designers.length - 1 ?
+            <Card.Grid key={`designer-${order.uid}-${idx}`} style={{ width: '100%' }}>
+              <div style={{textDecoration: 'line-through'}}>
+              <Card.Meta
+                avatar={designer.image ? <Avatar src={designer.image} /> : <Avatar icon="user" />}
+                title={designer.name}
+                description={moment(designer.asignedDate).fromNow()}
+              />
+              </div>
+            </Card.Grid>
+            :
+            <Card.Grid key={`designer-${order.uid}-${idx}`} style={{ width: '100%' }}>
               <Card.Meta
                 avatar={designer.image ? <Avatar src={designer.image} /> : <Avatar icon="user" />}
                 title={designer.name}
