@@ -12,3 +12,10 @@ export const removeNotification = (uid) => ({
     uid
   }
 })
+
+export const socketDisconnect = token => ({
+  type: 'WS/SOCKET_DISCONNECT',
+  payload: {
+    token
+  }
+})

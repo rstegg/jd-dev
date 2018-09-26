@@ -23,7 +23,7 @@ module.exports = io => (req, res) => {
           .then(users => {
             if (users) {
               console.log('designers exist');
-              User.update({ priority: 0 }, { where: { id: assignedDesigner.id }, returning: true, plain: true })
+              User.update({ priority: 0 }, { where: { id: assignedDesigner.id, active: true }, returning: true, plain: true })
               .then(([_, newDesigner]) => {
                 const oldDesigners = order.designers ? order.designers : []
 

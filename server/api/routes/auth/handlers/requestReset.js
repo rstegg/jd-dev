@@ -36,7 +36,7 @@ module.exports = (req, res, next) =>
     })
     .then(([_, updatedUser]) => {
       const { resetPermalink, resetVerifyToken } = updatedUser
-      const permalink_url = `https://jawdrop.io/reset/${resetPermalink}/${resetVerifyToken}`
+      const permalink_url = `https://jawdrop.io/#/reset/${resetPermalink}/${resetVerifyToken}`
       const mail = resetPasswordMail(updatedUser, permalink_url)
       sendPasswordReset(mail, updatedUser)
       return res.status(200).json({ user: updatedUser })

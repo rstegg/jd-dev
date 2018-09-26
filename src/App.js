@@ -14,7 +14,7 @@ import Forgot from './auth/pages/Forgot';
 import Reset from './auth/pages/Reset';
 import LibRouter from './lib/Router';
 
-import { joinRoom, removeNotification } from './actions'
+import { joinRoom, removeNotification, socketDisconnect } from './actions'
 
 import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -25,6 +25,12 @@ import './App.css';
 import './layout/layout.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.props.socket.on('disconnect', () => {
+      this.props.socketDisconnect(this.props.user.token)
+    })
+  }
   componentWillMount() {
     if (this.props.user.token) {
       this.props.joinRoom(this.props.user.uid, this.props.user.token)
@@ -83,6 +89,7 @@ const mapStateToProps = ({ user, notifications }) => ({ user, notifications })
 const mapDispatchToProps = dispatch => ({
   joinRoom: (uid, token) => dispatch(joinRoom(uid, token)),
   removeNotification: (uid) => dispatch(removeNotification(uid)),
+  socketDisconnect: (token) => dispatch(socketDisconnect(token)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { StripeProvider } from 'react-stripe-elements';
-import store, { persistor } from './store';
+import store, { persistor, socket } from './store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import { Spin } from 'antd';
@@ -21,7 +21,7 @@ const Root = () =>
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>
         <HashRouter>
-          <App />
+          <App socket={socket} />
         </HashRouter>
       </PersistGate>
     </Provider>

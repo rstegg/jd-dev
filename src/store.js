@@ -6,7 +6,7 @@ import io from 'socket.io-client'
 import rootReducer from './reducers'
 import createSocketIoMiddleware from './utils/redux-socket-io'
 
-const socket = io({ path: '/WSS' })
+export const socket = io({ path: '/WSS' })
 const socketIoMiddleware = createSocketIoMiddleware(socket, 'WS/')
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

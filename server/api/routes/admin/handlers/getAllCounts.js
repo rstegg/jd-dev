@@ -18,7 +18,7 @@ module.exports = (req, res) =>
     .then(_ => Promise.all([
       User.count(),
       Order.count(),
-      User.count({ where: { userType: 'designer' } }),
+      User.count({ where: { userType: 'designer', active: true } }),
       Order.count({ where: { dueDate: { $lt: moment().toISOString() }  } })
     ]))
     .then(([userCount, orderCount, designerCount, finishedOrderCount]) => res.status(200).json({ userCount, orderCount, designerCount, finishedOrderCount }))

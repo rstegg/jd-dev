@@ -1,4 +1,5 @@
 'use strict'
+const { User } = requireDb
 const jwt = require('jsonwebtoken')
 const { path } = require('ramda')
 
@@ -7,6 +8,7 @@ const { joinChatThread, leaveChatThread } = require('./threads/join')
 const { joinChatRoom } = require('./rooms/join')
 const { sendShopOffer, sendProductOffer } = require('./offer/createoffer')
 const { acceptOffer, rejectOffer } = require('./offer/editoffer')
+const { socketDisconnect } = require('./socket/disconnect')
 
 const authorize = token =>
   new Promise((resolve, reject) =>
@@ -29,7 +31,11 @@ module.exports = (io, socket, action) => {
 
   authorize(getToken(action))
     .then(token => {
-      console.log(token);
+      if (token.id) {
+        User.update({ active: true }, { where: { id: token.id }, returning: true, plain: true }) //not secure?
+        .then(([_, user]) => console.log('New Connection', user.id))
+        .catch(console.error)
+      }
       socket.userId = token.id //TODO: best answer?
       switch(action.type) {
         case 'WS/JOIN_ROOM':
@@ -48,6 +54,8 @@ module.exports = (io, socket, action) => {
           return joinChatThread(io, socket, action)
         case 'WS/LEAVE_THREAD':
           return leaveChatThread(io, socket, action)
+        case 'WS/SOCKET_DISCONNECT':
+          return socketDisconnect(io, socket, action)
       }
   })
   .catch(error => console.error(error))
