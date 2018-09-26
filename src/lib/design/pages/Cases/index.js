@@ -161,7 +161,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCases: token => dispatch(fetchCases(token)),
   addDesignFile: (file, order) => dispatch(addDesignFile(file, order)),
-  addDesignNote: (note, order, token) => dispatch(addDesignNote(note, order, token)),
+  addDesignNote: (note, order, user) => dispatch(addDesignNote(note, order, user)),
   reassignOrder: (order, token) => dispatch(reassignOrder(order, token))
 })
 

@@ -38,12 +38,12 @@ export const cancelOrdersSuccess = res => ({
   }
 })
 
-export const addExtraNote = (note, order, token) =>
+export const addExtraNote = (note, order, user) =>
   dispatch => {
-    dispatch({ type: 'ADMIN_ADD_EXTRA_NOTE', payload: { note, order } })
+    dispatch({ type: 'ADMIN_ADD_EXTRA_NOTE', payload: { note, order, user } })
     su.put(`/api/v1/orders/${order.uid}/notes`)
       .accept('application/json')
-      .set('Authorization', token)
+      .set('Authorization', user.token)
       .send({ note })
       .then(res => dispatch(addExtraNoteSuccess(res)))
       .catch(err => {

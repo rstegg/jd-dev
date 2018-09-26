@@ -39,12 +39,12 @@ export const reassignOrderSuccess = res => ({
   }
 })
 
-export const addDesignNote = (note, order, token) =>
+export const addDesignNote = (note, order, user) =>
   dispatch => {
-    dispatch({ type: 'ADD_DESIGN_NOTE', payload: { note, order } })
+    dispatch({ type: 'ADD_DESIGN_NOTE', payload: { note, order, user } })
     su.put(`/api/v1/orders/${order.uid}/notes`)
       .accept('application/json')
-      .set('Authorization', token)
+      .set('Authorization', user)
       .send({ note })
       .then(res => dispatch(addDesignNoteSuccess(res)))
       .catch(err => {

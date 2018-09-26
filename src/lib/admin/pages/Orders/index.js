@@ -87,7 +87,7 @@ class OrdersTableView extends Component {
 
     scanFileTemplate = (rowData, column) => {
       if (rowData.caseFileUrls) {
-        return rowData.caseFileUrls.map(scanFile => <Button key={`scanFileUrl-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`} href={scanFile} shape="circle" icon="download" />)
+        return rowData.caseFileUrls.map((scanFile, idx) => <Button key={`scanFileUrl-${rowData.uid}-${idx}`} href={scanFile} shape="circle" icon="download" />)
       } else {
         return null
       }
@@ -95,7 +95,7 @@ class OrdersTableView extends Component {
 
     designFileTemplate = (rowData, column) => {
       if (rowData.designFileUrls) {
-        return rowData.designFileUrls.map(designFile => <Button key={`designFileUrl-${rowData.uid.slice(0,4)}-${String(Math.random()).slice(0,4)}`} href={designFile} shape="circle" icon="inbox" />)
+        return rowData.designFileUrls.map((designFile, idx) => <Button key={`designFileUrl-${rowData.uid}-${idx}`} href={designFile} shape="circle" icon="inbox" />)
       } else {
         return null
       }
@@ -104,7 +104,10 @@ class OrdersTableView extends Component {
     notesTemplate = (rowData, column) => {
       if (rowData.notes && rowData.notes.length) {
         const lastNote = rowData.notes[rowData.notes.length - 1]
-        return <div>{lastNote.user}: "{lastNote.text && lastNote.text.length > 15 ? lastNote.text.slice(0,15) + '...' : lastNote.text}"</div>
+        if (lastNote.text && lastNote.text.length) {
+          return <div>{lastNote.user}: "{lastNote.text && lastNote.text.length > 15 ? lastNote.text.slice(0,15) + '...' : lastNote.text}"</div>
+        }
+        return null
       } else {
         return null
       }
@@ -164,7 +167,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchOrders: token => dispatch(fetchOrders(token)),
   addExtraScanFile: (file, order) => dispatch(addExtraScanFile(file, order)),
-  addExtraNote: (note, order, token) => dispatch(addExtraNote(note, order, token)),
+  addExtraNote: (note, order, user) => dispatch(addExtraNote(note, order, user)),
   setOrderPrefs: (prefs, order, token) => dispatch(setOrderPrefs(prefs, order, token)),
   cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
 })

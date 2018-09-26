@@ -165,7 +165,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchOrders: token => dispatch(fetchOrders(token)),
   addExtraScanFile: (file, order) => dispatch(addExtraScanFile(file, order)),
-  addExtraNote: (note, order, token) => dispatch(addExtraNote(note, order, token)),
+  addExtraNote: (note, order, user) => dispatch(addExtraNote(note, order, user)),
   setOrderPrefs: (prefs, order, token) => dispatch(setOrderPrefs(prefs, order, token)),
   cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
 })

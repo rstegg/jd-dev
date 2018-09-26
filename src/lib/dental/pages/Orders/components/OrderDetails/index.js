@@ -49,7 +49,7 @@ export default class OrderDetails extends Component {
     this.setState({ noteVisible: false, note: '' })
   }
   saveNewNote = () => {
-    this.props.addExtraNote(this.state.note, this.props.order, this.props.user.token)
+    this.props.addExtraNote(this.state.note, this.props.order, this.props.user)
     this.setState({ noteVisible: false, note: '' })
   }
   showNotesModal = () => {

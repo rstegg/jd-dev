@@ -40,7 +40,7 @@ export default class PrescriptionForm extends Component {
     this.setState({ visible: false, note: '' })
   }
   saveNewNote = () => {
-    this.props.addDesignNote(this.state.note, this.props.activeOrder, this.props.user.token)
+    this.props.addDesignNote(this.state.note, this.props.activeOrder, this.props.user)
     this.setState({ visible: false, note: '' })
   }
   showModal = () => {

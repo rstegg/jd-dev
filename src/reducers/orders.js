@@ -25,7 +25,7 @@ const ordersReducer = (state = initialState, action) => {
       const noteOrderIDX = noteOrderUIDs.indexOf(action.payload.order.uid)
       const currNotes = action.payload.order.notes || []
       return [ ...state.slice(0, noteOrderIDX),
-              { ...action.payload.order, notes: currNotes.concat(action.payload.note) },
+              { ...action.payload.order, notes: currNotes.concat({ user: action.payload.user.name, text: action.payload.note }) },
               ...state.slice(noteOrderIDX+1) ]
     case 'SET_ORDER_PREFS':
     case 'ADMIN_SET_ORDER_PREFS':
