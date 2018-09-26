@@ -77,7 +77,7 @@ export default class OrderDetails extends Component {
           title="Designer Info">
           {order.designers && order.designers.map((designer, idx) =>
             idx < order.designers.length - 1 ?
-            <Card.Grid key={`designer-${order.uid}-${idx}`} style={{ width: '100%' }}>
+            <Card.Grid key={`designer-${order.uid}-${idx}`} style={{ width: '100%', backgroundColor: 'rgba(232,0,0,0.15)' }}>
               <div style={{textDecoration: 'line-through'}}>
               <Card.Meta
                 avatar={designer.image ? <Avatar src={designer.image} /> : <Avatar icon="user" />}

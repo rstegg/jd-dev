@@ -100,7 +100,10 @@ class OrdersView extends Component {
     notesTemplate = (rowData, column) => {
       if (rowData.notes && rowData.notes.length) {
         const lastNote = rowData.notes[rowData.notes.length - 1]
-        return <div>{lastNote.user}: "{lastNote.text && lastNote.text.length > 15 ? lastNote.text.slice(0,15) + '...' : lastNote.text}"</div>
+        if (lastNote.text) {
+          return <div>{lastNote.user}: "{lastNote.text && lastNote.text.length > 15 ? lastNote.text.slice(0,15) + '...' : lastNote.text}"</div>
+        }
+        return null
       } else {
         return null
       }
