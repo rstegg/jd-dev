@@ -6,7 +6,7 @@ const mailcomposer = require('mailcomposer')
 const shortId = require('shortid')
 const uuid = require('uuid/v4')
 
-const { confirmationMail, sendConfirmation } = apiRequire('service/mail')
+const { resetPasswordMail, sendPasswordReset } = apiRequire('service/mail')
 
 const validate = req =>
   User.findOne({ where: { email: req.body.email } })

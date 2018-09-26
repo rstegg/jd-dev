@@ -144,7 +144,7 @@ module.exports = (user, permalink_url) => `
         <tr>
           <td style="padding:0 0 20px 0;border-bottom:1px solid #e9edee;">
             <a href="https://www.jawdrop.io/" style="display:block; margin:0 auto;" target="_blank">
-              <img src="https://www.jawdrop.io/images/logo/jawdrop-logo-100.png" width="75" height="75" alt="JawDrop logo" style="border: 0px;">
+              <img src="https://jawdrop.io/assets/media/jawdrop-logo.png" width="75" height="75" alt="JawDrop logo" style="border: 0px;">
             </a>
           </td>
         </tr>

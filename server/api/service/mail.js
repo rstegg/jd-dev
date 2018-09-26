@@ -29,4 +29,28 @@ const sendConfirmation = (mail, user) => {
   })
 }
 
-module.exports = { mailgun, confirmationMail, sendConfirmation }
+const resetPasswordMail = (user, permalink_url) => mailcomposer({
+  from: 'JawDrop <hello@mg.jawdrop.io>',
+  to: user.email,
+  subject: 'Verify your email address to use jawdrop.io',
+  text: `Forgot your password? Not to worry, we got you! Let’s get you a new password. Click here to reset your password: ${permalink_url}`,
+  html: confirmationTemplate(user, permalink_url)
+})
+
+const sendPasswordReset = (mail, user) => {
+  mail.build((mailBuildError, message) => {
+    const verifyEmail = {
+      to: user.email,
+      message: message.toString('ascii')
+    }
+    mailgun.messages().sendMime(verifyEmail, (sendError, body) => {
+      console.log(body);
+      if (sendError) {
+        console.log(sendError);
+        return;
+      }
+    })
+  })
+}
+
+module.exports = { mailgun, confirmationMail, sendConfirmation, resetPasswordMail, sendPasswordReset }

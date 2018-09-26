@@ -45,6 +45,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    resetPermalink: DataTypes.STRING,
+    resetVerifyToken: DataTypes.STRING,
     bio: DataTypes.STRING,
     userType: {
       type: DataTypes.STRING,
