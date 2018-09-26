@@ -51,23 +51,10 @@ export default class PrescriptionForm extends Component {
     return (
       <Card title={<OrderSteps activeOrder={activeOrder} />}>
         <div style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
-
+          <p>Sent: {moment(activeOrder.createdAt).fromNow()}</p>
           <p>Due by: {moment(activeOrder.dueDate).fromNow()}</p>
           <p>Latest change: {moment(activeOrder.updatedAt).fromNow()}</p>
         </div>
-        <Card
-          type="inner"
-          title="User Info">
-          {activeOrder.user &&
-            <Card.Grid style={{ width: '100%' }}>
-              <Card.Meta
-                avatar={activeOrder.userImage ? <Avatar src={activeOrder.userImage} /> : <Avatar icon="user" />}
-                title={activeOrder.userName}
-                description={<p>Sent: {moment(activeOrder.createdAt).fromNow()}</p>}
-              />
-            </Card.Grid>
-          }
-        </Card>
         <Card
           type="inner"
           title="Scan Files">
@@ -87,7 +74,7 @@ export default class PrescriptionForm extends Component {
           type="inner"
           title="Notes"
           extra={<a onClick={() => this.showModal()} style={{ position: 'absolute', right: '10px', top: '10px' }}>Add notes</a>}>
-          {activeOrder.notes && activeOrder.notes.map((note, i) => note.text ? <div key={`note-${activeOrder.uid}-${i}`}>{note.user}: "{note.text}"</div> : null)}
+          {activeOrder.notes && activeOrder.notes.map((note, i) => note.text ? <div key={`note-${activeOrder.uid}-${i}`}>User: "{note.text}"</div> : null)}
         </Card>
         <Card
           style={{ marginTop: 16 }}
