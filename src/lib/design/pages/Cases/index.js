@@ -131,7 +131,7 @@ class OrdersView extends Component {
                             <Column field="status" header="Status" sortable={true}/>
                             <Column body={this.dueByTemplate} field='dueDate' header="Due by" sortable={true} />
                             <Column body={this.notesTemplate} field="notes" header="Notes" sortable={true}/>
-                            <Column field="cFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
+                            <Column field="scanFileUrls" body={this.scanFileTemplate} header="Scan Files" sortable={true}/>
                             <Column field="designFileUrls" body={this.designFileTemplate} header="Design Files" sortable={true}/>
                             <Column body={this.actionTemplate} header="Reassign Order" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>
