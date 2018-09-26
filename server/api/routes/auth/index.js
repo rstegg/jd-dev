@@ -8,15 +8,18 @@ const validateEmailHandler = require('./handlers/validateEmail')
 const verifyTokenHandler = require('./handlers/verifyToken')
 const changePasswordHandler = require('./handlers/changePassword')
 const requestResetPasswordHandler = require('./handlers/requestReset')
-// const verifyResetPasswordHandler = require('./handlers/verifyReset')
+const resetPasswordHandler = require('./handlers/resetPassword')
 
 const validateBody = apiRequire('middleware/validate-body')
+const validField = apiRequire('middleware/valid-field')
 const validFields = apiRequire('middleware/valid-fields')
 const hashPassword = apiRequire('middleware/hash-password')
 
 const validSignupUser = validFields('user', ['email', 'name', 'password'])
 const validLoginUser = validFields('', ['email', 'password'])
 const validChangePassword = validFields('user', ['oldPassword', 'newPassword'])
+const validRequestReset = validFields('user', ['email'])
+const validResetPassword = validFields('user', ['password'])
 
 const logger = tap(console.log)
 
@@ -43,13 +46,12 @@ module.exports =
       validateBody(validChangePassword),
       changePasswordHandler
      )
-    .post(`/password/request_reset`,
-      passport.authenticate('jwt', { session: false }),
-      validateBody(validChangePassword),
+    .post(`/password/request`,
+      validateBody(validRequestReset),
       requestResetPasswordHandler
      )
-    .post(`/password/reset_password/:permalink/:verifyToken`,
-      passport.authenticate('jwt', { session: false }),
-      validateBody(validChangePassword),
-      // verifyResetPasswordHandler
+    .post(`/password/reset/:permalink/:verifyToken`,
+      validateBody(validResetPassword),
+      hashPassword,
+      resetPasswordHandler
      )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom'
+import { NavLink, withRouter, Redirect } from 'react-router-dom'
 
 import { Card } from 'antd'
 
@@ -23,6 +23,7 @@ class Login extends Component {
           actions={[<RouterButton to="/signup" prefix="Don't have an account?" label="Sign up" />]}
           >
           <LoginForm onSubmit={onLoginSubmit} />
+          <NavLink to="/forgot">Forgot password?</NavLink>
         </Card>
       </div>
     )

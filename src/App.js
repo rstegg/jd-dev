@@ -10,6 +10,8 @@ import { AppFooter } from './AppFooter';
 
 import Login from './auth/pages/Login';
 import Signup from './auth/pages/Signup';
+import Forgot from './auth/pages/Forgot';
+import Reset from './auth/pages/Reset';
 import LibRouter from './lib/Router';
 
 import { joinRoom, removeNotification } from './actions'
@@ -62,6 +64,8 @@ class App extends Component {
                 <Switch>
                   <Route path="/login" exact component={Login} />
                   <Route path="/signup" exact component={Signup} />
+                  <Route path="/forgot" exact component={Forgot} />
+                  <Route path="/reset/:permalink/:verifyToken" exact component={Reset} />
                   <Route path="/" component={LibRouter} />
                 </Switch>
               </div>

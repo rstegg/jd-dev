@@ -5,6 +5,8 @@ const initialState = {
   isRegistered: false,
   image: '',
   isLoading: false,
+  forgotSuccess: false,
+  resetSuccess: false,
   error: null
 }
 
@@ -32,6 +34,22 @@ export default function(state = initialState, action) {
         isRegistered: true,
         error: false,
         isLoading: false
+      })
+    case 'FORGOT_SUCCESS':
+      return Object.assign({}, state, {
+        forgotSuccess: true
+      })
+    case 'RESET_FORGOT':
+      return Object.assign({}, state, {
+        forgotSuccess: false
+      })
+    case 'RESET_SUCCESS':
+      return Object.assign({}, state, {
+        resetSuccess: true
+      })
+    case 'RESET_RESET':
+      return Object.assign({}, state, {
+        resetSuccess: false
       })
     case 'EDIT_PROFILE_SUCCESS':
       return Object.assign({}, state, {
