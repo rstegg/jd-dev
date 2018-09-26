@@ -4,6 +4,7 @@ const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
 const mailcomposer = require('mailcomposer')
 
 const confirmationTemplate = require('../emails/confirmation')
+const resetTemplate = require('../emails/confirmation')
 
 const confirmationMail = (user, permalink_url) => mailcomposer({
   from: 'JawDrop <hello@mg.jawdrop.io>',
@@ -34,7 +35,7 @@ const resetPasswordMail = (user, permalink_url) => mailcomposer({
   to: user.email,
   subject: 'Verify your email address to use jawdrop.io',
   text: `Forgot your password? Not to worry, we got you! Let’s get you a new password. Click here to reset your password: ${permalink_url}`,
-  html: confirmationTemplate(user, permalink_url)
+  html: resetTemplate(user, permalink_url)
 })
 
 const sendPasswordReset = (mail, user) => {
