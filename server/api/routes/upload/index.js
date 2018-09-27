@@ -9,9 +9,14 @@ const imager = require('multer-imager')
 const shortId = require('shortid')
 
 const uploadProfileImage = require('./handlers/uploadProfileImage')
-const uploadCaseFile = require('./handlers/uploadCaseFile')
-const uploadExtraCaseFile = require('./handlers/uploadExtraCaseFile')
+const uploadScanFile = require('./handlers/uploadScanFile')
+const uploadExtraScanFile = require('./handlers/uploadExtraScanFile')
 const uploadDesignFile = require('./handlers/uploadDesignFile')
+const uploadExtraScanFileAdmin = require('./handlers/uploadExtraScanFileAdmin')
+const uploadDesignFileAdmin = require('./handlers/uploadDesignFileAdmin')
+const uploadProfileImageAdmin = require('./handlers/uploadProfileImageAdmin')
+
+const authenticateAdmin = apiRequire('middleware/authenticate-admin')
 
 const debug = require('debug')('aws-s3')
 
@@ -72,7 +77,7 @@ module.exports =
     )
     .post('/orders/:uid',
       upload.single('file'),
-      uploadExtraCaseFile
+      uploadExtraScanFile
     )
     .post('/design/:uid',
       upload.single('file'),
@@ -80,5 +85,20 @@ module.exports =
     )
     .post('/orders',
       upload.array('file'),
-      uploadCaseFile
+      uploadScanFile
+    )
+    .post('/admin/design/:uid',
+      authenticateAdmin,
+      upload.single('file'),
+      uploadDesignFileAdmin
+    )
+    .post('/admin/orders/:uid',
+      authenticateAdmin,
+      upload.single('file'),
+      uploadExtraScanFileAdmin
+    )
+    .post('/admin/profile',
+      authenticateAdmin,
+      upload.single('file'),
+      uploadProfileImageAdmin
     )

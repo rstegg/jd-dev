@@ -19,6 +19,13 @@ const ordersReducer = (state = initialState, action) => {
       return [ ...state.slice(0, scanOrderIDX),
               { ...action.payload.order, scanFileUrls: action.payload.order.scanFileUrls.concat(action.payload.file) },
               ...state.slice(scanOrderIDX+1) ]
+    case 'ADMIN_ADD_DESIGN_FILE':
+      const scanCaseUIDs = state.map(order => order.uid)
+      const scanCaseIDX = scanCaseUIDs.indexOf(action.payload.order.uid)
+      const previousOrderDesignUrls = action.payload.order.designFileUrls || []
+      return [ ...state.slice(0, scanCaseIDX),
+              { ...action.payload.order, designFileUrls: previousOrderDesignUrls.concat(action.payload.file) },
+              ...state.slice(scanCaseIDX+1) ]
     case 'ADD_EXTRA_NOTE':
     case 'ADMIN_ADD_EXTRA_NOTE':
       const noteOrderUIDs = state.map(order => order.uid)

@@ -8,12 +8,16 @@ const getCountsHandler = require('./handlers/getAllCounts')
 const getOrdersHandler = require('./handlers/getAllOrders')
 const banUserHandler = require('./handlers/banUser')
 const unbanUserHandler = require('./handlers/unbanUser')
+const reassignOrderHandler = require('./handlers/reassign')
+const addOrderNoteHandler = require('./handlers/addNotes')
 
 const validateBody = apiRequire('middleware/validate-body')
 const validateParams = apiRequire('middleware/validate-params')
 const validFields = apiRequire('middleware/valid-fields')
 const validField = apiRequire('middleware/valid-field')
 const hashPassword = apiRequire('middleware/hash-password')
+
+const authenticateAdmin = apiRequire('middleware/authenticate-admin')
 
 const validUser = validField('user')
 const validSingle = validField('order')
@@ -46,4 +50,12 @@ module.exports =
     )
     .get('/counts',
       getCountsHandler
+    )
+    .post('/orders/resassign',
+      authenticateAdmin,
+      reassignOrderHandler
+    )
+    .put('/orders/:uid/notes',
+      authenticateAdmin,
+      addOrderNoteHandler
     )

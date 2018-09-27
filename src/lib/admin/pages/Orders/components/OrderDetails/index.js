@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import { Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } from 'antd'
+import { Popconfirm, Modal, Upload, Avatar, Steps, List, Tag, Card, Input, Button, Form } from 'antd'
 
 import moment from 'moment'
 
@@ -32,7 +33,7 @@ const OrderSteps = ({ order }) => {
   )
 }
 
-export default class OrderDetails extends Component {
+class OrderDetails extends Component {
   state = {
     noteVisible: false,
     prefsVisible: false,
@@ -49,7 +50,7 @@ export default class OrderDetails extends Component {
     this.setState({ noteVisible: false, note: '' })
   }
   saveNewNote = () => {
-    this.props.addExtraNote(this.state.note, this.props.order, this.props.user)
+    this.props.addExtraNoteAdmin(this.state.note, this.props.order, this.props.user)
     this.setState({ noteVisible: false, note: '' })
   }
   showNotesModal = () => {
@@ -67,6 +68,11 @@ export default class OrderDetails extends Component {
   }
   render () {
     const { order } = this.props
+    const designerObjs = this.props.users && this.props.users.filter(user => user.userType === 'designer')
+    let designers = []
+    if (designerObjs && designerObjs.length) {
+      designers = designerObjs.map(obj => ({ label: obj.name, value: obj.uid }))
+    }
     return (
       <Card title={<OrderSteps order={order} />}>
         <p style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.85)', marginBottom: 16, fontWeight: 500, }}>
@@ -87,7 +93,15 @@ export default class OrderDetails extends Component {
         </Card>
         <Card
           type="inner"
-          title="Designer Info">
+          title="Designer Info"
+          extra={<Popconfirm
+              title="Are you sure you want to reassign this order?"
+              placement="topRight"
+              onConfirm={() => this.props.reassignOrderAdmin(order, this.props.user.token)}
+              okText="Yes" cancelText="Cancel">
+              <a style={{ position: 'absolute', right: '10px', top: '10px' }}>Reassign Designer</a>
+            </Popconfirm>
+            }>
           {order.designers && order.designers.map((designer, i) =>
             <Card.Grid key={`designer-${order.uid}-${i}`} style={{ width: '100%' }}>
               <Card.Meta
@@ -101,7 +115,7 @@ export default class OrderDetails extends Component {
         <Card
           type="inner"
           title="Scan Files"
-          extra={<Upload action={`/api/v1/upload/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onChange={accept => accept.file && accept.file.response && this.props.addExtraScanFile(accept.file.response.file, order)}>
+          extra={<Upload action={`/api/v1/upload/admin/orders/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onChange={accept => accept.file && accept.file.response && this.props.addExtraScanFileAdmin(accept.file.response.file, order)}>
             <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
           </Upload>}
           >
@@ -112,7 +126,13 @@ export default class OrderDetails extends Component {
         <Card
           style={{ marginTop: 16 }}
           type="inner"
-          title="Design Files">
+          title="Design Files"
+          extra={
+            <Upload action={`/api/v1/upload/admin/design/${this.props.order.uid}`} name='file' headers={{ authorization: this.props.user.token }} showUploadList={false} onChange={accept => accept.file && accept.file.response && this.props.addDesignFileAdmin(accept.file.response.file, this.props.order)}>
+              <Button icon='upload' shape='circle' style={{ position: 'absolute', right: '10px', top: '7.5px' }} />
+            </Upload>
+          }
+          >
           {order.designFileUrls && order.designFileUrls.map((designFileUrl, i) =>
             <Tag key={`designFileUrl-${order.uid}-${i}`} color='gold'><a href={designFileUrl}>{decodeURI(designFileUrl && designFileUrl.split('/').slice(-1)[0])}</a></Tag>
           )}
@@ -233,3 +253,7 @@ export default class OrderDetails extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ users }) => ({ users })
+
+export default connect(mapStateToProps)(OrderDetails)

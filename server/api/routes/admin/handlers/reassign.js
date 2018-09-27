@@ -9,18 +9,10 @@ const { merge, pick } = require('ramda')
 const updateOrderParams = [ 'designers' ]
 const orderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'occlusion', 'pontic', 'linerSpacer', 'status', 'dueDate', 'dueTime', 'scanFileUrls', 'designFileUrls', 'createdAt' ]
 
-const validate = req =>
-  Order.findOne({ where: { uid: req.body.order.uid, designerId: req.user.uid }})
-  .then(order => !order ? Promise.reject('Unauthorized')
-  : order)
-
 module.exports = io => (req, res) =>
-  validate(req)
-  .then(_ =>
-    User.findAll({
-      where: { userType: 'designer', disabled: false }
-    })
-  )
+  User.findAll({
+    where: { userType: 'designer', disabled: false }
+  })
   .then(designers => {
     if (designers && designers.length) {
       const assignedDesigner = designers.reduce((a, b) => {
@@ -64,4 +56,3 @@ module.exports = io => (req, res) =>
         })
       }
     })
-    .catch(error => res.status(400).json({ error }))

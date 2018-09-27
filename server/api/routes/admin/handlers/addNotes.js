@@ -1,4 +1,4 @@
-const { Order } = requireDb
+const { User, Order } = requireDb
 
 const validate = req =>
   User.findOne({
@@ -17,7 +17,8 @@ module.exports = (req, res) =>
   )
   .then(order => {
     const user = req.user.name
-    const newNotes = order.notes.concat({ user, text: req.body.note })
+    const oldNotes = order.notes || []
+    const newNotes = oldNotes.concat({ user, text: req.body.note })
     return Order.update({ notes: newNotes }, { where: { id: order.id }, returning: true, plain: true })
   })
   .then(order => res.status(200).json({ order }))

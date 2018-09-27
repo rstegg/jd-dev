@@ -7,7 +7,7 @@ import moment from 'moment'
 
 import { Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNote, setOrderPrefs } from './actions/orders'
+import { fetchOrders, cancelOrder, addExtraScanFile, addExtraNoteAdmin, setOrderPrefs, addExtraScanFileAdmin, addDesignFileAdmin, reassignOrderAdmin } from './actions/orders'
 
 import OrderDetails from './components/OrderDetails'
 
@@ -167,9 +167,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchOrders: token => dispatch(fetchOrders(token)),
   addExtraScanFile: (file, order) => dispatch(addExtraScanFile(file, order)),
-  addExtraNote: (note, order, user) => dispatch(addExtraNote(note, order, user)),
+  addExtraNoteAdmin: (note, order, user) => dispatch(addExtraNoteAdmin(note, order, user)),
   setOrderPrefs: (prefs, order, token) => dispatch(setOrderPrefs(prefs, order, token)),
-  cancelOrder: (order, token) => dispatch(cancelOrder(order, token))
+  cancelOrder: (order, token) => dispatch(cancelOrder(order, token)),
+  addExtraScanFileAdmin: (file, order) => dispatch(addExtraScanFileAdmin(file, order)),
+  addDesignFileAdmin: (file, order) => dispatch(addDesignFileAdmin(file, order)),
+  reassignOrderAdmin: (order, token) => dispatch(reassignOrderAdmin(order, token)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrdersTableView))

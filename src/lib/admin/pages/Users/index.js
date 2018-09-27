@@ -71,7 +71,7 @@ class OrdersTableView extends Component {
             placement="topRight"
             onConfirm={() => this.props.unbanUser(rowData, this.props.user.token)}
             okText="Yes" cancelText="Cancel">
-            <Button type="success" icon="reload" />
+            <Button type="success" icon="rollback" />
           </Popconfirm>
         )
       }
