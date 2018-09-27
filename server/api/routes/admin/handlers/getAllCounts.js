@@ -1,7 +1,7 @@
 const { Order, User } = requireDb
 const moment = require('moment')
 
-const UserAttrs = [ 'email', 'name', 'uid', 'userType', 'banned' ]
+const UserAttrs = [ 'email', 'name', 'uid', 'userType', 'disabled' ]
 
 const validate = req =>
   User.findOne({

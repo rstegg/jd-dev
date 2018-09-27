@@ -7,7 +7,7 @@ import moment from 'moment'
 
 import { Avatar, Spin, Modal, Icon, Button, Popconfirm } from 'antd';
 
-import { fetchUsers, banUser } from './actions/users'
+import { fetchUsers, banUser, unbanUser } from './actions/users'
 
 import UserDetails from './components/UserDetails'
 
@@ -64,11 +64,15 @@ class OrdersTableView extends Component {
           <Spin />
         )
       }
-      if (rowData.status === 'canceled') {
+      if (rowData.disabled) {
         return (
-          <Button type="danger" disabled>
-            <Icon type="close" />
-          </Button>
+          <Popconfirm
+            title="Are you sure you want to unban this user?"
+            placement="topRight"
+            onConfirm={() => this.props.unbanUser(rowData, this.props.user.token)}
+            okText="Yes" cancelText="Cancel">
+            <Button type="success" icon="reload" />
+          </Popconfirm>
         )
       }
       return <Popconfirm
@@ -80,8 +84,8 @@ class OrdersTableView extends Component {
         </Popconfirm>;
     }
 
-    bannedTemplate = (rowData) => {
-      if (rowData.banned) {
+    disabledTemplate = (rowData) => {
+      if (rowData.disabled) {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}><Icon type="stop" />Banned</div>
         )
@@ -105,7 +109,7 @@ class OrdersTableView extends Component {
                             <Column field="email" header="E-mail" sortable={true}/>
                             <Column field="userType" header="User type" sortable={true}/>
                             <Column field="uid" header="Unique ID" sortable={true}/>
-                            <Column body={this.bannedTemplate} field="banned" header="Status" sortable={true}/>
+                            <Column body={this.disabledTemplate} field="disabled" header="Status" sortable={true}/>
                             <Column body={this.actionTemplate} header="Ban user" style={{textAlign:'center', width: '6em'}}/>
                         </DataTable>
                     </div>
@@ -130,7 +134,8 @@ const mapStateToProps = ({ user, admin }) => ({ user, admin })
 
 const mapDispatchToProps = dispatch => ({
   fetchUsers: token => dispatch(fetchUsers(token)),
-  banUser: (order, token) => dispatch(banUser(order, token))
+  banUser: (user, token) => dispatch(banUser(user, token)),
+  unbanUser: (user, token) => dispatch(unbanUser(user, token)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrdersTableView)

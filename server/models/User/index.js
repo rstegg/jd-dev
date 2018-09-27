@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
-    banned: {
+    disabled: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false

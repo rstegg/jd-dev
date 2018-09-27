@@ -12,18 +12,18 @@ const orderParams = [ 'uid', 'designers', 'name', 'units', 'type', 'contact', 'o
 module.exports = io => (req, res) => {
   req.orders.map(order => {
     User.findAll({
-      where: { userType: 'designer' }
+      where: { userType: 'designer', disabled: false }
     })
     .then(designers => {
       if (designers && designers.length) {
         const assignedDesigner = designers.reduce((a, b) => {
             return a.priority > b.priority ? a : b;
         });
-        return User.update({ priority: sequelize.literal('priority + 1') }, { where: { userType: 'designer' }})
+        return User.update({ priority: sequelize.literal('priority + 1') }, { where: { userType: 'designer', disabled: false }})
           .then(users => {
             if (users) {
               console.log('designers exist');
-              User.update({ priority: 0 }, { where: { id: assignedDesigner.id, active: true }, returning: true, plain: true })
+              User.update({ priority: 0 }, { where: { id: assignedDesigner.id, active: true, disabled: false }, returning: true, plain: true })
               .then(([_, newDesigner]) => {
                 const oldDesigners = order.designers ? order.designers : []
 

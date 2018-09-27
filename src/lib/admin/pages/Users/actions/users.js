@@ -34,6 +34,26 @@ export const banUser = (user, token) =>
 export const banUserSuccess = res => ({
   type: 'BAN_USER_SUCCESS',
   payload: {
-    user: res.body.user
+    users: res.body.users
+  }
+})
+
+export const unbanUser = (user, token) =>
+  dispatch => {
+    dispatch({ type: 'UNBAN_USER', payload: { user } })
+    su.post('/api/v1/admin/users/unban')
+      .accept('application/json')
+      .set('Authorization', token)
+      .send({ user })
+      .then(res => dispatch(unbanUserSuccess(res)))
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+export const unbanUserSuccess = res => ({
+  type: 'UNBAN_USER_SUCCESS',
+  payload: {
+    users: res.body.users
   }
 })

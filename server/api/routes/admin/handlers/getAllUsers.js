@@ -1,6 +1,6 @@
 const { User } = requireDb
 
-const UserAttrs = [ 'email', 'name', 'uid', 'userType', 'banned' ]
+const UserAttrs = [ 'email', 'name', 'uid', 'userType', 'disabled' ]
 
 const validate = req =>
   User.findOne({

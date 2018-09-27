@@ -26,6 +26,7 @@ export default function(state = initialState, action) {
       })
     case 'FETCH_USERS_SUCCESS':
     case 'BAN_USER_SUCCESS':
+    case 'UNBAN_USER_SUCCESS':
       return Object.assign({}, state, {
         users: action.payload.users
       })

@@ -4,6 +4,7 @@ const { allPass, pipe, path, prop, tap } = require('ramda')
 
 const loginHandler = require('./handlers/login')
 const signupHandler = require('./handlers/signup')
+const logoutHandler = require('./handlers/logout')
 const validateEmailHandler = require('./handlers/validateEmail')
 const verifyTokenHandler = require('./handlers/verifyToken')
 const changePasswordHandler = require('./handlers/changePassword')
@@ -33,6 +34,10 @@ module.exports =
       validateBody(validSignupUser),
       hashPassword,
       signupHandler
+    )
+    .post(`/logout`,
+      passport.authenticate('jwt', { session: false }),
+      logoutHandler
     )
    .post(`/signup/validate_email`,
       validateBody(prop('email'), 'missing email'),

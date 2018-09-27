@@ -15,7 +15,7 @@ const validate = req =>
 module.exports = (req, res) =>
   validate(req)
   .then(_ =>
-    User.update({ disabled: true }, { where: { uid: req.body.user.uid }, returning: true, plain: true })
+    User.update({ disabled: false }, { where: { uid: req.body.user.uid }, returning: true, plain: true })
   )
   .then(([_, user]) =>
     User.findAll({

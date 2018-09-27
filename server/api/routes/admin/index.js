@@ -7,6 +7,7 @@ const getUsersHandler = require('./handlers/getAllUsers')
 const getCountsHandler = require('./handlers/getAllCounts')
 const getOrdersHandler = require('./handlers/getAllOrders')
 const banUserHandler = require('./handlers/banUser')
+const unbanUserHandler = require('./handlers/unbanUser')
 
 const validateBody = apiRequire('middleware/validate-body')
 const validateParams = apiRequire('middleware/validate-params')
@@ -20,6 +21,8 @@ const validPrefs = validField('prefs')
 const validNote = validField('note')
 const validEditOrderParams = validFields(false, [ 'id' ])
 
+const logger = tap(console.log)
+
 module.exports =
   router
     .use(passport.authenticate('jwt', { session: false }))
@@ -30,6 +33,10 @@ module.exports =
       validateBody(validUser),
       hashPassword,
       createUserHandler
+    )
+    .post('/users/unban',
+      validateBody(validUser),
+      unbanUserHandler
     )
     .delete('/users',
       banUserHandler
